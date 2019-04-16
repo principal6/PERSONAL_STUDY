@@ -51,18 +51,19 @@ $$
 
 평면의 법선 벡터와 평면 위의 한 점을 알면 평면의 방정식을 구할 수 있다!
 
-![math_plane](C:\Users\JesusKim\Documents\GitHub\PERSONAL_STUDY\Asset\math_plane.png)
-$$
-평면\ 위의\ 한\ 점\ A(x_0,\ y_0,\ z_0)를\ 알고,\\
-평면에\ 수직인\ 법선의\ 벡터\ \vec{h}(a,\ b,\ c)가\ 주어졌을\ 때,\\
-평면\ 위의\ 임의의\ 점\ P(x,\ y,\ z)에\ 대해\ \vec{AP}\bull \vec{h}=0이다.\\
-\  \\
-이\ 때\ \ \vec{AP}=P-A\ 이므로\ (P-A)\bull{}\vec{h}=0이다.\\
-\rightarrow (x-x_0,\ y-y_0,\ z-z_0)\bull (a,\ b,\ c)=0\\
-\rightarrow a(x-x_0)+b(y-y_0)+c(z-z_0)=0\\
-\rightarrow ax+by+cz+d=0\\
-(단,\ d=-ax_0-by_0-cz_0)
-$$
+![math_plane](https://raw.githubusercontent.com/principal6/PERSONAL_STUDY/master/Asset/math_plane.png?token=AoLPdJF_wNVMN9eeFR3E-2iI4Sc9_t-lks5cthy2wA%3D%3D)
+
+
+
+평면 위의 한 점 $A(x_0,\ y_0,\ z_0)$를 알고,
+평면에 수직인 법선의 벡터 $\vec{h}(a,\ b,\ c)$가 주어졌을 때,
+평면 위의 임의의 점 $P(x,\ y,\ z)$에 대해 $\vec{AP}\bull \vec{h}=0$이다.
+
+이 때 $\vec{AP}=P-A$ 이므로 $(P-A)\bull{}\vec{h}=0$이다.
+
+-> $(x-x_0,\ y-y_0,\ z-z_0)\bull (a,\ b,\ c)=0\\$
+-> $a(x-x_0)+b(y-y_0)+c(z-z_0)=0\\$
+-> $ax+by+cz+d=0\\$  (단, $d=-ax_0-by_0-cz_0$)
 
 ## 반직선의 방정식
 
