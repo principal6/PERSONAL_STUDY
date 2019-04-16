@@ -51,7 +51,7 @@ $$
 
 평면의 법선 벡터와 평면 위의 한 점을 알면 평면의 방정식을 구할 수 있다!
 
-![평면](C:\Users\JesusKim\Desktop\수학 공부\평면.png)
+![math_plane](C:\Users\JesusKim\Documents\GitHub\PERSONAL_STUDY\Asset\math_plane.png)
 $$
 평면\ 위의\ 한\ 점\ A(x_0,\ y_0,\ z_0)를\ 알고,\\
 평면에\ 수직인\ 법선의\ 벡터\ \vec{h}(a,\ b,\ c)가\ 주어졌을\ 때,\\
