@@ -87,3 +87,8 @@ $r$을 구의 반지름이라고 할 때,
 
 식 $(P_x-C_x)^2+(P_y-C_y)^2+(P_z-C_z)^2=r^2$을 만족한다.
 
+
+
+## 구 그리기 (Sphere coordinates)
+
+각도로 $\theta$ (theta)와 $\phi$ (phi)를 사용

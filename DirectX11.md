@@ -100,8 +100,10 @@
 
 - 업데이트
 
+  - 디폴트 버퍼
+    - `D3D11_BUFFER_DESC::Usage`가 `D3D11_USAGE_DEFAULT`이면 `ID3D11DeviceContext::UpdateSubresource()`를 활용하여 초기값을 지정하고, 업데이트는 하지 않는다!! UpdateSubresource()가 Map()/Unmap()보다 CPU를 더 많이 사용하기 때문.
   - 동적 버퍼에 쓰기
-    - `D3D11_BUFFER_DESC::Usage`가 `D3D11_USAGE_DYNAMIC`이고, `D3D11_BUFFER_DESC::CPUAccessFlags`가 `D3D11_CPU_ACCESS_WRITE`이면 `ID3D11DeviceContext::Map()` 시 `D3D11_MAP`자료형 인수에 `D3D11_MAP_WRITE_DISCARD`을 사용한다!!
+    - `D3D11_BUFFER_DESC::Usage`가 `D3D11_USAGE_DYNAMIC`이고, `D3D11_BUFFER_DESC::CPUAccessFlags`가 `D3D11_CPU_ACCESS_WRITE`이면 `ID3D11DeviceContext::Map()`, `ID3D11DeviceContext::Unmap()`을 사용하고, `ID3D11DeviceContext::Map()` 시 `D3D11_MAP`자료형 인수에 `D3D11_MAP_WRITE_DISCARD`을 사용한다!!★
   - 스테이징 버퍼에 쓰기
     - `D3D11_BUFFER_DESC::Usage`가 `D3D11_USAGE_STAGING`이고, `D3D11_BUFFER_DESC::CPUAccessFlags`가 `D3D11_CPU_ACCESS_WRITE`이면 `ID3D11DeviceContext::Map()` 시 `D3D11_MAP`자료형 인수에 `D3D11_MAP_WRITE`을 사용한다!!
   - 스테이징 버퍼에서 읽기
@@ -878,7 +880,11 @@ void EndDrawing() noexcept
 
 
 
-## 2. 삼각형 그리기 #1 (버텍스 버퍼, 색상)
+## 2. 삼각형 그리기
+
+### 2-1. 버텍스 버퍼, 색상
+
+#### 2-1-1.
 
 자료형: XMFLOAT2(8byte) XMFLOAT3(12byte), XMFLOAT4(16byte)
 
@@ -902,7 +908,73 @@ struct SVertex
 }
 ```
 
+#### 2-1-2. 인풋 레이아웃
 
+Syntax 이름에 숫자 못 쓴다!! 아래처럼 써야 한다.
+
+```cpp
+static constexpr D3D11_INPUT_ELEMENT_DESC KInputElementDescriptionModel[] =
+{
+	{"COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+    {"COLOR", 1, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
+}
+```
+
+
+
+### 2-2. 래스터라이저 스테이트 #1
+
+
+
+```cpp
+// 선언
+ID3D11RasterizerState*	RSWireFrame{};
+ID3D11RasterizerState*	RSSolidNoCull{};
+
+// 생성
+D3D11_RASTERIZER_DESC rasterizer_description{};
+rasterizer_description.FillMode = D3D11_FILL_WIREFRAME;
+rasterizer_description.CullMode = D3D11_CULL_NONE;
+
+PtrDevice->CreateRasterizerState(&rasterizer_description, &RSWireFrame);
+
+rasterizer_description.FillMode = D3D11_FILL_SOLID;
+rasterizer_description.CullMode = D3D11_CULL_NONE;
+PtrDevice->CreateRasterizerState(&rasterizer_description, &RSSolidNoCull);
+
+// 사용
+if (ShouldDrawWireFrame)
+{
+    PtrDeviceContext->RSSetState(RSWireFrame);
+}
+else
+{
+    PtrDeviceContext->RSSetState(RSSolidNoCull);
+}
+```
+
+
+
+### 2-3. 텍스처 입히기
+
+#### 2-3-1. 2D 텍스처 생성
+
+```cpp
+// D3DX11CreateShaderResourceViewFromFile()는 deprecated
+switch (file_type)
+{
+case EFileType::DDS:
+	CreateDDSTextureFromFile(m_pDX->GetDevice(), TextureFileName.c_str(),
+	nullptr, &TextureShaderResourceView, 0);
+	break;
+case EFileType::WIC:
+	CreateWICTextureFromFile(m_pDX->GetDevice(), TextureFileName.c_str(),
+	nullptr, &TextureShaderResourceView, 0);
+	break;
+default:
+	break;
+};
+```
 
 ## * CPU & GPU 프로파일링
 
@@ -960,30 +1032,9 @@ void Render (ID3D11DeviceContext * pContext)
 
 
 
-## 3. 삼각형 그리기 #2 (텍스처)
+## 3. 사각형 그리기
 
-### 3-1. 2D 텍스처 생성
-
-```cpp
-// D3DX11CreateShaderResourceViewFromFile()는 deprecated
-switch (file_type)
-{
-case EFileType::DDS:
-	CreateDDSTextureFromFile(m_pDX->GetDevice(), TextureFileName.c_str(),
-	nullptr, &TextureShaderResourceView, 0);
-	break;
-case EFileType::WIC:
-	CreateWICTextureFromFile(m_pDX->GetDevice(), TextureFileName.c_str(),
-	nullptr, &TextureShaderResourceView, 0);
-	break;
-default:
-	break;
-};
-```
-
-
-
-## 4. 사각형 그리기 #1 (인덱스 버퍼)
+### 3-1. 인덱스 버퍼
 
 ```cpp
 // IA 인덱스 버퍼 지정
@@ -997,7 +1048,7 @@ m_pDeviceContext->DrawIndexed(m_Mesh.IndexData.GetCount(), 0, 0);
 
 
 
-## 5. 사각형 그리기 #2 (텍스처)
+### 3-2. 텍스처 입히기
 
 ```cpp
 static constexpr D3D11_INPUT_ELEMENT_DESC KInputElementDescriptionMain[] =
@@ -1012,7 +1063,11 @@ static constexpr D3D11_INPUT_ELEMENT_DESC KInputElementDescriptionMain[] =
 
 
 
-## 6. 육면체 그리기 #1 (카메라-월드/뷰/프로젝션 변환, 상수 버퍼)
+## 4. 육면체 그리기
+
+### 4-1. 카메라-월드/뷰/프로젝션 변환
+
+### 4-2. 상수 버퍼
 
 상수 버퍼는 Dynamic으로, Map/DISCARD로 업데이트한다!
 
@@ -1026,15 +1081,19 @@ struct, register(b0) 모두 헤더에 넣자.
 
 
 
-## 7. 카메라 시점 추가 (자유시점)
+## 5. 카메라 시점 추가 (자유시점)
 
-## 8. 육면체 그리기 #2 (래스터라이저 스테이트)
+## 6. 육면체 그리기
+
+### 6-1. 래스터라이저 스테이트#2
 
 현재 카메라를 이동해 육면체 안으로 들어가면 안에서는 우리가 만든 육면체를 볼 수 없다..!!! 컬링때문!!
 
+
+
 @ RSSetScissorRects()도 참고! D3D11_RECT
 
-## 9. 육면체 그리기 #3 (텍스처, 깊이 버퍼)
+### 6-2. 텍스처 및 깊이 버퍼
 
 ```cpp
 // 렌더 타겟 버퍼를 비울 때 깊이 버퍼도 같이 비워준다!
@@ -1043,37 +1102,43 @@ PtrDeviceContext->ClearDepthStencilView(PtrDepthStencilView, D3D11_CLEAR_DEPTH |
 
 
 
-## 10. 육면체 그리기 #3 (블렌딩, 클리핑)
+### 6-3. 블렌딩과 클리핑
 
-## 11. 카메라 시점 추가 (1인칭, 3인칭)
+## 7. 카메라 시점 추가 (1인칭, 3인칭)
 
-## 12. 2D 그리기 (카메라 2D 시점)
+## 8. 2D 그리기 (카메라 2D 시점)
 
-## 13. ?? ECS 도입
+## 9. ?? ECS 도입
 
-## 14. 비트맵 폰트 사용하기 #1 (BMFont)
+## 10. 비트맵 폰트 사용하기
 
-## 15. 비트맵 폰트 사용하기 #2 (타이머=>FPS 표시)
+### 10-1. BMFont 이해
 
-## 16. 사용자 입력 받기 (윈도우/다이렉트 인풋)
+### 10-2. BMFont 파일 파싱
 
-## 17. 그리드 그리기
+### 10-3. 폰트 클래스 제작
 
-## 18. 3D 모델 파일 불러오기 #1 (obj 파일)
+### 10-4. 타이머를 이용해 FPS 표시
+
+## 11. 사용자 입력 받기 (윈도우/다이렉트 인풋)
+
+## 12. 그리드 그리기
+
+## 13. 3D 모델 파일 불러오기 #1 (obj 파일)
 
 **그냥 파싱 버전 or Assimp 버전**
 
-## 19. 라이팅 #1 (앰비언트 라이트)
+## 14. 라이팅 #1 (앰비언트 라이트)
 
-## 20. 라이팅 #2 (디렉셔널 라이트)
+## 15. 라이팅 #2 (디렉셔널 라이트)
 
-## 21. 3D 모델 파일 불러오기 #2 (x 파일 - rigged)
+## 16. 3D 모델 파일 불러오기 #2 (x 파일 - rigged)
 
-## 22. 3D 모델 파일 불러오기 #3 (Skinned animation)
+## 17. 3D 모델 파일 불러오기 #3 (Skinned animation)
 
-## 23. 스카이 박스
+## 18. 스카이 박스
 
-### 23-1. 큐브맵 텍스처(3D 텍스처 = 2D 텍스처 배열) 생성하기
+### 18-1. 큐브맵 텍스처(3D 텍스처 = 2D 텍스처 배열) 생성하기
 
 ```cpp
 // 필요한 변수
@@ -1129,7 +1194,7 @@ float4 main(SKY_MAP_OUTPUT input) : SV_Target
 }
 ```
 
-## 24. GPU 애니메이션
+## 19. GPU 애니메이션
 
 2D 텍스처-> 각 애니메이션의 최종 본 행렬(final bone transformation matrix) 저장 (max_bone = 50으로 제한)
 
@@ -1384,7 +1449,7 @@ inline void BakeCurrentFrameIntoTexture(uint32_t StartIndex, const XMMATRIX* Fra
 
 
 
-## 25. 피킹(Picking) & 바운딩볼륨(Bounding volume)
+## 20. 피킹(Picking) & 바운딩볼륨(Bounding volume)
 
 평면의 방정식...
 
@@ -1394,7 +1459,7 @@ inline void BakeCurrentFrameIntoTexture(uint32_t StartIndex, const XMMATRIX* Fra
 
 
 
-## 26. 인스턴싱(Instancing)
+## 21. 인스턴싱(Instancing)
 
 `D3D11_INPUT_ELEMENT_DESC`구조체의 `InputSlotClass`에 `D3D11_INPUT_PER_INSTANCE_DATA`를 대입, `InstanceDataStepRate`는 `1`을 대입한다.
 
@@ -1403,32 +1468,61 @@ inline void BakeCurrentFrameIntoTexture(uint32_t StartIndex, const XMMATRIX* Fra
 드로우콜은 `ID3D11DeviceContext::DrawIndexedInstanced()`를 호출한다.
 
 ```cpp
-D3D11_INPUT_ELEMENT_DESC layout[] =
+static constexpr D3D11_INPUT_ELEMENT_DESC KInputElementDescriptionModel[] =
 {
-    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },  
-    { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },  
-    { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0},
-    
-    { "INSTANCEPOS", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1},
-    { "INSTANCECOLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 12, D3D11_INPUT_PER_INSTANCE_DATA, 1}
+    // Vertex buffer #0 (VertexModel)
+    { "POSITION"	, 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "TEXCOORD"	, 0, DXGI_FORMAT_R32G32_FLOAT	, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "NORMAL"		, 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "COLOR"		, 0, DXGI_FORMAT_R32G32B32A32_FLOAT	, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 }, // Diffuse
+    { "COLOR"		, 1, DXGI_FORMAT_R32G32B32A32_FLOAT	, 0, 48, D3D11_INPUT_PER_VERTEX_DATA, 0 }, // Specular
+
+    // Vertex buffer #1 (VertexRigging)
+    { "BLENDINDICES", 0, DXGI_FORMAT_R32G32B32A32_UINT	, 1, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }, // int BoneID[4]
+    { "BLENDWEIGHT"	, 0, DXGI_FORMAT_R32G32B32A32_FLOAT	, 1, 16, D3D11_INPUT_PER_VERTEX_DATA, 0 }, // float Weight[4]
+
+    // Vertex buffer #2 (Instance buffer)
+    { "INST_WORLD", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 2, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+    { "INST_WORLD", 1, DXGI_FORMAT_R32G32B32A32_FLOAT, 2, 16, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+    { "INST_WORLD", 2, DXGI_FORMAT_R32G32B32A32_FLOAT, 2, 32, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+    { "INST_WORLD", 3, DXGI_FORMAT_R32G32B32A32_FLOAT, 2, 48, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 };
+
+// VertexShader
+VS_OUTPUT_MODEL main(VS_INPUT_MODEL input)
+{
+	VS_OUTPUT_MODEL output;
+
+	float4 position_result = input.Position;
+
+    if (IsInstanced)
+    {
+        float4x4 instance_world = float4x4(
+            input.InstanceWorld0,
+            input.InstanceWorld1,
+            input.InstanceWorld2,
+            input.InstanceWorld3);
+
+        position_result = mul(position_result, instance_world);
+    }
+    
+    //...
+}
 ```
 
+VS에서 SV_InstanceID를 사용하면 셰이더에서 인스턴스의 ID를 제공해 준다.
 
+## 22. 지형(Terrain), 높이맵(Height map)
 
-## 27. GUI & 3D Gizmo
+## 23. 충돌(Collision)
+
+## 24. 미니맵 - 텍스처에 그리기(RTT)
+
+## 27. 에디터 만들기 - GUI & 3D Gizmo
 
 Dear ImGui
 
 In-code 3D Gizmo mesh 생성
-
-
-
-## 28. 지형(Terrain), 높이맵(Height map)
-
-## 29. 충돌
-
-## 미니맵 - 텍스처에 그리기(RTT)
 
 ## 지오메트리 셰이더 - Grass instancing (Geometry instancing)
 

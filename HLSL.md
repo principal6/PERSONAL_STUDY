@@ -352,10 +352,10 @@ uint4 main(VS_OUTPUT input) : SV_TARGET
 
 ## 내장 함수 (Intrinsic functions)
 
+ - 행렬 계산: mul(벡터, 행렬)
  - 텍스처 샘플링: Sample, SampleGrad, SampleCmp, SampleLevel, SampleBias
    - Sample(샘플러 이름, uv좌표);
  - 샘플링 없이 텍셀 읽으려면? Load() 활용 (예전 tex2Dlod 같음..)
-
 - 전체화면 사각형(스크린 쿼드, screen quad) 만들기
 
 ```cpp

@@ -270,6 +270,16 @@ static constexpr const int* const_ptr_value{ &value };
 // *const_ptr_value = 30; // 오류 발생! const 한정자가 붙은 포인터는 포인터가 가리키는 값도 변경할 수 없다!!
 ```
 
+## __declspec
+
+### __declspec(deprecated("~"))
+
+```cpp
+__declspec(deprecated("This function is deprecated. Use DrawInstancedBoundingVolume() instead.")) void DrawBoundingVolumesNoInstancing(SComponentRender& Component) noexcept;
+```
+
+
+
 ## 어셈블리
 
 ### 레지스터
