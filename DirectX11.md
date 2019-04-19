@@ -1512,13 +1512,25 @@ VS_OUTPUT_MODEL main(VS_INPUT_MODEL input)
 
 VS에서 SV_InstanceID를 사용하면 셰이더에서 인스턴스의 ID를 제공해 준다.
 
-## 22. 지형(Terrain), 높이맵(Height map)
+## 22. 절두체 컬링 (Frustum culling)
 
-## 23. 충돌(Collision)
+Bounding sphere 활용!!!
 
-## 24. 미니맵 - 텍스처에 그리기(RTT)
+Culling freeze 기능 넣어서 확인해보기???
 
-## 27. 에디터 만들기 - GUI & 3D Gizmo
+## 23. 지형(Terrain), 높이맵(Height map)
+
+### 22-1. 높이맵(Height map)
+
+### 22-2. 노멀 매핑 (Normal mapping)
+
+### 22-3. 쿼드 트리, LOD, 절두체 컬링(Bounding sphere?)
+
+## 24. 충돌(Collision)
+
+## 25. 미니맵 - 텍스처에 그리기(RTT)
+
+## 26. 에디터 만들기 - GUI & 3D Gizmo
 
 Dear ImGui
 
