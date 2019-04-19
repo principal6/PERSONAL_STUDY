@@ -34,7 +34,7 @@
 
 #### 0-2-1. 리소스 (Resource)
 
-`ID3D11Resource` = DirectX11에서 사용되는 모든 **리소스(Resource, 자원)**의 베이스 자료형. 리소스는 크게 **버퍼(Buffer)**거나 **텍스처(Texture)**일 수 있다.
+`ID3D11Resource` = DirectX11에서 사용되는 모든 **리소스(Resource, 자원)**의 베이스 자료형. 리소스는 크게 **버퍼(Buffer)**이거나 **텍스처(Texture)**일 수 있다.
 
 ##### 0-2-1-1. 버퍼 (Buffer)
 
@@ -55,7 +55,7 @@
     struct SConstantBufferData
     {
     	XMMATRIX WorldMatrix{};
-        XMMATRIX WVPMatrix{}; // WVP = World * View * Projection
+    	XMMATRIX WVPMatrix{}; // WVP = World * View * Projection
     }
     
     // 상수 버퍼 묘사
