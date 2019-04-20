@@ -21,7 +21,7 @@ $$
 #### 1-1-2. 내적 계산 #2 (삼각함수)
 
 $$
-\vec{a}\bull\vec{b}=|a||b|\cos\theta
+\vec{a}\bull\vec{b}=|\vec{a}||\vec{b}|\cos\theta
 $$
 
 두 벡터가 단위벡터 (**정규화된 벡터)**인 경우 내적은 곧 **두 벡터의 사이각**의 cos과 같다!
@@ -33,7 +33,7 @@ $$
 #### 1-1-3. 내적 계산 #3 (결론)
 
 $$
-\vec{a}\bull\vec{b}=a_xb_x+a_yb_y+a_zb_z=|a||b|\cos\theta
+\vec{a}\bull\vec{b}=a_xb_x+a_yb_y+a_zb_z=|\vec{a}||\vec{b}|\cos\theta
 $$
 
 
@@ -94,7 +94,7 @@ iii) i)과 ii)을 조합하면
 
 ​	$-2(a_bb_x+a_yb_y)=-2(|\vec{a}||\vec{b}|cos\theta)$
 
-​	$a_bb_x+a_yb_y=|\vec{a}||\vec{b}|cos\theta$
+​	$a_xb_x+a_yb_y=|\vec{a}||\vec{b}|cos\theta$
 
 
 
