@@ -24,7 +24,7 @@ $$
 \vec{a}\bull\vec{b}=|a||b|\cos\theta
 $$
 
-두 벡터가 단위벡터 (**정규화된 벡터)**인 경우 내적은 곧 두 벡터의 사이각의 cos과 같다!
+두 벡터가 단위벡터 (**정규화된 벡터)**인 경우 내적은 곧 **두 벡터의 사이각**의 cos과 같다!
 
 다시 한 번, 내적의 결과는 **벡터**가 아니라 **스칼라** 값이다!
 
@@ -41,6 +41,20 @@ $$
 #### 1-1-4. 내적 계산 증명
 
 * 피타고라스의 정리 삼각함수 버전: $\sin^2\theta+\cos^2\theta=1$
+
+  ![](Asset\trigonometry.png)
+
+  $sin^2\theta=\dfrac{b^2}{c^2}$
+
+  $cos^2\theta=\dfrac{a^2}{c^2}$
+
+  $sin^2\theta+cos^2\theta=\dfrac{b^2}{c^2}+\dfrac{a^2}{c^2}=\dfrac{b^2+a^2}{c^2}$
+
+  이때 피타고라스의 정리 $a^2+b^2=c^2$에 의해 $\dfrac{b^2+a^2}{c^2}=1$이다.
+
+  $\therefore sin^2\theta+cos^2\theta=1$
+
+* 내적 증명
 
 ![](Asset\vector_dot.png)
 
@@ -108,9 +122,9 @@ iii) i)과 ii)을 조합하면
 
 ## 평면의 방정식
 
-평면의 법선 벡터와 평면 위의 한 점을 알면 평면의 방정식을 구할 수 있다!
+평면의 법선 벡터와 평면 위의 한 점을 알면 평면의 방정식을 구할 수 있다.
 
-![math_plane](Asset\math_plane.png)
+![plane](Asset\plane.png)
 
 
 
