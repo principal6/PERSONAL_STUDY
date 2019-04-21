@@ -165,3 +165,108 @@ $r$을 구의 반지름이라고 할 때,
 ## 구 그리기 (Sphere coordinates)
 
 각도로 $\theta$ (theta)와 $\phi$ (phi)를 사용
+
+
+
+## 행렬
+
+### 투영 행렬
+
+#### 원근 투영 행렬
+
+어떤 동차 좌표 $P_4 = (x,y,z,1)$에 대해
+
+동차 원근 투영행렬 $M_{proj}$를 곱한 결과값을 $P_{proj4} = (x_{proj4}, y_{proj4},z_{proj4},w_{proj4})$라고 하자.
+
+이때 $P_{proj4}$를 3차원 좌표로 옮기면
+
+$P_{proj3}=(\dfrac{x_{proj4}}{w_{proj4}},\dfrac{y_{proj4}}{w_{proj4}},\dfrac{z_{proj4}}{w_{proj4}})$ 이다.
+
+이때, $w_{proj4}=z$라면
+
+$P_{proj3}=(\dfrac{x_{proj4}}{z},\dfrac{y_{proj4}}{z},\dfrac{z_{proj4}}{z})$이 된다.
+
+$x_{proj}=\dfrac{x}{z}$
+
+$y_{proj}=\dfrac{y}{z}$
+
+이고,
+
+이때, $w_{proj4}=z$로 만드는 $M_{proj}$은
+
+$M_{proj}=\begin{bmatrix}?&?&?&0 \\ ?&?&?&0 \\ ?&?&?&1 \\ ?&?&?&0\end{bmatrix}$ 이다.
+
+
+
+![yz](Asset\perspective_projection_yz.png)
+
+
+
+$y$의 값을 각 $\theta$와 $z$값의 관계로 정의하면 그래프에서 볼 수 있듯이
+
+$y=[-z\tan\dfrac{\theta}{2},z\tan\dfrac{\theta}{2}]$ 이다.
+
+여기서 우리는 $y_{proj3}=\dfrac{y_{proj4}}{z}$라고 정의했다.
+
+이때 $y_{proj4}=\alpha y$라고 하면 $y_{proj3}=\dfrac{\alpha y}{z}$이므로
+
+$y_{proj3}=[\dfrac{-\alpha z\tan\dfrac{\theta}{2}}{z},\dfrac{\alpha z\tan\dfrac{\theta}{2}}{z}]$이다.
+
+즉, $y_{proj3}=[-\alpha\tan\dfrac{\theta}{2},\alpha\tan\dfrac{\theta}{2}]$이다.
+
+이때 $y_{proj3}$의 범위를 $y_{proj3}=[-1,1]$로 만드려면 $\alpha=\dfrac{1}{tan\dfrac{\theta}{2}}$이다.
+
+
+
+$M_{proj}=\begin{bmatrix}?&0&?&0 \\ ?&\dfrac{1}{tan\dfrac{\theta}{2}}&?&0 \\ ?&0&?&1 \\ ?&0&?&0\end{bmatrix}$
+
+
+
+![xz](Asset\perspective_projection_xz.png)
+
+
+
+$M_{proj}=\begin{bmatrix}\dfrac{1}{tan\dfrac{\phi}{2}}&0&?&0 \\ 0&\dfrac{1}{tan\dfrac{\theta}{2}}&?&0 \\ 0&0&?&1 \\ 0&0&?&0\end{bmatrix}$
+
+
+
+이때 만약
+
+$M_{proj}=\begin{bmatrix}\dfrac{1}{tan\dfrac{\phi}{2}}&0&0&0 \\ 0&\dfrac{1}{tan\dfrac{\theta}{2}}&0&0 \\ 0&0&a&1 \\ 0&0&0&0\end{bmatrix}$라고 하면
+
+$z_{proj4}=az$이고, $z_{proj3}=\dfrac{z_{proj4}}{z}=\dfrac{az}{z}=a$이다.
+
+그러나 $z_{proj3}$는 $[0,1]$의 범위를 가져야 하므로 상수 $a$일 수 없다!
+
+
+
+그럼 이때
+
+$M_{proj}=\begin{bmatrix}\dfrac{1}{tan\dfrac{\phi}{2}}&0&0&0 \\ 0&\dfrac{1}{tan\dfrac{\theta}{2}}&0&0 \\ 0&0&a&1 \\ 0&0&b&0\end{bmatrix}$라고 하면
+
+$z_{proj4}=az+b$이고, $z_{proj3}=\dfrac{z_{proj4}}{z}=\dfrac{az+b}{z}$이다.
+
+이때, $z_{proj3}=[0,1]$로 만드는 값 $a$를 찾아야 한다.
+
+즉, $z=z_n$일 경우 $z_{proj3}=0$이 되고
+
+$z=z_f$일 경우 $z_{proj3}=1$이 되는 $a$를 찾으면 된다.
+
+즉, $\dfrac{az_n+b}{z_n}=0$이고, $\dfrac{az_f+b}{z_f}=1$인 $a$의 값을 구하면 된다!
+
+식을 정리하면
+
+* 식1: $az_n+b=0$
+
+* 식2: $az_f+b=z_f$
+
+과 같다.
+
+식2-식2는 $a(z_f-z_n)=z_f$ 이므로 $a=\dfrac{z_f}{z_f-z_n}$ 이다.
+
+이때 $b=-az_n$이므로 $b=\dfrac{-z_fz_n}{z_f-z_n}$ 이다.
+
+$\therefore M_{proj}=\begin{bmatrix}\dfrac{1}{tan\dfrac{\phi}{2}}&0&0&0 \\ 0&\dfrac{1}{tan\dfrac{\theta}{2}}&0&0 \\ 0&0&\dfrac{z_f}{z_f-z_n}&1 \\ 0&0&\dfrac{-z_fz_n}{z_f-z_n}&0\end{bmatrix}$
+
+이때 화면 비율$r=\dfrac{width}{height}$이 주어지면 $\phi=r\theta$ 이다???
+
