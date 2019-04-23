@@ -154,7 +154,7 @@ $\vec{a_{proj}}=\vec{a}\bull\hat{b}$
 
 특정 기저에서 벡터의 좌표를 구하기 위해서는 해당 벡터를 기저 벡터에 투영하면 된다.
 
-예를 들어, 
+예를 들어, $\vec{v_{xy}}$에 대해
 
 $v_x=\vec{v_{xy}}\bull\hat{x}=3\times1+5\times0=3$
 
@@ -168,11 +168,13 @@ $\vec{v_{xy}}=\vec{v}M_{proj}=(v_x,v_y)\begin{bmatrix}x_x&y_x\\ x_y& y_y\end{bma
 
 와 같다.
 
+
+
 이제 벡터 $\vec{v_{xy}}$를 기저 $ij$로 옮겨보자.
 
-먼저 $\vec{v_{xy}}-(2,2)$를 해서 원점을 새 기저로 옮긴다.
+먼저 $\vec{v_{xy}}-(2,2)$를 해서 원점을 새 기저의 원점으로 옮긴다.
 
-$\vec{v}=\vec{v_{xy}}-(2,2)=(1,3)$
+$\vec{v}\prime=\vec{v_{xy}}-(2,2)=(1,3)$
 
 이때
 
@@ -180,9 +182,15 @@ $\hat{i}=(\dfrac{2}{\sqrt{5}},\dfrac{1}{\sqrt{5}})=(0.8944,0.4472)$ 이고
 
 $\hat{j}=(-\dfrac{1}{\sqrt{5}},\dfrac{2}{\sqrt{5}})=(-0.4472,0.8944)$ 이다.
 
-따라서
+따라서 $\vec{v_{ij}}$에 대해
 
-$\vec{v_{ij}}=\vec{v}M_{proj}=(v_x,v_y)\begin{bmatrix}i_x&j_x\\ i_y& j_y\end{bmatrix}=(1,3)\begin{bmatrix}0.8944&-0.4472\\ 0.4472& 0.8944\end{bmatrix}$
+$v_i=\vec{v}\prime \bull \hat{i}$
+
+$v_j=\vec{v}\prime \bull \hat{j}$
+
+이고, 이를 행렬로 나타내면 다음과 같다.
+
+$\vec{v_{ij}}=\vec{v} \prime M_{proj}=(v\prime_x,v\prime_y)\begin{bmatrix}i_x&j_x\\ i_y& j_y\end{bmatrix}=(1,3)\begin{bmatrix}0.8944&-0.4472\\ 0.4472& 0.8944\end{bmatrix}$
 
 $=(1\times0.8944+3\times0.4472,1\times(-0.4472)+3\times0.8944)$
 
@@ -252,15 +260,17 @@ $r$을 구의 반지름이라고 할 때,
 
 ### 뷰 행렬
 
-기존 $x, y, z$ 기저에 있던 벡터를 새로운 기저 $i, j, k$로 옮기는 것!
+뷰 행렬이 하는 일: 기존 $x, y, z$ 기저에 있던 벡터를 새로운 기저 $i, j, k$로 옮기는 것!
 
 
 
-카메라의 위치(eye)  $\vec{e}=(e_x,e_y,e_z)$
+카메라의 위치(eye)  $\vec{e}=(e_x,e_y,e_z)$ (= 새로운 기저의 원점)
 
-바라보는 곳(lookat) $\vec{l}=(l_x,l_y,l_z)$
+바라보는 곳(lookat) $\vec{l}=(l_x,l_y,l_z)$ (= 새로운 기저의 $+z$방향)
 
-상향(up) 벡터를 $\vec{u}=(u_x,u_y,u_z)$ 라고 하면
+상향(up) 벡터를 $\vec{u}=(u_x,u_y,u_z)$ (= 새로운 기저의 $+y$방향)
+
+라고 하면
 
 기저 $\hat{k}=\dfrac{\vec{l}}{|\vec{l}|}$
 
@@ -268,15 +278,17 @@ $r$을 구의 반지름이라고 할 때,
 
 기저 $\hat{j}=\dfrac{\vec{j}}{|\vec{j}|}$ 이때 $\vec{j}=\vec{k} \times \vec{i}$
 
+이다.
 
 
-임의의 벡터 $\vec{v}$에 대해
 
-먼저 벡터를 이동해 새로운 기저의 원점에 맞춘다.
+이때, 임의의 벡터 $\vec{v}$에 대해
+
+먼저 벡터를 이동해 기존 원점을 새로운 기저의 원점에 맞춘다.
 
 $\vec{v}\prime=\vec{v}-\vec{e}$
 
-그 다음 새로운 기저에 맞춰 투영을 한다.
+그 다음 새로운 기저 벡터들에 투영을 한다.
 
 $\vec{v_{ijk}}=\vec{v}\prime\begin{bmatrix}i_x&j_x&k_x\\ i_y&j_y&k_y \\ i_z&j_z&k_z \end{bmatrix}$
 
@@ -287,6 +299,14 @@ $=(\vec{v}\prime \bull \hat{i},\vec{v}\prime \bull \hat{j},\vec{v}\prime \bull \
 $=((\vec{v}-\vec{e}) \bull \hat{i},(\vec{v}-\vec{e}) \bull \hat{j},(\vec{v}-\vec{e}) \bull \hat{k})$
 
 $=(\vec{v} \bull \hat{i}-\vec{e} \bull \hat{i},\vec{v} \bull \hat{j}-\vec{e} \bull \hat{j},\vec{v} \bull \hat{k}-\vec{e} \bull \hat{k})$
+
+
+
+이를 동차좌표계로 옮기면 $-\vec{e} \bull \hat{i}(or\ \hat{j}\ or\ \hat{k})$ 계산을 간단히 할 수 있다.
+
+$\vec{v_{ijkl}}=\vec{v_{xyzw}}\begin{bmatrix}i_x&j_x&k_x&0\\i_y&j_y&k_y&0\\i_z&j_z&k_z&0\\ -\vec{e}\bull\hat{i}&-\vec{e}\bull\hat{j}&-\vec{e}\bull\hat{k}&1\end{bmatrix}$
+
+
 
 $\therefore M_{view}=\begin{bmatrix}i_x&j_x&k_x&0\\i_y&j_y&k_y&0\\i_z&j_z&k_z&0\\ -\vec{e}\bull\hat{i}&-\vec{e}\bull\hat{j}&-\vec{e}\bull\hat{k}&1\end{bmatrix}$
 
