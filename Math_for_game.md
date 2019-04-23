@@ -250,13 +250,27 @@ $r$을 구의 반지름이라고 할 때,
 
 ### 월드 행렬
 
-#### 스케일링
-
-#### 로테이션
-
-#### 트랜슬레이션
+#### 이동 (Translation)
 
 동차좌표계의 필요성 등장!!!
+
+$T=\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ t_x & t_y & t_z & 1\end{bmatrix}$
+
+#### 크기 (Scaling)
+
+$S=\begin{bmatrix}s_x & 0 & 0 & 0 \\ 0 & s_y & 0 & 0 \\ 0 & 0 & s_z & 0 \\ 0 & 0 & 0 & 1\end{bmatrix}$
+
+#### 회전 (Rotation)
+
+점을 회전시키거나.. 기저를 반대 방향으로 회전시키거나!!
+
+(기저 회전이 더 쉬울 수 있음...)
+
+
+
+$R_x=\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & cos\theta & -sin\theta  & 0 \\ 0 & sin\theta  & cos\theta  & 0 \\ 0 & 0 & 0 & 1\end{bmatrix}$
+
+
 
 ### 뷰 행렬
 
@@ -288,7 +302,7 @@ $r$을 구의 반지름이라고 할 때,
 
 $\vec{v}\prime=\vec{v}-\vec{e}$
 
-그 다음 새로운 기저 벡터들에 투영을 한다.
+그 다음 벡터 $\vec{v}\prime$를 새로운 기저 벡터들($i, j, k$)에 투영한다.
 
 $\vec{v_{ijk}}=\vec{v}\prime\begin{bmatrix}i_x&j_x&k_x\\ i_y&j_y&k_y \\ i_z&j_z&k_z \end{bmatrix}$
 
@@ -410,5 +424,6 @@ $z=z_f$일 경우 $z_{proj3}=1$이 되는 $a$를 찾으면 된다.
 
 $\therefore M_{proj}=\begin{bmatrix}\dfrac{1}{tan\dfrac{\phi}{2}}&0&0&0 \\ 0&\dfrac{1}{tan\dfrac{\theta}{2}}&0&0 \\ 0&0&\dfrac{z_f}{z_f-z_n}&1 \\ 0&0&\dfrac{-z_fz_n}{z_f-z_n}&0\end{bmatrix}$
 
-이때 화면 비율$r=\dfrac{width}{height}$이 주어지면 $\phi=r\theta$ 이다???
+이때 화면 비율 $r=\dfrac{width}{height}$이 주어지면
 
+$M_{proj}=\begin{bmatrix}\dfrac{1}{r\times tan\dfrac{\theta}{2}}&0&0&0 \\ 0&\dfrac{1}{tan\dfrac{\theta}{2}}&0&0 \\ 0&0&\dfrac{z_f}{z_f-z_n}&1 \\ 0&0&\dfrac{-z_fz_n}{z_f-z_n}&0\end{bmatrix}$
