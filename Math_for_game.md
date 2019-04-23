@@ -2,9 +2,21 @@
 
 ## 1. 벡터
 
-### 1-1. Dot product 내적
+### 1-1. 벡터 표기법
 
-#### 1-1-1. 내적 계산 #1 (원소의 곱)
+벡터 $a$는 $\vec{a}$와 같이 표기하고,
+
+벡터의 길이는 $|\vec{a}|$으로 표기한다.
+
+이때, 벡터의 길이가 $1$인 벡터를 단위 벡터(Unit vector)라 하며
+
+$\hat{a}$와 같이 표기한다.
+
+
+
+### 1-2. Dot product 내적
+
+#### 1-2-1. 내적 계산 #1 (원소의 곱)
 
 벡터 $\vec{a}$가 $(a_x,\ a_y,\ a_z)$이고
 
@@ -18,7 +30,7 @@ $$
 
 
 
-#### 1-1-2. 내적 계산 #2 (삼각함수)
+#### 1-2-2. 내적 계산 #2 (삼각함수)
 
 $$
 \vec{a}\bull\vec{b}=|\vec{a}||\vec{b}|\cos\theta
@@ -30,7 +42,7 @@ $$
 
 
 
-#### 1-1-3. 내적 계산 #3 (결론)
+#### 1-2-3. 내적 계산 #3 (결론)
 
 $$
 \vec{a}\bull\vec{b}=a_xb_x+a_yb_y+a_zb_z=|\vec{a}||\vec{b}|\cos\theta
@@ -38,7 +50,7 @@ $$
 
 
 
-#### 1-1-4. 내적 계산 증명
+#### 1-2-4. 내적 계산 증명
 
 * 피타고라스의 정리 삼각함수 버전: $\sin^2\theta+\cos^2\theta=1$
 
@@ -98,7 +110,7 @@ iii) i)과 ii)을 조합하면
 
 
 
-#### 1-1-5. 알아두면 좋은 내적 연산
+#### 1-2-5. 알아두면 좋은 내적 연산
 
 * **결합법칙**  $\vec{a}\bull\vec{b}+\vec{a}\bull\vec{c}=\vec{a}\bull(\vec{b}+\vec{c})$
   * $\vec{a}\bull\vec{b}=a_xb_x+a_yb_y+a_zb_z$ 이고
@@ -116,7 +128,65 @@ iii) i)과 ii)을 조합하면
   * $\vec{a}\bull(\vec{a}+\vec{b})+\vec{b}\bull(\vec{a}+\vec{b})$
   * $(\vec{a}+\vec{b})\bull(\vec{a}+\vec{b})$
 
-### 1-2. Cross product 외적
+### 1-3. Cross product 외적
+
+### 1-4. Projection 투영(사영)
+
+![](Asset\vector_projection.png)
+
+$\vec{a}$를 $\vec{b}$에 투영하면
+
+$\vec{a_{proj}}=|\vec{a}|cos\theta=\dfrac{(\vec{a}\bull\vec{b})}{|\vec{b}|}$
+
+이때, $\vec{b}$가 단위벡터라면
+
+$\vec{a_{proj}}=\vec{a}\bull\hat{b}$
+
+
+
+### 1-5. Frame change 기저 변경
+
+![](Asset\frame_change.png)
+
+위 그래프에서
+
+벡터 $\vec{v_{xy}}$는 기저가 $\hat{x}=(1,0)$, $\hat{y}=(0,1)$일 때 $\vec{v_{xy}}=(3,5)$ 이다.
+
+특정 기저에서 벡터의 좌표를 구하기 위해서는 해당 벡터를 기저 벡터에 투영하면 된다.
+
+예를 들어, 
+
+$v_x=\vec{v_{xy}}\bull\hat{x}=3\times1+5\times0=3$
+
+$v_y=\vec{v_{xy}}\bull\hat{y}=3\times0+5\times1=5$
+
+이다.
+
+이 계산을 행렬로 나타내면
+
+$\vec{v_{xy}}=\vec{v}M_{proj}=(v_x,v_y)\begin{bmatrix}x_x&y_x\\ x_y& y_y\end{bmatrix}$
+
+와 같다.
+
+이제 벡터 $\vec{v_{xy}}$를 기저 $ij$로 옮겨보자.
+
+먼저 $\vec{v_{xy}}-(2,2)$를 해서 원점을 새 기저로 옮긴다.
+
+$\vec{v}=\vec{v_{xy}}-(2,2)=(1,3)$
+
+이때
+
+$\hat{i}=(\dfrac{2}{\sqrt{5}},\dfrac{1}{\sqrt{5}})=(0.8944,0.4472)$ 이고
+
+$\hat{j}=(-\dfrac{1}{\sqrt{5}},\dfrac{2}{\sqrt{5}})=(-0.4472,0.8944)$ 이다.
+
+따라서
+
+$\vec{v_{ij}}=\vec{v}M_{proj}=(v_x,v_y)\begin{bmatrix}i_x&j_x\\ i_y& j_y\end{bmatrix}=(1,3)\begin{bmatrix}0.8944&-0.4472\\ 0.4472& 0.8944\end{bmatrix}$
+
+$=(1\times0.8944+3\times0.4472,1\times(-0.4472)+3\times0.8944)$
+
+$=(0.8944+1.3416,-0.4472+2.6832)=(2.2236,2.2236)=(\sqrt{5},\sqrt{5})$
 
 
 
@@ -168,7 +238,59 @@ $r$을 구의 반지름이라고 할 때,
 
 
 
-## 행렬
+## 행렬 (왼손좌표계 기준)
+
+### 월드 행렬
+
+#### 스케일링
+
+#### 로테이션
+
+#### 트랜슬레이션
+
+동차좌표계의 필요성 등장!!!
+
+### 뷰 행렬
+
+기존 $x, y, z$ 기저에 있던 벡터를 새로운 기저 $i, j, k$로 옮기는 것!
+
+
+
+카메라의 위치(eye)  $\vec{e}=(e_x,e_y,e_z)$
+
+바라보는 곳(lookat) $\vec{l}=(l_x,l_y,l_z)$
+
+상향(up) 벡터를 $\vec{u}=(u_x,u_y,u_z)$ 라고 하면
+
+기저 $\hat{k}=\dfrac{\vec{l}}{|\vec{l}|}$
+
+기저 $\hat{i}=\dfrac{\vec{i}}{|\vec{i}|}$ 이때 $\vec{i}=\vec{u} \times \vec{k}$
+
+기저 $\hat{j}=\dfrac{\vec{j}}{|\vec{j}|}$ 이때 $\vec{j}=\vec{k} \times \vec{i}$
+
+
+
+임의의 벡터 $\vec{v}$에 대해
+
+먼저 벡터를 이동해 새로운 기저의 원점에 맞춘다.
+
+$\vec{v}\prime=\vec{v}-\vec{e}$
+
+그 다음 새로운 기저에 맞춰 투영을 한다.
+
+$\vec{v_{ijk}}=\vec{v}\prime\begin{bmatrix}i_x&j_x&k_x\\ i_y&j_y&k_y \\ i_z&j_z&k_z \end{bmatrix}$
+
+$=(v\prime_xi_x+v\prime_yi_y+v\prime_zi_z,v\prime_xj_x+v\prime_yj_y+v\prime_zj_z,v\prime_xk_x+v\prime_yk_y+v\prime_zk_z)$
+
+$=(\vec{v}\prime \bull \hat{i},\vec{v}\prime \bull \hat{j},\vec{v}\prime \bull \hat{k})$
+
+$=((\vec{v}-\vec{e}) \bull \hat{i},(\vec{v}-\vec{e}) \bull \hat{j},(\vec{v}-\vec{e}) \bull \hat{k})$
+
+$=(\vec{v} \bull \hat{i}-\vec{e} \bull \hat{i},\vec{v} \bull \hat{j}-\vec{e} \bull \hat{j},\vec{v} \bull \hat{k}-\vec{e} \bull \hat{k})$
+
+$\therefore M_{view}=\begin{bmatrix}i_x&j_x&k_x&0\\i_y&j_y&k_y&0\\i_z&j_z&k_z&0\\ -\vec{e}\bull\hat{i}&-\vec{e}\bull\hat{j}&-\vec{e}\bull\hat{k}&1\end{bmatrix}$
+
+
 
 ### 투영 행렬
 

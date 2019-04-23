@@ -1528,15 +1528,23 @@ Culling freeze 기능 넣어서 확인해보기???
 
 ### 22-3. 쿼드 트리, LOD, 절두체 컬링(Bounding sphere?)
 
+### 22-4. 지형 선택 및 변형
+
+원으로 선택, 클릭해서 높이 변경
+
 ## 24. 충돌(Collision)
 
 ## 25. 미니맵 - 텍스처에 그리기(RTT)
 
-## 26. 에디터 만들기 - GUI & 3D Gizmo
+## 26. 레벨 에디터 만들기 - GUI & 3D Gizmo
 
 Dear ImGui
 
 In-code 3D Gizmo mesh 생성
+
+Mini axis 화면 우측 상단에..
+
+Map 파일 구성요소: Terrain, Objects(Tree, building, ...) + ObjectList
 
 ## 지오메트리 셰이더 - Grass instancing (Geometry instancing)
 
