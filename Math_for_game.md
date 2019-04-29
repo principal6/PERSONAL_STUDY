@@ -144,13 +144,25 @@ iii) i)과 ii)을 조합하면
 
 ![](Asset\vector_projection.png)
 
-$\vec{a}$를 $\vec{b}$에 투영하면
+$\vec{a}$를 $\vec{b}$에 **투영한 벡터의 길이**는
 
-$\vec{a_{proj}}=|\vec{a}|cos\theta=\dfrac{(\vec{a}\bull\vec{b})}{|\vec{b}|}$
+$|\vec{a_{proj}}|=|\vec{a}|cos\theta=\dfrac{(\vec{a}\bull\vec{b})}{|\vec{b}|}$ 와 같다.
 
 이때, $\vec{b}$가 단위벡터라면
 
-$\vec{a_{proj}}=\vec{a}\bull\hat{b}$
+$|\vec{a_{proj}}|=(\vec{a}\bull\hat{b})$ 이다.
+
+
+
+$\vec{a}$를 $\vec{b}$에 투영한 벡터는
+
+$\vec{a_{proj}}=|\vec{a}|cos\theta\dfrac{\vec{b}}{|\vec{b}|}=\dfrac{(\vec{a}\bull\vec{b})\vec{b}}{|\vec{b}|^2}$ 와 같다.
+
+이때, $\vec{b}$가 단위벡터라면
+
+$\vec{a_{proj}}=(\vec{a}\bull\hat{b})\hat{b}$ 이다.
+
+
 
 
 
@@ -162,7 +174,7 @@ $\vec{a_{proj}}=\vec{a}\bull\hat{b}$
 
 벡터 $\vec{v_{xy}}$는 기저가 $\hat{x}=(1,0)$, $\hat{y}=(0,1)$일 때 $\vec{v_{xy}}=(3,5)$ 이다.
 
-특정 기저에서 벡터의 좌표를 구하기 위해서는 해당 벡터를 기저 벡터에 투영하면 된다.
+특정 기저에서 벡터의 좌표를 구하기 위해서는 해당 벡터를 기저 벡터에 투영하여 길이를 보면 된다.
 
 예를 들어, $\vec{v_{xy}}$에 대해
 
@@ -312,6 +324,12 @@ $R_x=\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & cos\theta & -sin\theta  & 0 \\ 0 & sin\
 
 
 
+##### 2-2-3-3. Pitch, Yaw, Roll
+
+![](Asset\pitch_yaw_roll.png)
+
+
+
 ### 뷰 행렬
 
 뷰 행렬이 하는 일: 기존 $x, y, z$ 기저에 있던 벡터를 새로운 기저 $i, j, k$로 옮기는 것!
@@ -368,7 +386,7 @@ $\therefore M_{view}=\begin{bmatrix}i_x&j_x&k_x&0\\i_y&j_y&k_y&0\\i_z&j_z&k_z&0\
 
 ### 투영 행렬
 
-#### 원근 투영 행렬
+#### 원근 투영 행렬(Perspective projection matrix)
 
 어떤 동차 좌표 $P_4 = (x,y,z,1)$에 대해
 
@@ -467,3 +485,48 @@ $\therefore M_{proj}=\begin{bmatrix}\dfrac{1}{tan\dfrac{\phi}{2}}&0&0&0 \\ 0&\df
 이때 화면 비율 $r=\dfrac{width}{height}$이 주어지면
 
 $M_{proj}=\begin{bmatrix}\dfrac{1}{r\times tan\dfrac{\theta}{2}}&0&0&0 \\ 0&\dfrac{1}{tan\dfrac{\theta}{2}}&0&0 \\ 0&0&\dfrac{z_f}{z_f-z_n}&1 \\ 0&0&\dfrac{-z_fz_n}{z_f-z_n}&0\end{bmatrix}$
+
+
+
+#### 직교 투영 행렬(Orthographic projection matrix)
+
+![](Asset\orthographic_projection_xz.png)
+
+![](Asset\orthographic_projection_yz.png)
+
+카메라의 입장에서 (즉, 뷰 변환 이후의 좌표들에 대해)
+
+화면의 가로 크기를 $width$, 세로 크기를 $height$라고 할 때,
+
+$x = [-\dfrac{width}{2},\dfrac{width}{2}]$이다.
+
+이를 $x=[-1.0, 1.0]$로 바꾸려면
+
+$x$값에 $\dfrac{2}{width}$를 곱하면 된다.
+
+마찬가지로
+
+$y = [-\dfrac{height}{2},\dfrac{height}{2}]$이고,
+
+이를 $y=[-1.0, 1.0]$로 바꾸려면
+
+$y$값에 $\dfrac{2}{height}$를 곱하면 된다.
+
+$M_{ortho}=\begin{bmatrix}\dfrac{2}{width}&0&0&0 \\ 0&\dfrac{2}{height}&0&0 \\ 0&0&?&0 \\ 0&0&?&1\end{bmatrix}$
+
+이 때,
+
+$z=[zn,zf]$이므로
+
+$\dfrac{z-zn}{zf-zn}$을 계산하면 $z=[0, 1]$이 된다.
+
+$\therefore M_{ortho}=\begin{bmatrix}\dfrac{2}{width}&0&0&0 \\ 0&\dfrac{2}{height}&0&0 \\ 0&0&\dfrac{1}{zf-zn}&0 \\ 0&0&-\dfrac{zn}{zf-zn}&1\end{bmatrix}$
+
+
+
+#### 
+
+
+
+
+

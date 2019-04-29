@@ -1518,17 +1518,21 @@ VS에서 SV_InstanceID를 사용하면 셰이더에서 인스턴스의 ID를 제
 
 Bounding sphere 활용!!!
 
-Culling freeze 기능 넣어서 확인해보기???
+절두체 8개 정점 구하기
+
+평면의 법선 구하기
+
+엔티티 위치를 평면 법선에 투영하여 내적 -> 값이 0보다 크면 평면 바깥에 위치함!
 
 ## 23. 지형(Terrain), 높이맵(Height map)
 
-### 22-1. 높이맵(Height map)
+### 23-1. 높이맵(Height map)
 
-### 22-2. 노멀 매핑 (Normal mapping)
+### 23-2. 노멀 매핑 (Normal mapping)
 
-### 22-3. 쿼드 트리, LOD, 절두체 컬링(Bounding sphere?)
+### 23-3. 쿼드 트리, LOD
 
-### 22-4. 지형 선택 및 변형
+### 23-4. 지형 선택 및 변형
 
 원으로 선택, 클릭해서 높이 변경
 
