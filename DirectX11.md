@@ -531,14 +531,14 @@ void GetTextureData(WSTRING FileName) noexcept
     tex_desc.Usage = D3D11_USAGE_STAGING;
     tex_desc.BindFlags = 0;
 
-    // 데이터 접근용 텍스처 생성
+    // 데이터 접근(읽기)용 텍스처 생성
     ID3D11Texture2D* tex_access{};
     PtrDevice->CreateTexture2D(&tex_desc, nullptr, &tex_access);
 
-    // 불러온 텍스처를 데이터 접근용 텍스처에 복사
+    // 불러온 텍스처 데이터를 읽기용 텍스처에 복사
     PtrDeviceContext->CopyResource(tex_access, tex);
 
-    // 데이터 접근용 텍스처 매핑
+    // 읽기용 텍스처 매핑
     D3D11_MAPPED_SUBRESOURCE mapped_subresource{};
     if (SUCCEEDED(PtrDeviceContext->Map(tex_access, 0, D3D11_MAP_READ, 0, &mapped_subresource)))
     {
@@ -561,6 +561,64 @@ void GetTextureData(WSTRING FileName) noexcept
     delete[] data;
     data = nullptr;
 }
+```
+
+
+
+```cpp
+auto w_fn = StringToWstring(m_BaseDirectory + KAssetDirectory + FileName);
+
+STextureData texture_data{};
+auto& texture = texture_data.Texture;
+auto& texture_srv = texture_data.TextureSRV;
+auto& texture_size = texture_data.TextureSize;
+
+// Load WIC texture from file.
+CreateWICTextureFromFile(m_pDX->GetDevice(), w_fn.c_str(), (ID3D11Resource**)&texture, &texture_srv, 0);
+
+if (texture)
+{
+    // Get texture description from loaded texture.
+    D3D11_TEXTURE2D_DESC loaded_texture_desc{};
+    texture->GetDesc(&loaded_texture_desc);
+    texture_size.Width = loaded_texture_desc.Width;
+    texture_size.Height = loaded_texture_desc.Height;
+
+    // Modify texture description
+    loaded_texture_desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+    loaded_texture_desc.Usage = D3D11_USAGE_STAGING;
+    loaded_texture_desc.BindFlags = 0;
+
+    // Create texture for reading
+    ID3D11Texture2D* readable_texture{};
+    m_pDX->GetDevice()->CreateTexture2D(&loaded_texture_desc, nullptr, &readable_texture);
+
+    // Copy texture data
+    m_pDX->GetDeviceContext()->CopyResource(readable_texture, texture);
+
+    if (loaded_texture_desc.Format == DXGI_FORMAT_B8G8R8A8_UNORM)
+    {
+        uint32_t color_count = 4; // B, G, R, A
+        uint32_t array_size = color_count * texture_size.Width * texture_size.Height;
+        unsigned char* data = new unsigned char[array_size];
+
+        // Map the readable texture
+        D3D11_MAPPED_SUBRESOURCE mapped_subresource{};
+        if (SUCCEEDED(m_pDX->GetDeviceContext()->Map(readable_texture, 0, D3D11_MAP_READ, 0, &mapped_subresource)))
+        {
+            memcpy(data, mapped_subresource.pData, sizeof(unsigned char) * array_size);
+            m_pDX->GetDeviceContext()->Unmap(readable_texture, 0);
+        }
+
+        JW_DELETE_ARRAY(data);
+    }
+
+    JW_RELEASE(readable_texture);
+}
+
+// Release all resources
+JW_RELEASE(texture);
+JW_RELEASE(texture_srv);
 ```
 
 
@@ -1530,11 +1588,21 @@ Bounding sphere 활용!!!
 
 ### 23-2. 노멀 매핑 (Normal mapping)
 
-### 23-3. 쿼드 트리, LOD
+normal space -> tangent space 변환 필요
 
-### 23-4. 지형 선택 및 변형
+TBN matrix (tangent, bitangent, normal를 기저로 하는 기저 변환 행렬)
+
+tangent: u방향 벡터
+
+bitangent: v 방향 벡터
+
+### 23-3. 지형 선택 및 변형
 
 원으로 선택, 클릭해서 높이 변경
+
+### 23-4. 쿼드 트리, LOD
+
+쿼드 트리를 활용해 지형 탐색 속도를 향상시킨다.
 
 ## 24. 충돌(Collision)
 
@@ -1561,8 +1629,6 @@ Map 파일 구성요소: Terrain, Objects(Tree, building, ...) + ObjectList
  -> downscale -> bright-pass filter(luminance threshold) -> blur -> additive blending
 
 ## 디퍼드 셰이딩 - Pointlight, spotlight, ...
-
-frustum culling!!
 
 빌보딩
 

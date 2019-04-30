@@ -1,6 +1,6 @@
 # C++ tutorial
 
-## Chapter 01. Base
+## 1. Base
 
 메모리 조작
 
@@ -269,6 +269,47 @@ static constexpr int* ptr_value{ &value };
 static constexpr const int* const_ptr_value{ &value };
 // *const_ptr_value = 30; // 오류 발생! const 한정자가 붙은 포인터는 포인터가 가리키는 값도 변경할 수 없다!!
 ```
+
+## std::string
+
+std::stoi(), std:stof() ...
+
+## std::pair
+
+```cpp
+std::pair<int, char> test{std::make_pair(3, 'a')};
+std::pair<int, char> test{3, 'a'}; // C++ 11 이후
+
+// 개별 값은 first, second로 접근
+```
+
+
+
+## std::tuple
+
+std::get<0>(~)
+
+std::get<1>(~)
+
+float a, b, c;
+
+std::tie<a, b> = foo(3, 5); 로 리턴하는 것도 가능
+
+ **=> 이제 auto [a, b] = foo(3, 5); 로 가능 (C++ 17)**
+
+std::tie<a, std::ignore, c>로 무시도 가능
+
+
+
+```cpp
+// 좌변값 반환을 위해서는 std::tie 사용 필요
+std::tuple<float&, float&> foo(float& a, float& b)
+{
+	return std::tie(a, b);
+}
+```
+
+
 
 ## __declspec
 
