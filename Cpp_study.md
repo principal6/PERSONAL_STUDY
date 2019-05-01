@@ -260,6 +260,31 @@ int TwoXPlusOne(int input)
 
 32비트에선 4바이트, 64비트에선 8바이트!!
 
+### Static
+
+```cpp
+int* p{};
+
+void foo()
+{
+    // Static variable's lifetime differs from its scope!
+	static int x{ 4 };
+	p = &x;
+}
+
+int main()
+{
+	foo();
+
+    // This is legal!
+	*p = 5;
+	
+	return 0;
+}
+```
+
+
+
 ## constexpr, const
 
 ```cpp
