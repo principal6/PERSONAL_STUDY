@@ -1602,10 +1602,6 @@ bitangent: v 방향 벡터
 
 밉맵 활용하기
 
-### 23-4. 지형 선택 및 변형
-
-원으로 선택, 클릭해서 높이 변경
-
 
 
 ## 24. 충돌(Collision)
@@ -1613,6 +1609,8 @@ bitangent: v 방향 벡터
 ## 25. 미니맵 - 텍스처에 그리기(RTT)
 
 ## 26. 빌보딩 (Billboard)
+
+원거리 렌더링
 
 ## 27. 레벨 에디터 만들기 - GUI & 3D Gizmo
 
@@ -1623,6 +1621,8 @@ In-code 3D Gizmo mesh 생성
 Mini axis 화면 우측 상단에..
 
 Map 파일 구성요소: Terrain, Objects(Tree, building, ...) + ObjectList
+
+지형 선택 및 변형 (구로 선택)
 
 ## 지오메트리 셰이더 - Grass instancing (Geometry instancing)
 
@@ -1636,8 +1636,6 @@ Map 파일 구성요소: Terrain, Objects(Tree, building, ...) + ObjectList
 
 ## 디퍼드 셰이딩 - Pointlight, spotlight, ...
 
-빌보딩
 
-LOD??? 나중에 하자... ★
 
-범프 매핑 / 테셀레이션
+## 테셀레이션

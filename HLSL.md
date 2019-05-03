@@ -20,7 +20,9 @@ row_major matrix MyMatrix;
     - SV_Position (VS 출력, PS 입력) (과거 VPos, Position)
     - SV_Target (PS 출력) (과거 Color)
     - SV_IsFrontFace (과거 VFace)
-    - SV_InstanceID
+    - SV_InstanceID (VS, 인스턴스의 ID)
+    - SV_VertexID (VS, 정점의 ID)
+    - SV_Depth
 
 ## 자료형
 
@@ -517,7 +519,7 @@ struct HullInputType
 HullInputType ColorVertexShader(VertexInputType input)
 {
     HullInputType output;
-In the vertex shader we pass the vertices and color data through to the hull shader. Since the vertices will be increasing with the tessellation we now do the transforming and such in the domain shader. The vertex shader's purpose is now just for vertex animation and passing data into the hull shader.
+	// In the vertex shader we pass the vertices and color data through to the hull shader. Since the vertices will be increasing with the tessellation we now do the transforming and such in the domain shader. The vertex shader's purpose is now just for vertex animation and passing data into the hull shader.
 
     // Pass the vertex position into the hull shader.
     output.position = input.position;
