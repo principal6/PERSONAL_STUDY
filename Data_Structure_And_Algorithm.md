@@ -80,9 +80,11 @@ non-contiguous memory blocks
 
 용도: 파싱(괄호 검사), 되돌리기(Undo & Redo - Ctrl+Z)
 
-용어: top, overflow, underflow
+용어: top(peek), overflow, underflow
 
-size(), capacity(), display() & empty(), push(), pop(), is_full(), is_empty(), top()
+size(), capacity(), display() & push(), pop(), **top()**, **empty()==is_empty()**
+
+top() -> 참조형!(non-const, const)★★
 
 
 
@@ -90,9 +92,9 @@ size(), capacity(), display() & empty(), push(), pop(), is_full(), is_empty(), t
 
 용도: 이벤트 처리(버퍼 활용)
 
-용어: (전단)front, (후단)rear
+용어: (전단)front, (후단, rear)back
 
-size(), capacity(), display() & empty(), push(), pop(), is_full(), is_empty(), back()
+size(), capacity(), display() & push(), pop(), **front()**, **back()**, empty()
 
 #### 1) 선형 큐
 
@@ -106,7 +108,7 @@ size(), capacity(), display() & empty(), push(), pop(), is_full(), is_empty(), b
 
 deque = **d**ouble-**e**nded-**que**ue
 
-size(), capacity(), display() & empty(), push_front(), pop_front(), push_back(), pop_back(), is_full(), is_empty(), front(), back()
+size(), capacity(), display() & push_front(), pop_front(), push_back(), pop_back(), **clear()**, front(), back(), empty()
 
 
 
