@@ -54,6 +54,36 @@ TextureCUBE
    - [loop] for
    - while
 
+## 인풋 레이아웃
+
+```cpp
+static constexpr D3D11_INPUT_ELEMENT_DESC KInputElementDescriptionModel[] =
+{
+    // Vertex buffer #0 (VertexModel)
+    { "POSITION"	, 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "TEXCOORD"	, 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "NORMAL"		, 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "TANGENT"		, 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 48, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "BITANGENT"	, 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 64, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "DIFFUSE"		, 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 80, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "SPECULAR"	, 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 96, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+}
+
+struct VS_INPUT_MODEL
+{
+	// Model data
+	float4 Position : POSITION;
+	float2 TexCoord : TEXCOORD; // @important! (This is possible.)
+	float4 Normal	: NORMAL;
+	float4 Tangent	: TANGENT;
+	float4 Bitangent: BITANGENT;
+	float4 Diffuse	: DIFFUSE;
+	float4 Specular	: SPECULAR;
+}
+```
+
+
+
 ## 버퍼
 
 ### 상수 버퍼
@@ -347,6 +377,33 @@ uint4 main(VS_OUTPUT input) : SV_TARGET
 	uint4 final_color = TextureWihtoutSampling[input.Position.xy];
 	//uint4 final_color = TextureWihtoutSampling[uint2(50, 100)];
 	return final_color;
+}
+```
+
+
+
+## 기하 셰이더 (Geometry shader)
+
+```cpp
+#include "BaseHeader.hlsl"
+
+// 3D모델의 각 정점의 위치와 노멀로 법선을 그리기 위한 LineStrip을 만들어낸다.
+[maxvertexcount(2)]
+void main(point VS_OUTPUT_MODEL input[1], inout LineStream<VS_OUTPUT_MODEL> output)
+{
+	VS_OUTPUT_MODEL element;
+
+	// Line start
+	element = input[0];
+	element.Diffuse = float4(1, 0, 0, 1);
+	output.Append(element);
+
+	// Line end
+	element.Position += input[0].WVPNormal;
+	element.Diffuse = float4(0, 0, 1, 1);
+	output.Append(element);
+
+	output.RestartStrip();
 }
 ```
 
