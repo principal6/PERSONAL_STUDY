@@ -2,31 +2,31 @@
 
 ## 1. 벡터
 
-### 1-1. 벡터 표기법, 길이
+### 1). 벡터 표기법, 길이
 
-#### 1-1-1. 벡터 표기법
+#### (1). 벡터 표기법
 
 벡터 $a$는 $\vec{a}$와 같이 표기하고,
 
-벡터의 길이는 $|\vec{a}|$으로 표기한다.
+벡터의 길이는 $\|\vec{a}\|$으로 표기한다.
 
-벡터 $\vec{a}=(x,y)$의 길이는 $|\vec{a}|=\sqrt{x^2+y^2}$이다.
+벡터 $\vec{a}=(x,y)$의 길이는 $\|\vec{a}\|=\sqrt{x^2+y^2}$이다.
 
-(삼차원 벡터 $\vec{b}=(x,y,z)$의 경우 그 길이는 $|\vec{b}|=\sqrt{x^2+y^2+z^2}$ 이다.)
+(삼차원 벡터 $\vec{b}=(x,y,z)$의 경우 그 길이는 $\|\vec{b}\|=\sqrt{x^2+y^2+z^2}$ 이다.)
 
 
 
-#### 1-1-2. 벡터의 정규화
+#### (2). 벡터의 정규화
 
 벡터의 길이가 $1$인 벡터를 단위 벡터(Unit vector)라 하며 $\hat{a}$와 같이 표기한다.
 
 길이가 1이 아닌 벡터를 단위 벡터로 바꾸는 일을 정규화(Normalization)라고 한다.
 
-벡터 $\vec{a}=(a_x,a_y,a_z)$를 정규화하면 $\hat{a}=\dfrac{\vec{a}}{|\vec{a}|}$
+벡터 $\vec{a}=(a_x,a_y,a_z)$를 정규화하면 $\hat{a}=\dfrac{\vec{a}}{\|\vec{a}\|}$
 
-### 1-2. Dot product 내적
+### 2). Dot product 내적
 
-#### 1-2-1. 내적 계산 #1 (원소의 곱)
+#### (1). 내적 계산 #1 (원소의 곱)
 
 벡터 $\vec{a}$가 $(a_x,\ a_y,\ a_z)$이고
 
@@ -40,10 +40,10 @@ $$
 
 
 
-#### 1-2-2. 내적 계산 #2 (삼각함수)
+#### (2). 내적 계산 #2 (삼각함수)
 
 $$
-\vec{a}\bull\vec{b}=|\vec{a}||\vec{b}|\cos\theta
+\vec{a}\bull\vec{b}=\|\vec{a}\| \|\vec{b}\| \cos\theta
 $$
 
 두 벡터가 단위벡터 (**정규화된 벡터)**인 경우 내적은 곧 **두 벡터의 사이각**의 cos과 같다!
@@ -52,15 +52,15 @@ $$
 
 
 
-#### 1-2-3. 내적 계산 #3 (결론)
+#### (3). 내적 계산 #3 (결론)
 
 $$
-\vec{a}\bull\vec{b}=a_xb_x+a_yb_y+a_zb_z=|\vec{a}||\vec{b}|\cos\theta
+\vec{a}\bull\vec{b}=a_xb_x+a_yb_y+a_zb_z=\|\vec{a}\| \|\vec{b}\| \cos\theta
 $$
 
 
 
-#### 1-2-4. 내적 계산 증명
+#### (4). 내적 계산 증명
 
 * 피타고라스의 정리 삼각함수 버전: $\sin^2\theta+\cos^2\theta=1$
 
@@ -86,42 +86,45 @@ $\vec{b}=(b_x,b_y)$
 
 $\vec{c}=\vec{a}-\vec{b}=(a_x-b_x,a_y-b_y)$
 
-i) 피타고라스의 정리에 의해 $|\vec{c}|^2=h^2+i^2$이다.
+i) 피타고라스의 정리에 의해 $\|\vec{c}\|^2=h^2+i^2$이다.
 
-​	이때, $h=|\vec{b}|sin\theta$이고  $i=|\vec{a}|-|\vec{b}|cos\theta$이므로
+​	이때, $h=\|\vec{b}\|sin\theta$이고  $i=\|\vec{a}\|-\|\vec{b}\|cos\theta$이므로
 
-​	$|\vec{c}|^2=(|\vec{b}|sin\theta)^2 + (|\vec{a}|-|\vec{b}|cos\theta)^2$이다.
+​	$\|\vec{c}\|^2=(\|\vec{b}\|sin\theta)^2 + (\|\vec{a}\|-\|\vec{b}\|cos\theta)^2$이다.
 
-​	$|\vec{c}|^2=|\vec{b}|^2sin^2\theta + |\vec{a}|^2-2|\vec{a}||\vec{b}|cos\theta+|\vec{b}|^2cos^2\theta$
+​	$\|\vec{c}\|^2=\|\vec{b}\|^2sin^2\theta + \|\vec{a}\|^2-2\|\vec{a}\| \|\vec{b}\| cos\theta+\|\vec{b}\|^2cos^2\theta$
 
-​	$|\vec{c}|^2=|\vec{a}|^2-2|\vec{a}||\vec{b}|cos\theta+|\vec{b}|^2(cos^2\theta+sin^2\theta)$
+​	$\|\vec{c}\|^2=\|\vec{a}\|^2-2\|\vec{a}\| \|\vec{b}\| cos\theta+\|\vec{b}\|^2(cos^2\theta+sin^2\theta)$
 
 ​	이때, $cos^2\theta+sin^2\theta=1$이므로
 
-​	$|\vec{c}|^2=|\vec{a}|^2-2|\vec{a}||\vec{b}|cos\theta+|\vec{b}|^2$
+​	$\|\vec{c}\|^2=\|\vec{a}\|^2-2\|\vec{a}\| \|\vec{b}\| cos\theta+\|\vec{b}\|^2$
 
-ii) 피타고라스 정리에 의해 $|\vec{c}|^2=(a_x-b_x)^2+(a_y-b_y)^2$이고,
+ii) 피타고라스 정리에 의해 $\|\vec{c}\|^2=(a_x-b_x)^2+(a_y-b_y)^2$이고,
 
-​	따라서 $|\vec{c}|^2=a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2$이다.
+​	따라서 $\|\vec{c}\|^2=a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2$이다.
 
 iii) i)과 ii)을 조합하면
 
-​	$a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=|\vec{a}|^2-2|\vec{a}||\vec{b}|cos\theta+|\vec{b}|^2$
+​	$a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=\|\vec{a}\|^2-2\|\vec{a}\| \|\vec{b}\| cos\theta+\|\vec{b}\|^2$
 
-​	이때, $|\vec{a}|^2=a_x^2+a_y^2$이며, $|\vec{b}|^2=b_x^2+b_y^2$ 이므로
+​	이때, $\|\vec{a}\|^2=a_x^2+a_y^2$이며, $\|\vec{b}\|^2=b_x^2+b_y^2$ 이므로
 
-​	$a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=a_x^2+a_y^2-2|\vec{a}||\vec{b}|cos\theta+b_x^2+b_y^2$
+​	$a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=a_x^2+a_y^2-2\|\vec{a}\| \|\vec{b}\| cos\theta+b_x^2+b_y^2$
 
-​	$-2a_bb_x-2a_yb_y=-2|\vec{a}||\vec{b}|cos\theta$
+​	$-2a_bb_x-2a_yb_y=-2\|\vec{a}\| \|\vec{b}\| cos\theta$
 
-​	$-2(a_bb_x+a_yb_y)=-2(|\vec{a}||\vec{b}|cos\theta)$
+​	$-2(a_bb_x+a_yb_y)=-2(\|\vec{a}\| \|\vec{b}\| cos\theta)$
 
-​	$a_xb_x+a_yb_y=|\vec{a}||\vec{b}|cos\theta$
+​	$a_xb_x+a_yb_y=\|\vec{a}\| \|\vec{b}\|cos\theta$
 
 
 
-#### 1-2-5. 알아두면 좋은 내적 연산
+#### (5). 알아두면 좋은 내적 연산
 
+* 제곱
+  * $\vec{a}\bull\vec{a}=a_x^2+a_y^2+a_z^2$이므로, $\vec{a}$의 **길이(=원점에서 벡터 끝부분 까지의 거리)의 제곱**과 같다!★
+  * $\vec{a}\bull\vec{a}=\|\vec{a}\|^2$
 * **결합법칙**  $\vec{a}\bull\vec{b}+\vec{a}\bull\vec{c}=\vec{a}\bull(\vec{b}+\vec{c})$
   * $\vec{a}\bull\vec{b}=a_xb_x+a_yb_y+a_zb_z$ 이고
   * $\vec{a}\bull\vec{c}=a_xc_x+a_yc_y+a_zc_z$ 이므로
@@ -138,25 +141,25 @@ iii) i)과 ii)을 조합하면
   * $\vec{a}\bull(\vec{a}+\vec{b})+\vec{b}\bull(\vec{a}+\vec{b})$
   * $(\vec{a}+\vec{b})\bull(\vec{a}+\vec{b})$
 
-### 1-3. Cross product 외적
+### 3). Cross product 외적
 
-### 1-4. Projection 투영(사영)
+### 4). Projection 투영(사영)
 
 ![](Asset\vector_projection.png)
 
 $\vec{a}$를 $\vec{b}$에 **투영한 벡터의 길이**는
 
-$|\vec{a_{proj}}|=|\vec{a}|cos\theta=\dfrac{(\vec{a}\bull\vec{b})}{|\vec{b}|}$ 와 같다.
+$\|\vec{a_{proj}}\|=\|\vec{a}\|cos\theta=\dfrac{(\vec{a}\bull\vec{b})}{\|\vec{b}\|}$와 같다.
 
 이때, $\vec{b}$가 단위벡터라면
 
-$|\vec{a_{proj}}|=(\vec{a}\bull\hat{b})$ 이다.
+$\|\vec{a_{proj}}\|=(\vec{a}\bull\hat{b})$ 이다.
 
 
 
 $\vec{a}$를 $\vec{b}$에 투영한 벡터는
 
-$\vec{a_{proj}}=|\vec{a}|cos\theta\dfrac{\vec{b}}{|\vec{b}|}=\dfrac{(\vec{a}\bull\vec{b})\vec{b}}{|\vec{b}|^2}$ 와 같다.
+$\vec{a_{proj}}=\|\vec{a}\|cos\theta\dfrac{\vec{b}}{\|\vec{b}\|}=\dfrac{(\vec{a}\bull\vec{b})\vec{b}}{\|\vec{b}\|^2}$ 와 같다.
 
 이때, $\vec{b}$가 단위벡터라면
 
@@ -166,7 +169,7 @@ $\vec{a_{proj}}=(\vec{a}\bull\hat{b})\hat{b}$ 이다.
 
 
 
-### 1-5. Frame change 기저 변경
+### 5). Frame change 기저 변환
 
 ![](Asset\frame_change.png)
 
@@ -238,6 +241,22 @@ $=(0.8944+1.3416,-0.4472+2.6832)=(2.2236,2.2236)=(\sqrt{5},\sqrt{5})$
 -> $a(x-x_0)+b(y-y_0)+c(z-z_0)=0\\$
 -> $ax+by+cz+d=0\\$  (단, $d=-ax_0-by_0-cz_0$)
 
+### 점과 평면의 거리
+
+평면 $ax+by+cz+d=0$의 법선 벡터 $\hat{n}=(a, b, c)$가 정규화된 벡터이고, 평면 위의 점 $V$를 알 때,
+
+공간 상 임의의 점 $P$에 대해
+
+점 $P$와 평면 사이의 거리는
+
+$(P-V)\bull\vec{n}=P\bull\vec{n}-V\bull\vec{n}$ 이다.
+
+이때, 평면의 정의에 따라 $d=-V\bull\vec{n}$이므로
+
+$P\bull\vec{n}+d$이다.
+
+(단, $P$가 평면의 앞쪽에 있을 때 거리는 양수이고, 평면의 뒤쪽에 있을 때 거리는 음수이다.)
+
 ## 반직선의 방정식
 
 반직선 $H$의 시작점을 $O$라 하고
@@ -247,6 +266,30 @@ $=(0.8944+1.3416,-0.4472+2.6832)=(2.2236,2.2236)=(\sqrt{5},\sqrt{5})$
 반직선의 식은
 
 $H=O+tD$와 같다. (단, $t>0$)
+
+## 직선과 점의 거리
+
+두 점 $P_0$과 $P_1$을 지나는 직선 $L$ 이 있을 때
+
+공간 상 임의의 점 $Q$에 대해 점 $Q$와  직선 $L$ 사이의 거리는 다음과 같다.
+
+먼저, 직선 $L$와 평행한 벡터 $\vec{v}=P_1-P_0$ 라고 하자.
+
+직선 위의 점 $P_0$에서 점 $Q$로 향하는 벡터 $\vec{q}=Q-P_0$라고 하자.
+
+$\vec{q}$를 $\vec{v}$에 투영한 벡터 $\vec{q}\prime=\dfrac{(\vec{q}\bull\vec{v})\vec{v}}{\|\vec{v}\|^2}$ 이다.
+
+이 때, 직선 $L$에서 점 $Q$로 직각으로 향하는 벡터를 $\vec{d}$라고 하면
+
+$\vec{q}=\vec{d}+\vec{q}\prime$ 이므로
+
+$\vec{d}=\vec{q}-\vec{q}\prime$
+
+=> $\vec{d}=\vec{q}-\dfrac{(\vec{q}\bull\vec{v})\vec{v}}{\|\vec{v}\|^2}$ 
+
+이때, 거리는 $\|\vec{d}\|=\sqrt{\vec{d} \bull \vec{d}}$ 이다.
+
+거리의 제곱은 $\|\vec{d}\|^2=\vec{d} \bull \vec{d}$ 이다.
 
 
 
@@ -270,11 +313,11 @@ $r$을 구의 반지름이라고 할 때,
 
 ## 2. 행렬 (왼손좌표계 기준)
 
-### 2-1. 행렬의 계산
+### 1). 행렬의 계산
 
-#### 2-1-1. 행렬의 덧셈
+#### (1). 행렬의 덧셈
 
-#### 2-1-2. 행렬과 벡터의 곱셈
+#### (2). 행렬과 벡터의 곱셈
 
 왼손 좌표계에서는 행 벡터와 행렬을 곱하며, 그 계산은 다음과 같다.
 
@@ -292,21 +335,21 @@ $z\prime = xm_{02} + ym_{12} + zm_{22}$
 
 
 
-### 2-2. 월드 행렬
+### 2). 월드 행렬
 
-#### 2-2-1. 이동 (Translation)
+#### (1). 이동 (Translation)
 
 동차좌표계의 필요성 등장!!!
 
 $T=\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ t_x & t_y & t_z & 1\end{bmatrix}$
 
-#### 2-2-2. 크기 (Scaling)
+#### (2). 크기 (Scaling)
 
 $S=\begin{bmatrix}s_x & 0 & 0 & 0 \\ 0 & s_y & 0 & 0 \\ 0 & 0 & s_z & 0 \\ 0 & 0 & 0 & 1\end{bmatrix}$
 
-#### 2-2-3. 회전 (Rotation)
+#### (3). 회전 (Rotation)
 
-##### 2-2-3-1. 벡터 회전
+##### i). 벡터 회전
 
 
 
@@ -314,7 +357,7 @@ $S=\begin{bmatrix}s_x & 0 & 0 & 0 \\ 0 & s_y & 0 & 0 \\ 0 & 0 & s_z & 0 \\ 0 & 0
 
 
 
-##### 2-2-3-2. 기저 회전
+##### ii). 기저 회전
 
 (기저 회전이 더 쉬울 수 있음...)
 
@@ -324,13 +367,13 @@ $R_x=\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & cos\theta & -sin\theta  & 0 \\ 0 & sin\
 
 
 
-##### 2-2-3-3. Pitch, Yaw, Roll
+##### iii). Pitch, Yaw, Roll
 
 ![](Asset\pitch_yaw_roll.png)
 
 
 
-### 뷰 행렬
+### 3). 뷰 행렬
 
 뷰 행렬이 하는 일: 기존 $x, y, z$ 기저에 있던 벡터를 새로운 기저 $i, j, k$로 옮기는 것!
 
@@ -384,9 +427,9 @@ $\therefore M_{view}=\begin{bmatrix}i_x&j_x&k_x&0\\i_y&j_y&k_y&0\\i_z&j_z&k_z&0\
 
 
 
-### 투영 행렬
+### 4). 투영 행렬
 
-#### 원근 투영 행렬(Perspective projection matrix)
+#### (1). 원근 투영 행렬(Perspective projection matrix)
 
 어떤 동차 좌표 $P_4 = (x,y,z,1)$에 대해
 
@@ -488,7 +531,7 @@ $M_{proj}=\begin{bmatrix}\dfrac{1}{r\times tan\dfrac{\theta}{2}}&0&0&0 \\ 0&\dfr
 
 
 
-#### 직교 투영 행렬(Orthographic projection matrix)
+#### (2). 직교 투영 행렬(Orthographic projection matrix)
 
 ![](Asset\orthographic_projection_xz.png)
 
@@ -529,4 +572,162 @@ $\therefore M_{ortho}=\begin{bmatrix}\dfrac{2}{width}&0&0&0 \\ 0&\dfrac{2}{heigh
 
 
 
+
+## 3. 충돌 Collision
+
+### 1) 움직이는 단위 구 - 삼각형 충돌 Unit sphere- triangle collision
+
+처음 구의 중심의 위치: $C$
+
+구의 속도: $\vec{v}$
+
+구가 움직이는 시간: $t$
+
+$t$시간 동안 이동한 구의 (중심의) 위치: $C\prime=C+t\vec{v}$ 
+
+공간 상의 임의의 점 $P$에 대해 점 $P$와 평면 사이의 거리 $Dist(P)=P\bull\vec{n}+d$
+
+
+
+#### (1) 구와 평면의 충돌
+
+구가 평면의 앞면과 충돌하는 시점: $t_0$
+
+구가 평면의 뒷면과 충돌하는 시점: $t_1$
+
+$t = [t_0, t_1]$의 범위에서 구는 평면과 충돌한다.
+
+$t_0$시점에서 (단위) 구와 평면 사이의 거리는 $Dist(C+t_0\vec{v}) = +1.0$ 이어야 한다.
+
+즉, $(C+t_0\vec{v})\bull\vec{n}+d=1$이어야 한다.
+
+$(C+t_0\vec{v})\bull\vec{n}+d=1$
+
+=> $C\bull\vec{n}+t_0(\vec{v}\bull\vec{n})=1 - d$
+
+=> $t_0(\vec{v}\bull\vec{n})=1 - d - C\bull\vec{n}$
+
+=> $t_0=\dfrac{1 - d - C\bull\vec{n}}{\vec{v}\bull\vec{n}}=\dfrac{1 - (C\bull\vec{n} + d)}{\vec{v}\bull\vec{n}}$
+
+$\therefore t_0=\dfrac{1 - Dist(C)}{\vec{v}\bull\vec{n}}$
+
+마찬가지로, $t_1$시점에 구와 평면 사이의 거리는 $Dist(C+t_1\vec{v})=-1.0$ 이어야 한다.
+
+$\therefore t_1 = \dfrac{-1-Dist(C)}{\vec{v}\bull\vec{n}}$
+
+다만, $\vec{v}\bull\vec{n}=0$인 경우 위 공식을 사용할 수 없다! (분모가 0이 되므로)
+
+즉, 속도가 법선 벡터와 정확히 직각을 이루는 경우, 다시 말해 구의 진행 방향이 평면과 평행할 경우 위 공식을 사용할 수 없다.
+
+이 경우 구와 평면의 거리가 $Dist(C+t\vec{v})<=|1.0|$인 경우에만 구가 평면과 충돌할 수 있으며, 삼각형의 내부가 아닌 꼭짓점이나 변과만 충돌할 수 있다.
+
+#### (2) 구가 삼각형의 내부와 충돌
+
+구가 삼각형의 앞면과 충돌하는 지점 $P_c=C-\vec{n}+t_0\vec{v}$
+
+#### (3) 구가 삼각형의 옆(꼭짓점, 변)과 충돌 (sweep test)
+
+##### i). 구가 삼각형의 꼭짓점(vertex)과 충돌
+
+꼭짓점 $P$에 대해 $P$과 $C\prime$사이의 거리가 1일 때 충돌.
+
+$\sqrt{(C\prime-P)\bull(C\prime-P)}=1$
+
+=> $(C\prime-P)\bull(C\prime-P)=1^2$
+
+=> $(C\prime-P)\bull(C\prime-P)-1=0$
+
+=> $C\prime \bull C\prime - 2C\prime \bull P + P \bull P -1=0$
+
+=> $(C+t\vec{v}) \bull (C+t\vec{v}) - 2(C+t\vec{v}) \bull P + P \bull P -1=0$
+
+이때, 벡터 연산에서 $(\vec{a}+\vec{b}) \bull (\vec{a}+\vec{b})=\vec{a} \bull \vec{a} + 2\vec{a} \bull \vec{b} + \vec{b} \bull \vec{b}$ 이므로
+
+=> $C \bull C + 2C\bull t \vec{v} +t\vec{v} \bull t\vec{v} - 2(C+t\vec{v}) \bull P + P \bull P -1=0$
+
+=> $C \bull C + 2C\bull t \vec{v} +t\vec{v} \bull t\vec{v} - 2C \bull P-2t\vec{v} \bull P + P \bull P -1=0$
+
+식을 $t$에 대해 정리하면
+
+=> $C \bull C + (2C\bull \vec{v})t +(\vec{v} \bull \vec{v}) t^2 - 2C \bull P-(2\vec{v} \bull P) t + P \bull P -1=0$
+
+=> $(\vec{v} \bull \vec{v}) t^2 + (2C\bull \vec{v})t - (2\vec{v} \bull P) t + C \bull C - 2C \bull P + P \bull P -1=0$
+
+=> $(\vec{v} \bull \vec{v}) t^2 + (2C\bull \vec{v}-2P \bull \vec{v})t + C \bull C - 2C \bull P + P \bull P -1=0$
+
+=> $(\vec{v} \bull \vec{v}) t^2 + \{2(C-P) \bull \vec{v}\}t + C \bull C - 2C \bull P + P \bull P -1=0$
+
+=> $(\vec{v} \bull \vec{v}) t^2 + \{2(C-P) \bull \vec{v}\}t + (C - P) \bull (C - P) -1=0$
+
+$t$에 대한 이차 방정식 $at^2 + bt + c =0$에 대해
+
+$a=\vec{v}\bull\vec{v}$
+
+$b=2(C-P)\bull\vec{v}$
+
+$c=(C-P)\bull(C-P)-1$
+
+이때 $t=\dfrac{-b \pm \sqrt{b^2-4ac} }{2a}$ 이다.
+
+우리는 두 개의 근 중 작은 근 $t_s=\dfrac{-b - \sqrt{b^2-4ac} }{2a}$ 을 사용한다(== 처음으로 구가 정점과 충돌하는 시점)
+
+##### ii). 구가 삼각형의 변(edge)과 충돌
+
+변을 꼭지점 $P_1-P_0$로 정의하면
+
+변과 $C\prime$ 사이의 거리가 1일 때 충돌.
+
+변을 $\vec{e}=P_1-P_0$ 이라 하고
+
+정규화된 변을 $\hat{e}=\dfrac{\vec{e}}{\|\vec{e}\|}$ 라고 하자.
+
+$P_0$에서 $C\prime$으로 향하는 벡터를
+
+ $\vec{c}\prime=C\prime-P_0=\vec{c}+t\vec{v}$이라 하자.
+
+$\vec{c}=C-P_0$
+
+이때 거리의 제곱은 $\|\vec{d}\|^2=\{\vec{c}\prime-(\vec{c}\prime\bull\hat{e})\hat{e}\} \bull \{\vec{c}\prime-(\vec{c}\prime\bull\hat{e})\hat{e}\}$ 이다.
+
+=> $1=\vec{c}\prime \bull \vec{c}\prime - 2 \vec{c}\prime \bull (\vec{c}\prime \bull \hat{e})\hat{e}+(\vec{c}\prime\bull\hat{e})\hat{e} \bull (\vec{c}\prime\bull\hat{e})\hat{e}$
+
+=> $1=\vec{c}\prime \bull \vec{c}\prime - 2 (\vec{c}\prime \bull \hat{e}) \vec{c}\prime \bull \hat{e}+(\vec{c}\prime\bull\hat{e})(\vec{c}\prime\bull\hat{e})\hat{e} \bull \hat{e}$
+
+이때, $\hat{e}$는 정규화된 벡터이므로 $\hat{e}\bull\hat{e}=1$이다.
+
+=> $1=\vec{c}\prime \bull \vec{c}\prime - 2 (\vec{c}\prime \bull \hat{e}) (\vec{c}\prime \bull \hat{e})+(\vec{c}\prime\bull\hat{e})(\vec{c}\prime\bull\hat{e})$
+
+=> $1=\vec{c}\prime \bull \vec{c}\prime - (\vec{c}\prime \bull \hat{e}) (\vec{c}\prime \bull \hat{e})$
+
+=> $1=(\vec{c}+t\vec{v}) \bull (\vec{c}+t\vec{v}) - \{(\vec{c}+t\vec{v}) \bull \hat{e}\} \{(\vec{c}+t\vec{v}) \bull \hat{e}\}$
+
+=> $1=\vec{c} \bull \vec{c}+2(\vec{c} \bull \vec{v})t + (\vec{v} \bull \vec{v})t^2 - \{(\vec{c}+t\vec{v}) \bull \hat{e}\} \{(\vec{c}+t\vec{v}) \bull \hat{e}\}$
+
+=> $1=\vec{c} \bull \vec{c}+2(\vec{c} \bull \vec{v})t + (\vec{v} \bull \vec{v})t^2 - (\vec{c} \bull \hat{e} + \vec{v} \bull \hat{e}t)(\vec{c} \bull \hat{e} + \vec{v} \bull \hat{e}t)$
+
+=> $1=\vec{c} \bull \vec{c}+2(\vec{c} \bull \vec{v})t + (\vec{v} \bull \vec{v})t^2 - \{ (\vec{c} \bull \hat{e})(\vec{c} \bull \hat{e}) + 2(\vec{c} \bull \hat{e})( \vec{v} \bull \hat{e})t + (\vec{v} \bull \hat{e})(\vec{v} \bull \hat{e})t^2 \}$
+
+=> $1=\vec{c} \bull \vec{c}+2(\vec{c} \bull \vec{v})t + (\vec{v} \bull \vec{v})t^2 - (\vec{c} \bull \hat{e})(\vec{c} \bull \hat{e}) - 2(\vec{c} \bull \hat{e})( \vec{v} \bull \hat{e})t - (\vec{v} \bull \hat{e})(\vec{v} \bull \hat{e})t^2$
+
+=> $1= (\vec{v} \bull \vec{v})t^2 - (\vec{v} \bull \hat{e})(\vec{v} \bull \hat{e})t^2 + 2(\vec{c} \bull \vec{v})t - 2(\vec{c} \bull \hat{e})( \vec{v} \bull \hat{e})t + \vec{c} \bull \vec{c} - (\vec{c} \bull \hat{e})(\vec{c} \bull \hat{e}) $
+
+=> $1= \{ (\vec{v} \bull \vec{v}) - (\vec{v} \bull \hat{e})(\vec{v} \bull \hat{e}) \}t^2 + 2\{ (\vec{c} \bull \vec{v}) - (\vec{c} \bull \hat{e})( \vec{v} \bull \hat{e}) \}t + \vec{c} \bull \vec{c} - (\vec{c} \bull \hat{e})(\vec{c} \bull \hat{e}) $
+
+=> $0= \{ (\vec{v} \bull \vec{v}) - (\vec{v} \bull \hat{e})(\vec{v} \bull \hat{e}) \}t^2 + 2\{ (\vec{c} \bull \vec{v}) - (\vec{c} \bull \hat{e})( \vec{v} \bull \hat{e}) \}t + \vec{c} \bull \vec{c} - (\vec{c} \bull \hat{e})(\vec{c} \bull \hat{e}) - 1$
+
+=> $0= ( \vec{v} \bull \vec{v} - \dfrac{(\vec{v} \bull \vec{e})(\vec{v} \bull \vec{e})}{\| \vec{e} \|^2} ) t^2 + 2 ( \vec{c} \bull \vec{v} - \dfrac{(\vec{c} \bull \vec{e})( \vec{v} \bull \vec{e})}{\| \vec{e} \|^2} ) t + \vec{c} \bull \vec{c} - \dfrac{\vec{c} \bull \vec{e})(\vec{c} \bull \vec{e})}{\| \vec{e} \|^2} - 1$
+
+이때 양변에 $\| \vec{e} \|^2$를 곱하면
+
+=> $0= \{ \| \vec{e} \|^2(\vec{v} \bull \vec{v}) - (\vec{v} \bull \vec{e})(\vec{v} \bull \vec{e}) \} t^2 + 2 \{ \| \vec{e} \|^2 (\vec{c} \bull \vec{v}) - (\vec{c} \bull \vec{e})( \vec{v} \bull \vec{e}) \} t - (\vec{c} \bull \vec{e})(\vec{c} \bull \vec{e}) + \| \vec{e} \|^2(\vec{c} \bull \vec{c} - 1)$
+
+$t$에 대한 이차 방정식 $at^2+bt+c=0$에서
+
+$a = \| \vec{e} \|^2(\vec{v} \bull \vec{v}) - (\vec{v} \bull \vec{e})(\vec{v} \bull \vec{e})$
+
+$b = 2 \| \vec{e} \|^2(\vec{c} \bull \vec{v}) - 2(\vec{c} \bull \vec{e})( \vec{v} \bull \vec{e})$
+
+$c= - (\vec{c} \bull \vec{e})(\vec{c} \bull \vec{e}) + \| \vec{e} \|^2(\vec{c} \bull \vec{c} - 1)$
+
+$t=\dfrac{-b \pm \sqrt{b^2-4ac} }{2a}$ 이다.
 

@@ -250,6 +250,8 @@ cbuffer cbDirLight : register( b0 )
 ### 전체화면 사각형 그리기 (Screen quad)
 
 ```cpp
+// #####
+// In CPP
 // 인풋 레이아웃, 정점 버퍼 관련 값은 전부 0과 nullptr로 설정
 pd3dImmediateContext->IASetInputLayout( nullptr );
 pd3dImmediateContext->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
@@ -260,11 +262,13 @@ pd3dImmediateContext->IASetPrimitiveTopology( D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTR
 
 // 사각형을 그릴 땐 총 4개의 정점이 필요 (인덱스 버퍼가 없어도 된다!)
 pd3dImmediateContext->Draw(4, 0);
-```
 
-```cpp
+// #####
+// In VS
 static const float2 QuadArray[4] =
 {
+    // 화면 x = [-1.0, 1.0]
+    // 화면 y = [-1.0, 1.0]
     // 정점 셰이더에서 x, y 좌표는 픽셀 셰이더에서는 픽셀 좌표로 변경되어 있다!
 	float2(-1.0, +1.0), // 왼쪽 위
 	float2(+1.0, +1.0), // 오른쪽 위
@@ -282,6 +286,33 @@ float4 main(uint VertexID : SV_VertexID) : SV_POSITION
 
 
 
+### 부분 화면 사각형 그리기
+
+```cpp
+static float2 arrOffsets[4] = {
+	float2(-0.75, -0.75),
+	float2(-0.25, -0.75),
+	float2(0.25, -0.75),
+	float2(0.75, -0.75),
+};
+
+static const float2 arrBasePos[4] = {
+	float2(1.0, 1.0),
+	float2(1.0, -1.0),
+	float2(-1.0, 1.0),
+	float2(-1.0, -1.0),
+};
+
+static const float2 arrUV[4] = {
+	float2(1.0, 0.0),
+	float2(1.0, 1.0),
+	float2(0.0, 0.0),
+	float2(0.0, 1.0),
+};
+```
+
+
+
 ## 픽셀셰이더 (Pixel shader = Fragment shader)
 
 **x 범위: -1 ~ +1**
@@ -290,6 +321,18 @@ float4 main(uint VertexID : SV_VertexID) : SV_POSITION
  - **시스템 값(SV_)**
  - SV_POSITION은 반드시 float4여야 한다! (x,y 만 쓸 거면 w값은 1로 할 것!)
  - SV_TARGET은 float4일수도, int4, uint4일수도 ...
+
+### 멀티 텍스처, 텍스처 배열
+
+```cpp
+// In PS
+Texture2D TextureArray[2];
+
+// In CPP
+PtrDeviceContext->PSSetShaderResources(0, 2, TextureArray);
+```
+
+
 
 ### 샘플링으로 텍셀 읽기
 

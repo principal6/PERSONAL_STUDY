@@ -1596,21 +1596,36 @@ tangent: u방향 벡터
 
 bitangent: v 방향 벡터
 
+기타 텍스처 효과: 스페큘러 매핑, 알파 매핑, 라이트맵
+
 ### 23-3. 쿼드 트리, LOD
 
 쿼드 트리를 활용해 지형 탐색 속도를 향상시킨다.
 
 밉맵 활용하기
 
+## 24. 반사Reflection 물, 거울
 
+굴절은 Refraction
+
+RTT 텍스처에 그리기
 
 ## 24. 충돌(Collision)
+
+구-삼각형 충돌
+
+- 구-평면
+- 원-삼각형
+
+## 윈도우 크기 변경 & 전체화면, 해상도 변경
 
 ## 25. 미니맵 - 텍스처에 그리기(RTT)
 
 ## 26. 빌보딩 (Billboard)
 
-원거리 렌더링
+원거리 지오메트리 렌더링
+
+## 음향 효과 (Direct Sound? FMOD?)
 
 ## 27. 레벨 에디터 만들기 - GUI & 3D Gizmo
 
@@ -1627,6 +1642,14 @@ Map 파일 구성요소: Terrain, Objects(Tree, building, ...) + ObjectList
 ## 지오메트리 셰이더 - Grass instancing (Geometry instancing)
 
 ## 후처리 효과(Post-processing effects)
+
+### fog
+
+linear blending 
+
+fog_factor = [0, 1]  <= 0 if (distance <= d_min), 1 if (distance >= d_max)
+
+final_color = final_color * (1-fog_factor) + flog color * fog_factor
 
 ### blur
 
