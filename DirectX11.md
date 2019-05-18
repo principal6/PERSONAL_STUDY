@@ -686,6 +686,84 @@ void CreateGameWindow(SPositionInt Position, SSizeInt Size, const STRING& Title)
 }
 ```
 
+
+
+#### 현재 해상도 얻어오기
+
+```cpp
+// 화면 해상도
+auto resolution_w = GetSystemMetrics(SM_CXSCREEN);
+auto resolution_h = GetSystemMetrics(SM_CYSCREEN);
+```
+
+
+
+#### 해상도 모드 목록 얻어오기
+
+```cpp
+IDXGIOutput* output{};
+UINT mode_count{};
+DXGI_MODE_DESC* mode_list{};
+
+PtrSwapChain->GetContainingOutput(&output);
+
+output->GetDisplayModeList(DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM, 0, &mode_count, nullptr);
+
+mode_list = new DXGI_MODE_DESC[mode_count];
+output->GetDisplayModeList(DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM, 0, &mode_count, mode_list);
+
+SAFE_DELETE_ARRAY(mode_list);
+SAFE_RELEASE(output);
+```
+
+해상도 변경하기 (전체화면일 경우. 창모드면 윈도우 크기 변경)
+
+```cpp
+DXGI_MODE_DESC mode{};
+mode.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+mode.Width = 640;
+mode.Height = 480;
+mode.RefreshRate.Denominator = 60;
+mode.RefreshRate.Numerator = 1;
+mode.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+mode.Scaling = DXGI_MODE_SCALING_CENTERED;
+
+// 창모드일 경우, 아래 코드를 실행하면 윈도우 크기도 자동으로 같이 변경된다!!★
+m_SwapChain->ResizeTarget(&mode);
+
+m_SwapChain->ResizeBuffers(0, mode.Width, mode.Height, mode.Format, DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH);
+```
+
+
+
+```cpp
+IDXGISwapChain::GetFullscreenState();
+
+IDXGISwapChain::ResizeTarget(); // (전체화면)해상도 변경 & (창모드)윈도우 크기 변경
+
+IDXGISwapChain::SetFullscreenState();
+
+IDXGISwapChain::ResizeTarget(); // 전체화면으로 바꾸면 다시 호출 With zeroed RefreshRate for DXGI to calculate it automatically (recommended by MSDN)
+
+// @warning:
+// You must destroy ID3D11RenderTargetView before calling ResizeBuffers()
+IDXGISwapChain::ResizeBuffers(); 
+
+MakeWindowAssociation(hWnd, DXGI_MWA_NO_ALT_ENTER); // ALT+ENTER 전체화면 금지
+```
+
+
+
+#### 모니터 대수 구하기
+
+```cpp
+GetSystemMetrics(SM_CMONITORS); // 모니터 개수
+EnumDisplayMonitors(nullptr, nullptr, MonitorEnumProc, (LPARAM)&m_monitor_list);
+MonitorEnumProc() 안에서 GetMonitorInfo(~); (Proc는 모니터 대수만큼 호출됨)
+```
+
+
+
 ### 0-4. 게임의 메인 루프
 
 ```cpp
@@ -1616,8 +1694,6 @@ RTT 텍스처에 그리기
 
 - 구-평면
 - 원-삼각형
-
-## 윈도우 크기 변경 & 전체화면, 해상도 변경
 
 ## 25. 미니맵 - 텍스처에 그리기(RTT)
 

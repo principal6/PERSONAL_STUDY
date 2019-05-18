@@ -169,7 +169,7 @@ $\vec{a_{proj}}=(\vec{a}\bull\hat{b})\hat{b}$ 이다.
 
 
 
-### 5). Frame change 기저 변환
+### 5). Frame change 기저 변환 ★
 
 ![](Asset\frame_change.png)
 
@@ -177,7 +177,7 @@ $\vec{a_{proj}}=(\vec{a}\bull\hat{b})\hat{b}$ 이다.
 
 벡터 $\vec{v_{xy}}$는 기저가 $\hat{x}=(1,0)$, $\hat{y}=(0,1)$일 때 $\vec{v_{xy}}=(3,5)$ 이다.
 
-특정 기저에서 벡터의 좌표를 구하기 위해서는 해당 벡터를 기저 벡터에 투영하여 길이를 보면 된다.
+특정 기저에서 벡터의 좌표를 구하기 위해서는 **해당 벡터를 기저 벡터에 투영**하여 **길이**를 보면 된다.
 
 예를 들어, $\vec{v_{xy}}$에 대해
 
@@ -203,7 +203,7 @@ $\vec{v}\prime=\vec{v_{xy}}-(2,2)=(1,3)$
 
 이때
 
-$\hat{i}=(\dfrac{2}{\sqrt{5}},\dfrac{1}{\sqrt{5}})=(0.8944,0.4472)$ 이고
+$\hat{i}=\dfrac{(2,1)}{\|\vec{i}\|}=(\dfrac{2}{\sqrt{5}},\dfrac{1}{\sqrt{5}})=(0.8944,0.4472)$ 이고
 
 $\hat{j}=(-\dfrac{1}{\sqrt{5}},\dfrac{2}{\sqrt{5}})=(-0.4472,0.8944)$ 이다.
 
@@ -353,17 +353,45 @@ $S=\begin{bmatrix}s_x & 0 & 0 & 0 \\ 0 & s_y & 0 & 0 \\ 0 & 0 & s_z & 0 \\ 0 & 0
 
 
 
-점을 회전시키거나.. 기저를 반대 방향으로 회전시키거나!!
-
-
-
 ##### ii). 기저 회전
 
-(기저 회전이 더 쉬울 수 있음...)
+![](Asset\rotation_frame.png)
+
+위의 두 그래프에서 볼 수 있듯이
+
+벡터 $\vec{v}$를 시계 반대방향으로 각 $\theta$만큼 회전시키는 것(좌측 그래프)은 각 기저를 시계 방향으로 각 $\theta$만큼 회전시키는 것(우측 그래프)과 같다.
+
+![](Asset\rotation_frame_detail.png)
+
+원래 기저가 $\hat{x}=(1, 0)$이고, $\hat{y}=(0, 1)$일 때,
+
+각 기저를 시계 방향으로 $\theta$만큼 회전하면
+
+$\hat{x}\prime=(cos\theta, -sin\theta)$
+
+$\hat{y}\prime = (sin\theta, cos\theta)$
+
+와 같다.
+
+이때 (기저 회전에 의해) 회전된 벡터 $\vec{v}\prime$은
+
+새로운 각 기저에 투영한 길이로 구성된 벡터다.
+
+$\vec{v}\prime = (\vec{v}\bull\hat{x}\prime, \vec{v}\bull\hat{y}\prime)$
+
+​     $=(cos\theta v_x-sin\theta v_y, sin\theta v_x, cos\theta v_y)$
+
+이때 이 회전 변환을 $R$이라 하면
+
+$R=\begin{bmatrix} cos\theta & -sin\theta \\ sin\theta & cos\theta \end{bmatrix}$ 이다.
+
+
 
 
 
 $R_x=\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & cos\theta & -sin\theta  & 0 \\ 0 & sin\theta  & cos\theta  & 0 \\ 0 & 0 & 0 & 1\end{bmatrix}$
+
+
 
 
 
@@ -573,7 +601,39 @@ $\therefore M_{ortho}=\begin{bmatrix}\dfrac{2}{width}&0&0&0 \\ 0&\dfrac{2}{heigh
 
 
 
-## 3. 충돌 Collision
+## 사원수 (Quaternion)
+
+### 정의
+
+사원수 $\hat{q}=(\vec{q_v}, q_w) = iq_x+jq_y+kq_z+q_w$이다.
+
+이때, $i=j=k=\sqrt{-1}$이고,
+
+$i^2=j^2=k^2=-1$ 이고,  $ij=-ji=k$, $jk=-kj=i$, $ki=-ik=j$ 이다.
+
+### 곱셈
+
+$\hat{q}\hat{r}=(iq_x+jq_y+kq_z+q_w)(ir_x+jr_y+kr_z+r_w)$
+
+=> $-q_xr_x +kq_xr_y -jq_xr_z +iq_xr_w \\ -kq_yr_x -q_yr_y +iq_yr_z+jq_yr_w \\ +jq_zr_x -iq_zr_y -q_zr_z +kq_zr_w \\ +iq_wr_x +jq_wr_y +kq_wr_z +q_wr_w$
+
+=> $i(q_yr_z -q_zr_y +r_wq_x +q_wr_x) \\ + j(q_zr_x -q_xr_z +r_wq_y +q_wr_y) \\ +k(q_xr_y -q_yr_x +r_wq_z +q_wr_z) \\ q_wr_w -q_xr_x -q_yr_y -q_zr_z$
+
+이때 $\vec{q_v} \times \vec{r_v}=(q_yr_z-q_zr_y, q_zr_x-q_xr_z, q_xr_y-q_yr_x)$ 이고
+
+$r_w\vec{q_v}=(r_wq_x, r_wq_y, r_wq_z)$, $q_w\vec{r_v}=(q_wr_x, q_wr_y, q_wr_z)$ 이므로
+
+$\therefore \hat{q}\hat{r}=(\vec{q_v} \times \vec{r_v} + r_w\vec{q_v} +q_w\vec{r_v}, q_wr_w -\vec{q_v} \bull \vec{r_v})$
+
+### 덧셈
+
+### Conjugate
+
+$\hat{q}^*= (\vec{q_v},q_w)^* = (-\vec{q_v},q_w)$
+
+
+
+## 3. 교차 (Intersection) & 충돌 (Collision)
 
 ### 1) 움직이는 단위 구 - 삼각형 충돌 Unit sphere- triangle collision
 
@@ -673,7 +733,7 @@ $c=(C-P)\bull(C-P)-1$
 
 ##### ii). 구가 삼각형의 변(edge)과 충돌
 
-변을 꼭지점 $P_1-P_0$로 정의하면
+삼각형의 한 변을 꼭지점 $P_1-P_0$로 정의하면
 
 변과 $C\prime$ 사이의 거리가 1일 때 충돌.
 
@@ -731,3 +791,18 @@ $c= - (\vec{c} \bull \vec{e})(\vec{c} \bull \vec{e}) + \| \vec{e} \|^2(\vec{c} \
 
 $t=\dfrac{-b \pm \sqrt{b^2-4ac} }{2a}$ 이다.
 
+### 2) 단위 구 - 타원체 충돌 (Unit sphere - ellipsoid collision) ??
+
+다른 모든 타원체를 기준이 되는 타원체의 공간으로 변환한다
+
+기준이 되는 타원체는 이제 단위 구이다.
+
+타원체의 중심 $E$ 에서 구의 중심 $C$ 으로 반직선을 그린다.
+
+이때 반직선과 타원체의 경계가 교차하는 지점을 $I$라고 하면
+
+$I$와 $C$사이의 거리가 1 이하이면 충돌이다 ??
+
+$I$를 찾기 위해서는 먼저 타원체의 공간에서 반직선과의 교차점을 찾아 월드 공간으로 변환한다
+
+![](Asset\sphere_ellipsoid_collision.png)

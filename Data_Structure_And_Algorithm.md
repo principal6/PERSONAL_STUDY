@@ -198,6 +198,12 @@ size(), capacity(), display() & push_front(), pop_front(), push_back(), pop_back
 
 ### 4. 해시 (Hash) - 해시 테이블
 
+해시 테이블 (테이블 크기는 소수로, 인덱스가 모듈로 연산이니까!!)
+
+해시 맵
+
+사전! 만들어봐 (dictionary)
+
 
 
 ### * 사례

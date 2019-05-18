@@ -416,3 +416,38 @@ struct __declspec(uuid("00000001-0002-0003-0004-000000000005")) STest
 GUID what = __uuidof(STest);
 ```
 
+## 멀티스레딩
+
+thread safety
+
+**concurrency 동시성**
+
+API races (== data races + object races)
+
+thread-safe type (동시에 사용해도 API race 발생 안 함!!)
+
+deadlock (mutex lock때문에 발생...)
+
+std::vector의 서로 다른 항목을 수정하는 것은 safe하지만... 웬만하면 하지 말까..? ㅋㅋ
+
+### 주의할 것
+
+#### 다수의 스레드가 같은 메모리(전역/static 변수)에 [쓰기] 작업을 하면 안 된다!★★★
+
+#### const 속성이 있더라도 mutable이 있는지 확인!
+
+#### const * 에 주의!!!!!★ (함수 포인터 포함...)
+
+#### 여러 스레드가 같은 자료형을 읽거나 쓰는 걸 피하자...???
+
+기타
+
+```cpp
+std::atomic;
+std::this_thread;
+sleep_for();
+sleep_until();
+yield(); //활동 포기, 다른 스레드에 자리 양보
+std::lock_guard<std::mutex> guard(my_mutex); //(scope를 벗어나면 자동으로 unlock 호출!)
+```
+
