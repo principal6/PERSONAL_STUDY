@@ -451,3 +451,83 @@ yield(); //활동 포기, 다른 스레드에 자리 양보
 std::lock_guard<std::mutex> guard(my_mutex); //(scope를 벗어나면 자동으로 unlock 호출!)
 ```
 
+### atomic
+
+atomicity = 실행 전이나 후 상태는 볼 수 있고, 실행 중에는 볼 수 없음! (즉, corruption 방지)
+
+기본적으로 mutex 보다 빠르다! 하지만 spinlock이 atomic보다 더 빠른 경우는 있을 수 있다.
+
+```cpp
+std::atomic<int> x{};
+
+void thread_1()
+{
+	++x;
+}
+
+void thread_2()
+{
+	++x;
+}
+
+// Result: x = 2;
+```
+
+#### atomic 연산
+
+```cpp
+std::atomic<int> x{};
+x++; // atomic increment
+++x; // atomic increment
+x += 2; // atomic increment
+x *= 2; // ERROR (There is no atomic multiplication)
+x = x + 1; // NOT atomic (atomic read + atomic write => could be corrupted between the two operations!!)
+x = x * 2; // NOT atomic (")
+int y = x * 2; // atomic read
+x = y + 1; // atomic write
+
+int y = x.load();
+x.store(y, std::memory_order_relaxed);
+x.store(y, std::memory_order_acquire);
+x.store(y, std::memory_order_release);
+x.exchange(y);
+bool is_done = x.compare_exchange_strong(y, z);
+```
+
+#### atomic 곱하기는?
+
+```cpp
+std::atomic<int> x{};
+int x_save = x;
+while (!x.compare_exchange_strong(x_save, x_save * 2)) {};
+```
+
+less error-prone atomic operation
+
+```cpp
+std::atomic<int> x{};
+x.fetch_add(y); // x += y;
+// fetch_sub(), fetch_and(), ...
+```
+
+#### atomic != lock_free
+
+```cpp
+std::atomic<T>::is_lock_free();
+
+struct C {long x; long y; long z;} // not lock-free!
+```
+
+#### atomic != wait_free
+
+서로 다른 atomic 변수더라도 같은 캐시 라인 (예를 들면 64바이트 이내)에 있다면 ... write할 때마다 캐시 업데이트 필요.. 즉 not-wait-free!!!
+
+#### memory barrier
+
+```cpp
+x.store(1, std::memory_order_relaxed); // no memory barrier..
+x.store(2, std::memory_order_release); // 이 instruction 이전에 '쓰기'한 메모리들은 실제로 먼저 쓰기를 한다!!★
+x.load(std::memory_order_acquire); // 이 instruction 다음에 실행되는 '읽기'작업들은 실제로 다음에 일어난다!
+x.store(3, std::memory_order_seq_cst); // default, and the strongest barrier
+```
+
