@@ -2,6 +2,8 @@
 
 ## I. 기초 자료구조(C++)
 
+### 지역성 (locality = cache locality)
+
 ### 1. 배열 - 직접 접근
 
 엔트리(entry)
@@ -154,15 +156,121 @@ size(), capacity(), display() & push_front(), pop_front(), push_back(), pop_back
 
 #### 2) 가중치 그래프
 
+## III. Standard Template Library (STL)
+
+### std::vector
+
+**sequence container (선형 순서로 정렬되어 있다. 각각 위치를 통해 원소에 접근한다.)**
+
+dynamic array 동적 배열로 구현됨.
+
+탐색 속도: $O(1)$
+
+삽입/삭제 속도: $O(N)$ (단, 마지막 원소의 경우 $O(1)$)
+
+### std::deque
+
+sequence container
+
+### std::stack
+
+container adaptor (deque -> stack, LIFO)
+
+### std::queue
+
+container adaptor (deque -> queue, FIFO)
+
+### std::list
+
+sequence container
+
+doubly-linked-list 이중 연결 리스트로 구현됨.
+
+탐색 속도: $O(N)$
+
+삽입/삭제 속도: $O(1)$
+
+### std::map
+
+**associative container (컨테이너 상의 위치 말고 key를 통해 원소에 접근하는 컨테이너!)**
+
+key와 value 쌍(std::pair)이 하나의 원소를 이룬다
+
+(단, key값은 중복될 수 없다)
+
+각 원소는 항상 key값을 기준으로 정렬된다.
+
+red-black tree를 이용해 구현됨?
+
+탐색 속도: $O(logN)$
+
+삽입/삭제 속도: $O(logN)$
+
+### free functions
+
+#### std::find
+
+```cpp
+auto iter = std::find(c.begin(), c.end(), 16);
+if (iter != c.end())
+{
+	//~
+}
+```
+
+std::swap
+
+std::erase
+
+std::erase_if
+
+## IV. 알고리즘
+
+### * 복잡도
+
+### 표기법
+
+Big-O notation: 최악의 경우 복잡도
+
+Theta notation: 평균적 복잡도
+
+Omega notation: 최적의 경우 복잡도
+
+### 마스터 정리 (Master theorum)
+
+$T(n)=aT \left( \dfrac{n}{b} \right) + f(n)$ (단, $a\ge1, b>1$) 라는 관계식이 주어졌을 때 총 세 가지 경우가 있다.
+
+경우 1) $f(n)=\mathcal{O}(n^c)$이고  $c < \log_ba$일 때 (즉  $f(n)=\mathcal{O}(n^{log_ba-\epsilon})$ (단, $\epsilon>0$) 일 때)
+
+$T(n)=\Theta(n^{log_ba})$
 
 
-## II. 알고리즘
+
+경우 2) $f(n)=\Theta(n^{log_ba})$일 때, (즉 $f(n)=\Theta(n^{lob_ba}log^kn)$ (단, $k\ge0$) 일 때)
+
+$T(n)=\Theta(n^{lob_ba}log^{k+1}n)$
+
+
+
+경우 3) $f(n)=\Omega(n^c)$이고  $c > \log_ba$ 이고, (즉 $f(n)=\Omega(n^{log_ba+\epsilon})$ (단, $\epsilon>0$) 이고)
+
+$af \left( \dfrac{n}{b} \right) \le kf(n)$ (단, $k < 1$이고 $n$이 충분히 클 때) 이면
+
+$T(n)=\Theta(f(n))$
+
+예시 1) $T(n)=8T\left(\dfrac{n}{2}\right)+1000n^2$
+
+예시 2) $T(n)=2T\left(\dfrac{n}{2}\right)+10n$
+
+예시 3) $T(n)=2T\left(\dfrac{n}{2}\right)+n^2$
+
+
 
 ### 1. 정렬
 
 #### 1) 퀵 정렬 (Quick sort)
 
-#### 2) 합병 정렬 (Merge sort) - 분할정복법(Divide-And-Conquer), stable sort
+#### 2) 합병 정렬 (Merge sort) - 분할정복법(Divide-And-Conquer), stable sort -> Master theorum?
 
 #### 3) 힙 정렬 (Heap sort)
 
