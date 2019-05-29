@@ -260,7 +260,11 @@ int TwoXPlusOne(int input)
 
 32비트에선 4바이트, 64비트에선 8바이트!!
 
-### Static
+포인터를 복사하면 얕은 복사(shallow copy)
+
+포인터가 가리키는 데이터를 복사하면 깊은 복사(deep copy)
+
+## Static
 
 ```cpp
 int* p{};
@@ -280,6 +284,70 @@ int main()
 	*p = 5;
 	
 	return 0;
+}
+```
+
+## class
+
+### 생성자
+
+#### 복사생성자
+
+```cpp
+// 컴파일러가 만들어주는 기본 복사생성자는
+// 얕은 복사(shallow copy)를 한다.
+Vector(const Vector& other)
+{
+    if (this != &other)
+    {
+        m_size = other.m_size;
+        m_capacity = other.m_capacity;
+        m_data = other.m_data;
+    }
+    return *this;
+}
+```
+
+
+
+```cpp
+Vector(const Vector& other)
+{
+    // 자기 자신을 복사하려 할 경우
+    // new가 동일한 포인터에 일어나므로 메모리 누수가 발생한다!
+    if (this != &other)
+    {
+        m_size = other.m_size;
+        m_capacity = other.m_capacity;
+
+        // 깊은 복사(deep copy)
+        m_data = new T[m_capacity]{};
+        memcpy(m_data, other.m_data, sizeof(T) * m_size);
+    }
+    return *this;
+}
+```
+
+
+
+#### 복사대입연산자
+
+```cpp
+Vector& operator=(const Vector& other)
+{
+    // 자기 자신을 복사하려 할 경우
+    // new가 동일한 포인터에 일어나므로 메모리 누수가 발생한다!
+    if (this != &other)
+    {
+        m_size = other.m_size;
+        m_capacity = other.m_capacity;
+
+        // 깊은 복사(deep copy)
+        m_data = new T[m_capacity]{};
+        memcpy(m_data, other.m_data, sizeof(T) * m_size);
+    }
+
+    return *this;
 }
 ```
 

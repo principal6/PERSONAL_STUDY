@@ -1,12 +1,16 @@
-# 자료구조와 알고리즘 Structure and algorithm
+# 자료구조와 알고리즘 Structure and algorithm (C++)
 
-## I. 기초 자료구조(C++)
+## I. 기초 자료구조
 
-### 지역성 (locality = cache locality)
+### 지역성 (locality => cache locality)
 
 ### 1. 배열 - 직접 접근
 
+
+
 엔트리(entry)
+
+spatial locality(공간 지역성) 보장
 
 메모리 인접성 보장 (contiguous memory block)
 
@@ -76,7 +80,7 @@ non-contiguous memory blocks
 
 
 
-## II. 응용 자료구조
+## II. 추상자료형(ADT, Abstract Data Type)
 
 ### 1. 선형 - 스택 (Stack)
 
