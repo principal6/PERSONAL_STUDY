@@ -230,29 +230,31 @@ std::erase_if
 
 ### 표기법
 
-Big-O notation: 최악의 경우 복잡도
+Big-O notation: 최악의 경우 복잡도 $\mathcal{O}(n)$
 
-Theta notation: 평균적 복잡도
+Big-Theta notation: 평균적 복잡도 $\Theta(n)$
 
-Omega notation: 최적의 경우 복잡도
+Big-Omega notation: 최적의 경우 복잡도 $\Omega(n)$
+
+
 
 ### 마스터 정리 (Master theorum)
 
 $T(n)=aT \left( \dfrac{n}{b} \right) + f(n)$ (단, $a\ge1, b>1$) 라는 관계식이 주어졌을 때 총 세 가지 경우가 있다.
 
-경우 1) $f(n)=\mathcal{O}(n^c)$이고  $c < \log_ba$일 때 (즉  $f(n)=\mathcal{O}(n^{log_ba-\epsilon})$ (단, $\epsilon>0$) 일 때)
+경우 1) $f(n)=\mathcal{O}(n^c)$이고  $c < \log_ba$일 때 (즉  $f(n)=\mathcal{O}(n^{\log{_ba}-\epsilon})$ (단, $\epsilon>0$) 일 때)
 
-$T(n)=\Theta(n^{log_ba})$
-
-
-
-경우 2) $f(n)=\Theta(n^{log_ba})$일 때, (즉 $f(n)=\Theta(n^{lob_ba}log^kn)$ (단, $k\ge0$) 일 때)
-
-$T(n)=\Theta(n^{lob_ba}log^{k+1}n)$
+$T(n)=\Theta(n^{\log{_ba}})$
 
 
 
-경우 3) $f(n)=\Omega(n^c)$이고  $c > \log_ba$ 이고, (즉 $f(n)=\Omega(n^{log_ba+\epsilon})$ (단, $\epsilon>0$) 이고)
+경우 2) $f(n)=\Theta(n^{\log{_ba}})$일 때, (즉 $f(n)=\Theta(n^{\log{_ba}}\log{^kn})$ (단, $k\ge0$) 일 때)
+
+$T(n)=\Theta(n^{\log{_ba}}\log{^{k+1}n})$
+
+
+
+경우 3) $f(n)=\Omega(n^c)$이고  $c > \log{_ba}$ 이고, (즉 $f(n)=\Omega(n^{\log{_ba}+\epsilon})$ (단, $\epsilon>0$) 이고)
 
 $af \left( \dfrac{n}{b} \right) \le kf(n)$ (단, $k < 1$이고 $n$이 충분히 클 때) 이면
 
@@ -268,9 +270,19 @@ $T(n)=\Theta(f(n))$
 
 ### 1. 정렬
 
-#### 1) 퀵 정렬 (Quick sort)
+#### 1) 퀵 정렬 (Quick sort) ★
 
-#### 2) 합병 정렬 (Merge sort) - 분할정복법(Divide-And-Conquer), stable sort -> Master theorum?
+분할정복법(Divide-And-Conquer)
+
+시간 복잡도: $\Theta(n\log{n})$ ~ $\mathcal{O}(n^2)$★
+
+
+
+#### 2) 합병 정렬 (Merge sort) ★
+
+분할정복법(Divide-And-Conquer), stable sort -> Master theorum 참고
+
+
 
 #### 3) 힙 정렬 (Heap sort)
 
@@ -288,13 +300,31 @@ $T(n)=\Theta(f(n))$
 
 ### 2. 탐색
 
-#### 1) 순차 탐색
+#### 1) 순차 탐색 (Linear search = Sequential serach)
 
-#### 2) 이진 탐색
+시간 복잡도: $\mathcal{O}(n)$
 
-#### 3) 색인 순차 탐색
 
-#### 4) 보간 탐색
+
+#### 2) 이진 탐색 (Binary search)
+
+반드시 정렬된 데이터에 한해 실행할 수 있는 알고리즘이다.
+
+시간 복잡도: $\mathcal{O}(\log{n})$
+
+
+
+#### 3) 색인 순차 탐색 (Indexed sequential search)
+
+시간 복잡도: $\mathcal{O}(\log{n})$
+
+
+
+#### 4) 보간 탐색 (Interpolation search)
+
+시간 복잡도: $\Theta(\log{(\log{n})})$ ~ $\mathcal{O}(n)$
+
+
 
 #### 5) 깊이 우선 탐색 (DFS, Depth First Search)
 
@@ -302,7 +332,7 @@ $T(n)=\Theta(f(n))$
 
 
 
-### 3. 순환 (Recursion)
+### 3. 재귀 (Recursion)
 
 ### 4. 해시 (Hash) - 해시 테이블
 
