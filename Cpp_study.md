@@ -308,8 +308,6 @@ Vector(const Vector& other)
 }
 ```
 
-
-
 ```cpp
 Vector(const Vector& other)
 {

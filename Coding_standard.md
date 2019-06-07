@@ -14,6 +14,8 @@ Normally the first letter of every name is capitalized  (e.g. ... )
 
 Type and variable names are nouns
 
+
+
 ### 2-1. Namespace
 
 ```cpp
@@ -29,6 +31,8 @@ namespace JWEngine
 
 Method names are verbs that describe the method's effect, or describe the return value of a method that has no effect.
 
+Use **camel case** (or **lower case with underscore)** for function names.
+
 [Verb]
 
 - `Clear()`
@@ -36,14 +40,16 @@ Method names are verbs that describe the method's effect, or describe the return
 - `Update()`
 - `Draw()`
 - `Destroy()`
+- `Get()`
 
 [Verb + noun]
 
-- `CalculateDistance(Vector v1, Vector v2)`
+- `CalculateDistance(const Vector& v1, const Vector& v2)`
 - `ClearAll()`
 - `CreateBuffer()`
-- `SetName(char* Name)`
+- `SetName(const char* Name)`
 - `GetName()`
+- `Get*Ptr()` / `Get*Ref()` ★★
 
 **On-** `OnMouseDown()` `OnKeyUp()`
 
@@ -68,6 +74,8 @@ bool CheckTea(FTea Tea);
 // name makes it clear true means tea is fresh
 bool IsTeaFresh(FTea Tea);
 ```
+
+
 
 ### 2-3. Variable/Struct/Class
 
@@ -150,6 +158,8 @@ UClass* TeaClass;
 USoundCue* TeaSound;
 UTexture* TeaTexture;
 ```
+
+
 
 ## 3. Comments
 

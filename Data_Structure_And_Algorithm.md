@@ -12,7 +12,7 @@
 
 spatial locality(공간 지역성) 보장
 
-메모리 인접성 보장 (contiguous memory block)
+
 
 #### 1) 정적 배열 (static array)
 
