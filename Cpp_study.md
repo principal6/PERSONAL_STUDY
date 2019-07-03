@@ -1,5 +1,21 @@
 # C++ tutorial
 
+## 0. 개요
+
+1. Hello world (#include, cout)
+2. 변수와 함수 (char, int, float, double + 배열, 문자열)
+3. 콘솔 입력 받기 (cin)
+4. 조건문 (if, switch) & 비교 연산자, 논리 연산자
+5. 반복문 (for, while)
+6. 구조체 (struct)
+   1. 캐릭터 관리 프로그램 만들기 (인간 캐릭터, 거인 캐릭터, 난쟁이 캐릭터 등 다양화)
+7. 클래스 (class) + #include, namespace, static 키워드
+8. 별칭, 매크로 using, #define
+9. 포인터 (pointer), 참조형 (reference type)
+10. 상속 (inheritance) 과 다형성(polymorphism) + private, protected, public
+11. 열거형 (enum class)
+12. 
+
 ## 1. Base
 
 메모리 조작

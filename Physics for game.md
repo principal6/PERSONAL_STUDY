@@ -98,9 +98,145 @@ velocity  $\vec{v}=r\vec{\omega}$ ($r$ 은 회전축으로부터의 거리. 즉 
 
 angular impulse = $\tau \times \Delta t$
 
-## 관성 모멘트
+## 관성 모멘트 Moment of inertia
 
-$\displaystyle I=\sum_{i=1}^{n}m_ir_i^2$
+$\displaystyle I=\sum_{i=1}^{n}m_ir_i^2=\int r^2dm$
+
+
+
+### 질량, 면적, 부피 관계★
+
+ $\dfrac{dm}{M}=\dfrac{dA}{A}=\dfrac{dV}{V}$ 
+
+#### 질량 - 면적
+
+$dm=\dfrac{M}{A}dA$
+
+#### 질량 - 부피
+
+$dm=\dfrac{M}{V}dV$
+
+이때, 밀도 $\rho=\dfrac{M}{V}$이므로
+
+$dm=\rho dV$ (단, 밀도 $\rho$는 상수이다.)
+
+
+
+### 2차원 고리(ring)
+
+![](Asset\intertia_ring.png)
+
+위 그림에서 $\dfrac{1}{24}=\dfrac{m_i}{M}=\dfrac{l_i}{L}$ 이다.
+
+$\displaystyle I=\sum_{i}^{n}m_ir_i^2$ 인데
+
+$r_i = R$ 로 상수이므로
+
+$\displaystyle I=R^2\sum_{i}^{n}m_i$
+
+이때 $\displaystyle \sum_{i}^{n}m_i=M$ 이므로
+
+$I=MR^2$
+
+
+
+### 2차원 원판(disk)
+
+반지름이 $R$인 원판에서
+
+회전축에서 떨어진 거리가 $l$이고 두께가 $dl$인 고리의 면적 $dA$는
+
+$dA=\pi (l+dl)^2 - \pi l^2 $
+
+​       $= \pi(l^2 + 2l \cdot dl + dl^2 - l^2)$
+
+​       $= \pi(2l \cdot dl + dl^2)$
+
+​       $= 2\pi l \cdot dl$
+
+와 같다.
+
+이때 $A=\pi R^2$ 이고 $\dfrac{dm}{M}=\dfrac{dA}{A}$ 이므로
+
+$dm=M\dfrac{2 \pi l \cdot dl}{\pi R^2}$
+
+$dm=M\dfrac{2l \cdot dl}{R^2}$
+
+$\displaystyle I = \int l^2dm = \int l^2 M\dfrac{2l \cdot dl}{R^2}$
+
+$\displaystyle I=\dfrac{M}{R^2}\int l^2 2l \cdot dl$
+
+$\displaystyle I=\dfrac{M}{R^2}\int 2l^3 \cdot dl$
+
+$I=\dfrac{M}{R^2}\left[ \dfrac{1}{2}l^4 \right]_0^R$
+
+$I=\dfrac{M}{R^2}\left( \dfrac{1}{2}R^4 - 0 \right)$
+
+$I=\dfrac{1}{2}\dfrac{M}{R^2}R^4$
+
+$I=\dfrac{1}{2}MR^2$
+
+
+
+### 2차원 막대(rod)
+
+
+
+### 3차원 원기둥(cylinder)
+
+![](Asset\inertia_cylinder.png)
+
+$\displaystyle I = \int r^2dm$
+
+이때 $dm=\rho dV$ 이므로
+
+$\displaystyle I=\int r^2\rho dV$
+
+원기둥의 부피 $V = \pi R^2 L$ 이고
+
+축과의 거리가 $r$, 두께가 $dr$ 인 원기둥의 부피 $dV$ 는
+
+$dV=\pi (r+dr)^2L - \pi r^2L$
+
+$dV=\pi (r^2+2rdr+dr^2)L - \pi r^2L$
+
+$dV=\pi L (r^2+2rdr+dr^2-r^2)$
+
+$dV=\pi L (2rdr+dr^2)$
+
+$dV=2 \pi L rdr$
+
+와 같다.
+
+
+
+$\displaystyle I=\int r^2\rho 2 \pi L rdr$
+
+$\displaystyle I=2 \pi \rho L \int r^3 dr$
+
+$\displaystyle I=2 \pi \rho L \left[\dfrac{1}{4}r^4 \right]_0^R$
+
+$\displaystyle I=2 \pi \rho L \dfrac{R^4}{4}$
+
+$\displaystyle I=\dfrac{1}{2} \pi \rho L R^4$
+
+이때 $\rho=\dfrac{M}{V}$ 이고, $V = \pi R^2 L$ 이므로
+
+$\displaystyle I=\dfrac{1}{2} \pi \dfrac{M}{\pi R^2 L} L R^4$
+
+$\displaystyle I=\dfrac{1}{2}MR^2$
+
+
+
+### 3차원 육면체(box)
+
+### 3차원 원뿔(cone)
+
+### 3차원 구(sphere)
+
+
+
+
 
 ## 중력과 토크
 
@@ -138,6 +274,67 @@ $\rho = \dfrac{m}{V}$  ($m$ 은 질량, $V$ 는 부피)
 
 
 
-## 충돌 검출 Collsion detection
+## 충돌 Collision
 
-Broad-phase: bounding sphere??
+### 충돌 검출 Collision detection
+
+coarse collision detection / fine collision detection
+
+
+
+### 충돌 처리
+
+충돌 전후 운동량(momentum)은 보존된다.
+
+$m_a\vec{v_a}+m_b\vec{v_b}=m_a\vec{v\prime_a}+m_b\vec{v\prime_b}$
+
+$m_a\vec{v_a}-m_a\vec{v\prime_a}=m_b\vec{v\prime_b}-m_b\vec{v_b}$
+
+$-m_a(\vec{v\prime_a}-\vec{v_a})=m_b(\vec{v\prime_b}-\vec{v_b})$
+
+$-m_a\Delta\vec{v_a} = m_b\Delta\vec{v_b}$
+
+
+
+만약 $m_a$가 무한대라면? $\vec{v_a}=\vec{0}$, $\vec{v\prime_a}=\vec{0}$
+
+$m_b\vec{v_b}=m_b\vec{v\prime_b}$ => $\vec{v_b}=\vec{v\prime_b}$ ????
+
+
+
+
+
+
+
+$s_c=-(\vec{v_a}-\vec{v_b})\bull(\hat{d_{ba}})$
+
+$s\prime_c=-rs_c$
+
+$=-(r_a\vec{v_a}-r_b\vec{v_b})\bull(\hat{d_{ba}})$
+
+$=(-r_a\vec{v_a}+r_b\vec{v_b})\bull(\hat{d_{ba}})$
+
+$=   (\vec{v\prime_a}-\vec{v\prime_b})\bull(\hat{d_{ba}})$
+
+
+
+### 접근 속도 closing speed (b to a?)
+
+$s_c=\vec{v_b}\bull\hat{d_{ba}}-\vec{v_a}\bull\hat{d_{ba}}$  (단, $\vec{d_{ba}}=\vec{p_a}-\vec{p_b}$)
+
+$s_c=-(\vec{v_a}-\vec{v_b})\bull(\hat{d_{ba}})$
+
+$s_s=-c_rs_c$ (closing speed, coefficient of restitution) $c_r$이 1이면 **완전 탄성 충돌**
+
+분리속도 $s_s=(\vec{v_a}-\vec{v_b})\bull(\hat{d_{ba}})$
+
+
+
+선충격량 (linear impulse)
+
+$\vec{g}=m\Delta\vec{v}$ -> $\Delta\vec{v}=\dfrac{1}{m}\vec{g}$ 
+
+
+
+**※ 접근 속도가 가장 빠른 충돌부터 해결하는 것이 효율적!!**
+
