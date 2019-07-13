@@ -236,6 +236,14 @@ $\displaystyle I=\dfrac{1}{2}MR^2$
 
 
 
+## 관성 텐서 -> 관성 모멘트
+
+From inertia tensor to scalar moment of inertia
+
+임의의 축 $\hat{n}$에 대한 관성 모멘트 $I_n$은
+
+$I_n = \hat{n} I\hat{n}^T$ 와 같다.
+
 
 
 ## 중력과 토크
@@ -271,6 +279,28 @@ $\rho = \dfrac{m}{V}$  ($m$ 은 질량, $V$ 는 부피)
 물체에 가해진 힘이 질량 중심과 동일선상에 있을 때에는 회전 운동은 생기지 않고, 선형 운동만 생긴다.
 
 힘이 질량 중심을 지나지 않는 경우에는 회전 운동과 선형 운동이 모두 발생한다.
+
+### 선충격량 (linear impulse)
+
+$\vec{g}=m\vec{v}$
+
+ -> $\vec{v}=\dfrac{1}{m}\vec{g}$
+
+ -> $\vec{v}\prime=\vec{v}+\dfrac{1}{m}\vec{g}$
+
+
+
+### 각충격량 (angular impulse) = 충격 토크 ★★
+
+힘이 발생시키는 토크는
+
+$\vec{\tau} = r \times \vec{F}$ 이므로
+
+선충격량이 발생시키는 각충격량은 다음과 같다.
+
+$\vec{u}=r\times\vec{g}$
+
+이때 $\vec{u}=I\vec{\omega}$ 이므로 $\vec{\omega}=I^{-1}\vec{u}$ 이다.
 
 
 
@@ -327,12 +357,6 @@ $s_c=-(\vec{v_a}-\vec{v_b})\bull(\hat{d_{ba}})$
 $s_s=-c_rs_c$ (closing speed, coefficient of restitution) $c_r$이 1이면 **완전 탄성 충돌**
 
 분리속도 $s_s=(\vec{v_a}-\vec{v_b})\bull(\hat{d_{ba}})$
-
-
-
-선충격량 (linear impulse)
-
-$\vec{g}=m\Delta\vec{v}$ -> $\Delta\vec{v}=\dfrac{1}{m}\vec{g}$ 
 
 
 
