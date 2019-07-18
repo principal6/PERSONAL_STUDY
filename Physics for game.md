@@ -246,20 +246,6 @@ $I_n = \hat{n} I\hat{n}^T$ 와 같다.
 
 
 
-## 중력과 토크
-
-★참고★ 토크 $\tau = rF$
-
-중력가속도 $g = 9.8 m/s^2$ 
-
-중력 힘 $G = mg$
-
-중력 토크 $T = rG=I\alpha$
-
-중력 각가속도 $\alpha = I^{-1}T$
-
-
-
 ## Density 물체의 밀도
 
 $\rho = \dfrac{m}{V}$  ($m$ 은 질량, $V$ 는 부피)
@@ -280,9 +266,13 @@ $\rho = \dfrac{m}{V}$  ($m$ 은 질량, $V$ 는 부피)
 
 힘이 질량 중심을 지나지 않는 경우에는 회전 운동과 선형 운동이 모두 발생한다.
 
+
+
 ### 선충격량 (linear impulse)
 
-$\vec{g}=m\vec{v}$
+$\vec{F}=m\vec{a}$ 에서
+
+선충격량은 $\vec{g}=m\vec{v}$ 이다.
 
  -> $\vec{v}=\dfrac{1}{m}\vec{g}$
 
@@ -299,6 +289,8 @@ $\vec{\tau} = r \times \vec{F}$ 이므로
 선충격량이 발생시키는 각충격량은 다음과 같다.
 
 $\vec{u}=r\times\vec{g}$
+
+이때 $\vec{\tau}=I\vec{\alpha}$ 이고
 
 이때 $\vec{u}=I\vec{\omega}$ 이므로 $\vec{\omega}=I^{-1}\vec{u}$ 이다.
 
