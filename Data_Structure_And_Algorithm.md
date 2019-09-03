@@ -472,8 +472,6 @@ void foo()
 
 
 
-### HASH -> std::unordered_map / std::unordered_multimap
-
 ```cpp
 #include <unordered_map> // ★★ <map>이 아님에 주의하자
 
