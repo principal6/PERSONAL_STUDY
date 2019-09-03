@@ -608,6 +608,32 @@ int main()
 
 
 
+### heap
+
+```cpp
+#include <queue>
+
+void foo()
+{
+    // 기본 힙은 ★최대 힙★이므로 pop_heap()을 하면 최대값이 벡터의 맨 끝으로 온다.
+    // 최소 힙을 만드려면? greater<> 를 써야한다! ★★
+    make_heap(scoville.begin(), scoville.end(), greater<int>());
+    
+    pop_heap(scoville.begin(), scoville.end(), greater<int>());
+    int z{ scoville.back() };
+    scoville.pop_back();
+    
+    pop_heap(scoville.begin(), scoville.end(), greater<int>());
+    int y{ scoville.back() };
+    scoville.pop_back();
+
+    scoville.push_back(z + y * 2);
+    push_heap(scoville.begin(), scoville.end(), greater<int>());
+}
+```
+
+
+
 ### PALINDROME ...?
 
 ```cpp
