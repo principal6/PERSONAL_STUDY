@@ -1034,7 +1034,7 @@ IASetVertexBuffers
 
 Default면 UpdateSubresource(), 이후 변경 X
 
-Dynamic이면 Map/Unmap() 활용 (UpdateSubresource는 CPU를 더 많이 써서 느리다!!)
+Dynamic이면 Map/Unmap() 활용 (UpdateSubresource()는 계속 쓰기엔 CPU를 더 많이 써서 느리다!!)
 
 
 

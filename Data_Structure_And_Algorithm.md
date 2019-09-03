@@ -354,3 +354,303 @@ $T(n)=\Theta(f(n))$
 
 #### 미로 탐색
 
+
+
+## ### 알고리즘 실전 연습 (프로그래머스)
+
+```cpp
+실패 (signal: segmentation fault (core dumped))
+실패 (signal: aborted (core dumped))
+
+// 주의: class/struct {}; 세미콜론 잊지 말기
+```
+
+
+
+### ★ std::sort() ★
+
+#### ★주의 pred 함수 내 비교는 '>' 나  '<' 만 쓰자!  not (!) 을 했을 시 반대 결과가 나와야 하기 때문!!!★
+
+#### ★sort의 기본 정렬은 ★오름차순★ (즉, 0번이 제일 작다!!!)★
+
+#### ★★★정렬만 잘 해도 많은 문제가 간단해진다!!!★★★
+
+```cpp
+#include <algorithm>
+
+bool pred(char a, char b)
+{
+    return (a > b);
+}
+
+int main()
+{
+    std::string s{ "abcABC" };
+    std::sort(s.begin(), s.end(), pred);
+}
+```
+
+
+
+### ★ string ★
+
+#### stoi(), stof()
+
+#### to_string()
+
+#### string::compare()
+
+```cpp
+using std::string;
+
+bool foo()
+{
+    string a{ "123" };
+    string b{ "123" };
+
+    if (a == b) // 연산자 오버로딩. a.compare(b)와 동일하다!
+    {
+        return true;
+    }
+    
+    return false;
+}
+```
+
+#### string::substr()
+
+### std::stack.top()
+
+
+
+### vector
+
+```cpp
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+vector<int> solution(vector<int> array, vector<vector<int>> commands)
+{
+    vector<int> answer{};
+    
+    for (auto& command : commands)
+    {
+        auto& i{ command[0] };
+        auto& j{ command[1] };
+        auto& k{ command[2] };
+        
+        vector<int> sub{ array.begin() + i - 1, array.begin() + j};
+        sort(sub.begin(), sub.end());
+        
+        answer.emplace_back(sub[k - 1]);
+    }
+    
+    return answer;
+}
+```
+
+
+
+### ★★Hash★★
+
+#### unordered_map // unordered_multimap
+
+#### hash<>
+
+```cpp
+#include <functional>
+
+void foo()
+{
+    size_t a{ hash<string>{}("abcd") };
+	size_t b{ hash<string>{}("abcd") };
+}
+```
+
+
+
+### HASH -> std::unordered_map / std::unordered_multimap
+
+```cpp
+#include <unordered_map> // ★★ <map>이 아님에 주의하자
+
+unordered_map<string, int> map{};
+map.insert(make_pair(a, b));
+map.erase(a);
+
+auto found{ map.find(a) };
+if (found != map.end())
+{
+    auto value{ found.second };
+}
+```
+
+```cpp
+unordered_map<string, int> map{};
+for (auto& row : clothes)
+{
+    ++map[row[1]]; // ★★ (해당 키가 없으면 알아서 추가된다... 대박;) ★★
+}
+```
+
+```cpp
+// 프로그래머스 - 해시 - 위장
+
+#include <string>
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+
+int solution(vector<vector<string>> clothes)
+{
+	int answer{ 1 };
+
+	unordered_map<string, int> map{};
+	for (auto& row : clothes)
+	{
+		++map[row[1]];
+	}
+
+	for (auto& i : map)
+	{
+		answer *= (i.second + 1);
+	}	
+	--answer;
+
+	return answer;
+}
+```
+
+```cpp
+// 프로그래머스 - 해시 - 베스트앨범
+#include <string>
+#include <vector>
+#include <map>
+#include <algorithm>
+
+using namespace std;
+
+bool pred(const tuple<int, int>& a, const tuple<int, int>& b)
+{
+	return get<0>(a) > get<0>(b);
+}
+
+vector<int> solution(vector<string> genres, vector<int> plays)
+{
+	vector<int> answer{};
+
+	map<string, int> sum_per_genre{};
+	for (size_t i = 0; i < genres.size(); ++i)
+	{
+		sum_per_genre[genres[i]] += plays[i];
+	}
+
+	vector<string> each_genre{};
+	map<int, string, greater<int>> ordered_sum_per_genre{};
+	for (auto& i : sum_per_genre)
+	{
+		ordered_sum_per_genre[i.second] = i.first;
+
+		each_genre.emplace_back(i.first);
+	}
+
+	vector<vector<tuple<int, int>>> plays_per_genre{};
+	plays_per_genre.resize(sum_per_genre.size());
+
+	for (size_t genre_id = 0; genre_id < plays_per_genre.size(); ++genre_id)
+	{
+		for (size_t i = 0; i < genres.size(); ++i)
+		{
+			if (genres[i] == each_genre[genre_id])
+			{
+				plays_per_genre[genre_id].emplace_back(make_tuple(plays[i], i));
+			}
+		}
+	}
+	
+	for (auto& i : plays_per_genre)
+	{
+		sort(i.begin(), i.end(), pred);
+	}
+
+	// RESULT
+	for (auto& os : ordered_sum_per_genre)
+	{
+		size_t genre_id{};
+		for (size_t i = 0; i < each_genre.size(); ++i)
+		{
+			if (os.second == each_genre[i])
+			{
+				genre_id = i;
+			}
+		}
+		
+		answer.emplace_back(get<1>(plays_per_genre[genre_id][0]));
+
+		if (plays_per_genre[genre_id].size() > 1)
+		{
+			answer.emplace_back(get<1>(plays_per_genre[genre_id][1]));
+		}
+	}
+
+	return answer;
+}
+
+int main()
+{
+	solution({ "classic", "pop", "classic", "classic", "pop" }, { 500, 600, 150, 800, 2500 });
+
+	return 0;
+}
+```
+
+
+
+### PALINDROME ...?
+
+```cpp
+bool is_palindrome(const string& s)
+{
+	if (s.size() % 2 == 0) return false;
+
+	for (size_t i = 0; i < s.size(); ++i)
+	{
+		if (s[i] != s[s.size() - 1 - i])
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+```
+
+
+
+### COMBINATION
+
+```cpp
+size_t combination(size_t left, size_t right)
+{
+	size_t result{ 1 };
+
+	if (left - right < right) right = left - right;
+
+	for (size_t i = 0; i < right; ++i)
+	{
+		result *= (left - i);
+	}
+
+	for (size_t i = 0; i < right; ++i)
+	{
+		result /= (right - i);
+	}
+
+	return result;
+}
+```
+
