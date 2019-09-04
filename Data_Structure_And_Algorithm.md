@@ -367,9 +367,9 @@ $T(n)=\Theta(f(n))$
 
 
 
-### ★ std::sort() ★
+### ★sort()
 
-#### ★주의 pred 함수 내 비교는 '>' 나  '<' 만 쓰자!  not (!) 을 했을 시 반대 결과가 나와야 하기 때문!!!★
+#### ★주의★ pred 함수 내 비교는 '>' 나  '<' 만 쓰자!  not (!) 을 했을 시 반드시 반대 결과가 나와야 하기 때문!!!★
 
 #### ★sort의 기본 정렬은 ★오름차순★ (즉, 0번이 제일 작다!!!)★
 
@@ -394,11 +394,11 @@ int main()
 
 ### ★ string ★
 
-#### stoi(), stof()
+#### ★ stoi(), stoll(), stof(), stod()
 
-#### to_string()
+#### ★ to_string()
 
-#### string::compare()
+#### ★ == operator VS. string::compare()
 
 ```cpp
 using std::string;
@@ -418,6 +418,27 @@ bool foo()
 ```
 
 #### string::substr()
+
+```cpp
+string a{ "my text" };
+a = a.substr(4); // a는 이제 "text"가 된다!
+```
+
+
+
+#### ★ += operator VS. string::append()
+
+```cpp
+string a{}, b{};
+a += 'a'; // 가능 ★
+a += "bc";
+a += b;
+a.append('a'); // 불가능 ★
+a.append("bc"); // 가능
+a.append(b); // 가능
+```
+
+
 
 ### std::stack.top()
 
@@ -456,8 +477,6 @@ vector<int> solution(vector<int> array, vector<vector<int>> commands)
 
 ### ★★Hash★★
 
-#### unordered_map // unordered_multimap
-
 #### hash<>
 
 ```cpp
@@ -471,6 +490,12 @@ void foo()
 ```
 
 
+
+#### unordered_map // unordered_multimap
+
+ unordered_map은 해시를 이용한 키 검색을 하므로 탐색 시간 복잡도가 $O(1)$이고
+
+ map은 (주로) 이진 탐색 트리로 구현되므로 탐색 시간 복잡도가 $O(logN)$이다.
 
 ```cpp
 #include <unordered_map> // ★★ <map>이 아님에 주의하자
@@ -488,123 +513,25 @@ if (found != map.end())
 
 ```cpp
 unordered_map<string, int> map{};
+cout << map["abc"]; // 0이 출력된다.
+map["abc"] = 10; // ★★ (해당 키가 아직 없으면 알아서 추가된다... 대박;) ★★
+cout << map["abc"]; // 10이 출력된다.
+
 for (auto& row : clothes)
 {
-    ++map[row[1]]; // ★★ (해당 키가 없으면 알아서 추가된다... 대박;) ★★
+    ++map[row[1]]; // ★★ (해당 키가 아직 없으면 알아서 추가된다... 대박;) ★★
 }
 ```
 
-```cpp
-// 프로그래머스 - 해시 - 위장
 
-#include <string>
-#include <vector>
-#include <unordered_map>
 
-using namespace std;
 
-int solution(vector<vector<string>> clothes)
-{
-	int answer{ 1 };
 
-	unordered_map<string, int> map{};
-	for (auto& row : clothes)
-	{
-		++map[row[1]];
-	}
 
-	for (auto& i : map)
-	{
-		answer *= (i.second + 1);
-	}	
-	--answer;
 
-	return answer;
-}
-```
+### list -> 스택이나 큐 구현 (stack이나 queue 컨테이너는 iterator가 없어서 불편할 수 있다!)
 
-```cpp
-// 프로그래머스 - 해시 - 베스트앨범
-#include <string>
-#include <vector>
-#include <map>
-#include <algorithm>
-
-using namespace std;
-
-bool pred(const tuple<int, int>& a, const tuple<int, int>& b)
-{
-	return get<0>(a) > get<0>(b);
-}
-
-vector<int> solution(vector<string> genres, vector<int> plays)
-{
-	vector<int> answer{};
-
-	map<string, int> sum_per_genre{};
-	for (size_t i = 0; i < genres.size(); ++i)
-	{
-		sum_per_genre[genres[i]] += plays[i];
-	}
-
-	vector<string> each_genre{};
-	map<int, string, greater<int>> ordered_sum_per_genre{};
-	for (auto& i : sum_per_genre)
-	{
-		ordered_sum_per_genre[i.second] = i.first;
-
-		each_genre.emplace_back(i.first);
-	}
-
-	vector<vector<tuple<int, int>>> plays_per_genre{};
-	plays_per_genre.resize(sum_per_genre.size());
-
-	for (size_t genre_id = 0; genre_id < plays_per_genre.size(); ++genre_id)
-	{
-		for (size_t i = 0; i < genres.size(); ++i)
-		{
-			if (genres[i] == each_genre[genre_id])
-			{
-				plays_per_genre[genre_id].emplace_back(make_tuple(plays[i], i));
-			}
-		}
-	}
-	
-	for (auto& i : plays_per_genre)
-	{
-		sort(i.begin(), i.end(), pred);
-	}
-
-	// RESULT
-	for (auto& os : ordered_sum_per_genre)
-	{
-		size_t genre_id{};
-		for (size_t i = 0; i < each_genre.size(); ++i)
-		{
-			if (os.second == each_genre[i])
-			{
-				genre_id = i;
-			}
-		}
-		
-		answer.emplace_back(get<1>(plays_per_genre[genre_id][0]));
-
-		if (plays_per_genre[genre_id].size() > 1)
-		{
-			answer.emplace_back(get<1>(plays_per_genre[genre_id][1]));
-		}
-	}
-
-	return answer;
-}
-
-int main()
-{
-	solution({ "classic", "pop", "classic", "classic", "pop" }, { 500, 600, 150, 800, 2500 });
-
-	return 0;
-}
-```
+### ★ deque (iterator가 있고, random access도 가능..!!★ stack이나 queue보다 훨씬 편의성이 높다!)
 
 
 
