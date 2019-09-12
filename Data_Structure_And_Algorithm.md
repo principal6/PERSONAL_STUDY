@@ -160,77 +160,11 @@ size(), capacity(), display() & push_front(), pop_front(), push_back(), pop_back
 
 #### 2) 가중치 그래프
 
-## III. Standard Template Library (STL)
 
-### std::vector
 
-**sequence container (선형 순서로 정렬되어 있다. 각각 위치를 통해 원소에 접근한다.)**
+## III. 알고리즘 기초
 
-dynamic array 동적 배열로 구현됨.
-
-탐색 속도: $O(1)$
-
-삽입/삭제 속도: $O(N)$ (단, 마지막 원소의 경우 $O(1)$)
-
-### std::deque
-
-sequence container
-
-### std::stack
-
-container adaptor (deque -> stack, LIFO)
-
-### std::queue
-
-container adaptor (deque -> queue, FIFO)
-
-### std::list
-
-sequence container
-
-doubly-linked-list 이중 연결 리스트로 구현됨.
-
-탐색 속도: $O(N)$
-
-삽입/삭제 속도: $O(1)$
-
-### std::map
-
-**associative container (컨테이너 상의 위치 말고 key를 통해 원소에 접근하는 컨테이너!)**
-
-key와 value 쌍(std::pair)이 하나의 원소를 이룬다
-
-(단, key값은 중복될 수 없다)
-
-각 원소는 항상 key값을 기준으로 정렬된다.
-
-red-black tree를 이용해 구현됨?
-
-탐색 속도: $O(logN)$
-
-삽입/삭제 속도: $O(logN)$
-
-### free functions
-
-#### std::find
-
-```cpp
-auto iter = std::find(c.begin(), c.end(), 16);
-if (iter != c.end())
-{
-	//~
-}
-```
-
-std::swap
-
-std::erase
-
-std::erase_if
-
-## IV. 알고리즘
-
-### * 복잡도
+### 시간 복잡도, 공간 복잡도
 
 ### 표기법
 
@@ -242,7 +176,7 @@ Big-Omega notation: 최적의 경우 복잡도 $\Omega(n)$
 
 
 
-### 마스터 정리 (Master theorum)
+### 마스터 정리 (Master theorum) -> 재귀 시간 복잡도 계산
 
 $T(n)=aT \left( \dfrac{n}{b} \right) + f(n)$ (단, $a\ge1, b>1$) 라는 관계식이 주어졌을 때 총 세 가지 경우가 있다.
 
@@ -286,17 +220,23 @@ $T(n)=\Theta(f(n))$
 
 분할정복법(Divide-And-Conquer), stable sort -> Master theorum 참고
 
+합병 시 두 개의 목록의 원소에서 조건에 맞게 합병된 공간으로 옮긴다!
+
 
 
 #### 3) 힙 정렬 (Heap sort)
 
 #### 4) 셸 정렬 (Shell sort)
 
-#### 5) 삽입 정렬 (Insertion sort)
+#### 5) 삽입 정렬 (Insertion sort) ★
+
+왼쪽이 정렬된 부분, 정렬 안 된 맨 처음 항목을 앞의 정렬된 항목과 비교해서 교환(swap)★
 
 #### 6) 선택 정렬 (Selection sort)
 
 #### 7) 버블 정렬 (Bubble sort)
+
+인접한 두 개를 비교해서 교환(swap)
 
 #### * 기수 정렬 (Radix sort)
 
@@ -310,9 +250,11 @@ $T(n)=\Theta(f(n))$
 
 
 
-#### 2) 이진 탐색 (Binary search)
+#### 2) 이진 탐색 (Binary search) ★★★
 
 반드시 정렬된 데이터에 한해 실행할 수 있는 알고리즘이다.
+
+절반을 잘라서 확인 -> 반복 ★
 
 시간 복잡도: $\mathcal{O}(\log{n})$
 
@@ -356,77 +298,41 @@ $T(n)=\Theta(f(n))$
 
 
 
-## ### 알고리즘 실전 연습 (프로그래머스)
+## IV. STL (Standard Template Library)
 
-```cpp
-실패 (signal: segmentation fault (core dumped))
-실패 (signal: aborted (core dumped))
+### vector<>
 
-// 주의: class/struct {}; 세미콜론 잊지 말기
-```
+- sequence container (선형 순서로 정렬되어 있다. 각각 위치를 통해 원소에 접근한다.)
+- 탐색 속도: $O(1)$
+- 삽입/삭제 속도: $O(N)$ (단, 마지막 원소의 경우 $O(1)$)
 
+#### operator [] , at()
 
+#### front(), back()
 
-### ★sort()
+#### operator =, assign()
 
-#### ★주의★ pred 함수 내 비교는 '>' 나  '<' 만 쓰자!  not (!) 을 했을 시 반드시 반대 결과가 나와야 하기 때문!!!★
+#### begin(), end()
 
-#### ★sort의 기본 정렬은 ★오름차순★ (즉, 0번이 제일 작다!!!)★
+#### push_back(), emplace_back() <> pop_back()
 
-#### ★★★정렬만 잘 해도 많은 문제가 간단해진다!!!★★★
+#### reserve()
 
-```cpp
-#include <algorithm>
+#### resize()
 
-bool pred(char a, char b)
-{
-    return (a > b);
-}
+#### capacity(), size(), empty()
 
-int main()
-{
-    std::string s{ "abcABC" };
-    std::sort(s.begin(), s.end(), pred);
-}
-```
+#### shrink_to_fit()
 
+#### swap()
 
+### string
 
-### ★ string ★
+#### operator =, assign(), copy()
 
-#### ★ stoi(), stoll(), stof(), stod()
+#### operator +
 
-#### ★ to_string()
-
-#### ★ == operator VS. string::compare()
-
-```cpp
-using std::string;
-
-bool foo()
-{
-    string a{ "123" };
-    string b{ "123" };
-
-    if (a == b) // 연산자 오버로딩. a.compare(b)와 동일하다!
-    {
-        return true;
-    }
-    
-    return false;
-}
-```
-
-#### string::substr()
-
-```cpp
-string a{ "my text" };
-a = a.substr(4); // a는 이제 "text"가 된다!
-```
-
-
-
-#### ★ += operator VS. string::append()
+#### operator +=, append()
 
 ```cpp
 string a{}, b{};
@@ -438,46 +344,82 @@ a.append("bc"); // 가능
 a.append(b); // 가능
 ```
 
+#### operator [], at()
 
+#### operator ==, operator !=, compare()
 
-### std::stack.top()
+#### c_str()
 
+#### find(), rfind(), string::npos ★
 
+#### replace()
 
-### vector
+#### substr() ★
+
+#### std::to_string() ★
+
+#### std::stoi(), std::stof(), ... ★
+
+### list<>
+
+#### list -> 스택이나 큐 구현 (stack이나 queue 컨테이너는 iterator가 없어서 불편할 수 있다!)
+
+- sequence container
+- doubly-linked-list 이중 연결 리스트로 구현됨.
+- 탐색 속도: $O(N)$
+- 삽입/삭제 속도: $O(1)$
+
+#### insert() <> erase(), remove(), remove_if()
+
+#### push_back(), push_front(), emplace_back(), emplace_front() <> pop_back(), pop_front()
+
+#### merge()
+
+##### (정렬된 두 리스트에서) 다른 리스트의 모든 요소를 이 리스트로 정렬된 상태로 가져온다.
+
+#### sort()
+
+#### splice()
+
+##### (정렬되지 않은 두 리스트에서) 다른 리스트에서 이 리스트로 일부분을 빼서 넣는다.
+
+#### unique()
+
+##### 동일한 값을 지니는 노드 중 하나만 남기고 나머지를 다 지운다.
+
+### deque<>
+
+#### operator [], at()
+
+#### ★ deque (iterator가 있고, random access도 가능..!!★ stack이나 queue보다 훨씬 편의성이 높다!)
+
+### queue<> -> heap ★
 
 ```cpp
-#include <string>
-#include <vector>
-#include <algorithm>
+#include <queue>
 
-using namespace std;
-
-vector<int> solution(vector<int> array, vector<vector<int>> commands)
+void foo()
 {
-    vector<int> answer{};
+    // 기본 힙은 ★최대 힙★이므로 pop_heap()을 하면 최대값이 벡터의 맨 끝으로 온다.
+    // 최소 힙을 만드려면? greater<> 를 써야한다! ★★
+    make_heap(scoville.begin(), scoville.end(), greater<int>());
     
-    for (auto& command : commands)
-    {
-        auto& i{ command[0] };
-        auto& j{ command[1] };
-        auto& k{ command[2] };
-        
-        vector<int> sub{ array.begin() + i - 1, array.begin() + j};
-        sort(sub.begin(), sub.end());
-        
-        answer.emplace_back(sub[k - 1]);
-    }
+    pop_heap(scoville.begin(), scoville.end(), greater<int>());
+    int z{ scoville.back() };
+    scoville.pop_back();
     
-    return answer;
+    pop_heap(scoville.begin(), scoville.end(), greater<int>());
+    int y{ scoville.back() };
+    scoville.pop_back();
+
+    scoville.push_back(z + y * 2);
+    push_heap(scoville.begin(), scoville.end(), greater<int>());
 }
 ```
 
 
 
-### ★★Hash★★
-
-#### hash<>
+### hash<>
 
 ```cpp
 #include <functional>
@@ -489,13 +431,15 @@ void foo()
 }
 ```
 
+### unordered_map<>
 
+- **associative container (컨테이너 상의 위치 말고 key를 통해 원소에 접근하는 컨테이너!)**
+- key와 value 쌍(std::pair)이 하나의 원소를 이룬다 (단, key값은 중복될 수 없다)
+- VS에서는 red-black tree를 이용해 구현됨?
+- 탐색 속도: $O(logN)$
+- 삽입/삭제 속도: $O(logN)$
 
-#### unordered_map // unordered_multimap
-
- unordered_map은 해시를 이용한 키 검색을 하므로 탐색 시간 복잡도가 $O(1)$이고
-
- map은 (주로) 이진 탐색 트리로 구현되므로 탐색 시간 복잡도가 $O(logN)$이다.
+#### 배열처럼 저장해야 하나 인덱스가 순서대로 주어지지 않는다! (특히, 문자열로 검색해야 한다!)
 
 ```cpp
 #include <unordered_map> // ★★ <map>이 아님에 주의하자
@@ -525,41 +469,240 @@ for (auto& row : clothes)
 
 
 
+### sort()
 
+#### ★주의★ pred 함수 내 비교는 '<' 나  ''>' 만 쓰자!  not (!) 을 했을 시 반드시 반대 결과가 나와야 하기 때문!!!★
 
-
-
-### list -> 스택이나 큐 구현 (stack이나 queue 컨테이너는 iterator가 없어서 불편할 수 있다!)
-
-### ★ deque (iterator가 있고, random access도 가능..!!★ stack이나 queue보다 훨씬 편의성이 높다!)
-
-
-
-### heap
+#### ★sort의 기본 정렬은 ★오름차순★ (즉, 0번이 제일 작다!!!)★
 
 ```cpp
-#include <queue>
-
-void foo()
+bool operator<(const SAny& a, const SAny& b)
 {
-    // 기본 힙은 ★최대 힙★이므로 pop_heap()을 하면 최대값이 벡터의 맨 끝으로 온다.
-    // 최소 힙을 만드려면? greater<> 를 써야한다! ★★
-    make_heap(scoville.begin(), scoville.end(), greater<int>());
-    
-    pop_heap(scoville.begin(), scoville.end(), greater<int>());
-    int z{ scoville.back() };
-    scoville.pop_back();
-    
-    pop_heap(scoville.begin(), scoville.end(), greater<int>());
-    int y{ scoville.back() };
-    scoville.pop_back();
+	return (a.Value < b.Value);
+}
+```
 
-    scoville.push_back(z + y * 2);
-    push_heap(scoville.begin(), scoville.end(), greater<int>());
+```cpp
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct SAny
+{
+	SAny() {}
+	SAny(int _Index, int _Value) : Index{ _Index }, Value{ _Value } {}
+
+	int Index{};
+	int Value{};
+};
+
+bool operator<(const SAny& a, const SAny& b)
+{
+	return (a.Value < b.Value);
+}
+
+bool operator>(const SAny& a, const SAny& b)
+{
+	return (a.Value > b.Value);
+}
+
+int main()
+{
+	vector<SAny> v{ {0, 3}, {1, 1}, {2, 10}, {3, 0} };
+
+	// 오름차순: operator<
+	sort(v.begin(), v.end());
+
+	// 내림차순: operator>
+	sort(v.begin(), v.end(), greater<SAny>{});
+	
+	return 0;
+}
+```
+
+```cpp
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+bool pred(char a, char b)
+{
+	char la{ (char)tolower(a) };
+	char lb{ (char)tolower(b) };
+	
+	if (la == lb)
+	{
+		return a < b;
+	}
+	else
+	{
+		return la < lb;
+	}
+}
+
+int main()
+{
+	string s{ "aAbcCB" };
+	sort(s.begin(), s.end(), pred);
+	
+	return 0;
 }
 ```
 
 
+
+### max(a, b)
+
+### min(a, b)
+
+### max_element()
+
+### min_element()
+
+### lower_bound()
+
+### upper_bound()
+
+### lexicographical_compare()
+
+
+
+## V. 알고리즘 심화
+
+### 알고리즘의 정당성 증명
+
+#### 수학적 귀납법 & 불변식 & 단정문
+
+#### 귀류법★
+
+ -> 최적의 결론이 나왔다고 가정하고, 그 반대 상황을 생각해 보기
+
+#### 비둘기집의 원리★ (<= 머리카락 수)
+
+
+
+## VI. 알고리즘 실전에서 주의할 사항
+
+### 산술 오버플로우
+
+```cpp
+int a{ 100'000 * 480'000 / 5'000 }; // 오버플로우
+int b{ 100'000 / 5'000 * 480'000 }; // 정상 작동 (계산 순서 변경 ★)
+```
+
+```cpp
+long long combination_a(long long left, long long right)
+{
+	long long result{ 1 };
+
+	if (left - right < right) right = left - right;
+
+	for (long long i = 0; i < right; ++i)
+	{
+		result *= (left - i);
+	}
+
+	for (long long i = 0; i < right; ++i)
+	{
+		result /= (right - i);
+	}
+
+	return result;
+}
+
+// 점화식 (재귀) 활용
+long long combination_b(long long left, long long right)
+{
+	if (left == right) return 1;
+	if (right == 0) return 1;
+
+	return combination(left - 1, right - 1) + combination(left - 1, right);
+}
+```
+
+### 소수 정밀도 (float보다 double을 선호하고, double보다 int를 선호하자)
+
+IEEE-754
+
+유리수 클래스를 만드는 것도 한 방법
+
+실수를 아예 안 쓸 수 있으면 안 쓰는 게 최고★
+
+```cpp
+// 틀린 예
+if (a==b) ... 
+    
+// 옳은 예
+if (fabs(a-b) < 1e-9) ...
+```
+
+
+
+### 변수 초기화
+
+```cpp
+vector<int> a{};
+while (true)
+{
+	a.clear();    
+};
+```
+
+
+
+### 근사 최대치 활용하기
+
+```cpp
+constexpr int KBigInt{ 987'654'321 };
+//constexpr float KBigFloat{ 1e+30f };
+constexpr double KBigDouble{ 1e+300 };
+```
+
+
+
+
+
+### 스트림 속도
+
+```cpp
+cin.sync_with_stdio(false);
+```
+
+### 스캐폴딩 (scaffolding) - 알고리즘 검증
+
+### 유용한 매크로
+
+```cpp
+#define FOR(i, n) for (int i = 0; i < n; ++i)
+```
+
+### cin, cout VS. printf(), scanf()
+
+```cpp
+cout << fixed;
+cout.precision(11);
+```
+
+```cpp
+ios::sync_with_stdio(false);
+```
+
+### size() 캐스팅
+
+```cpp
+for (int i = 0; i < v.size() - 1; ++i) // 문제 발생 가능성!
+for (int i = 0; i < (int)v.size() - 1; ++i) // 문제 해결!
+```
+
+
+
+## VII. 알고리즘 실전 연습 (프로그래머스)
+
+### ★★★정렬만 잘 해도 많은 문제가 간단해진다!!!★★★
+
+### 가능한 모든 조합 만들기...?
 
 ### PALINDROME ...?
 
@@ -579,29 +722,3 @@ bool is_palindrome(const string& s)
 	return true;
 }
 ```
-
-
-
-### COMBINATION
-
-```cpp
-size_t combination(size_t left, size_t right)
-{
-	size_t result{ 1 };
-
-	if (left - right < right) right = left - right;
-
-	for (size_t i = 0; i < right; ++i)
-	{
-		result *= (left - i);
-	}
-
-	for (size_t i = 0; i < right; ++i)
-	{
-		result /= (right - i);
-	}
-
-	return result;
-}
-```
-
