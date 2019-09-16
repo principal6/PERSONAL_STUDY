@@ -6,7 +6,7 @@
 
 ```c
 char
-wchar_t
+wchar_t // ...
 short
 int
 long
