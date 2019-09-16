@@ -698,11 +698,147 @@ for (int i = 0; i < (int)v.size() - 1; ++i) // 문제 해결!
 
 
 
-## VII. 알고리즘 실전 연습 (프로그래머스)
+## VII. 알고리즘 실전 연습
 
 ### ★★★정렬만 잘 해도 많은 문제가 간단해진다!!!★★★
 
-### 가능한 모든 조합 만들기...?
+### 무식하게 풀기 == 완전 탐색 (brute-force search, exhaustive search)
+
+#### 다음 단계를 예측할 수 없어 모든 경우를 확인해보아야만 알 수 있는 경우 사용한다!★
+
+#### 재귀 활용
+
+##### 기저 사례(base case)
+
+##### 문제(problem)와 부분문제(subproblem) -> 점화식!★★
+
+##### 예) 팩토리얼 계산
+
+```cpp
+// ★ 1! = 1, 0! = 1 ★
+// 4! = 4 * 3 * 2 * 1 = 4 * 3! (문제와 부분문제)
+// 3! = 3 * 2!
+// 2! = 2 * 1!
+int Factorial(int n)
+{
+	if (n <= 1) return 1;
+	return n * Factorial(n - 1);
+}
+```
+
+##### 예) 등차수열의 합
+
+```cpp
+// ★ S_1 = a ★
+// S_3 = a + a + d + a + 2d = S_2 + a + 2d (문제와 부분문제)
+// S_2 = a + a + d = S_1 + a + d
+int SumOfArithmeticProgression(int a, int d, int n)
+{
+	if (n == 1) return a;
+	return (a + (n - 1) * d) + SumOfArithmeticProgression(a, d, n - 1);
+}
+```
+
+##### 예) 등비수열의 합
+
+```cpp
+double SumOfGeometricProgression(double a, double r, int n)
+{
+	if (n == 1) return a;
+	return (a * pow(r, n - 1)) + SumOfGeometricProgression(a, r, n - 1);
+}
+```
+
+##### 예) 조합 계산하기
+
+```cpp
+// ★ n_C_0 == n_C_n == 1 ★
+// 4_C_3 = 3_C_2 + 3_C_3
+// 3_C_3 = 1 && 3_C_2 = 2_C_1 + 2_C_2
+// 2_C_2 = 1 && 2_C_1 = 1_C_0 + 1_C_1
+// 1_C_0 = 1 && 1_C_1 = 1
+long long GetCombination(long long left, long long right)
+{
+	if (left == right) return 1;
+	if (right == 0) return 1;
+
+	return GetCombination(left - 1, right - 1) + GetCombination(left - 1, right);
+}
+```
+
+##### 예) 가능한 모든 조합(combination) ★ / 중복조합(multiset) 만들기
+
+```cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void DisplayGroup(const vector<int>& List, const vector<int>& Indices)
+{
+	for (auto& i : Indices)
+	{
+		cout << '[' << List[i] << ']';
+	}
+	cout << '\n';
+	return;
+}
+
+void GetMultiset(const vector<int>& List, vector<int>& UsedIndices, int CountToGo)
+{
+	if (CountToGo == 0)
+	{
+		DisplayGroup(List, UsedIndices);
+		return;
+	}
+
+	int offset{ (UsedIndices.size()) ? UsedIndices.back() : 0 };
+	for (int i = offset; i < (int)List.size(); ++i)
+	{
+		UsedIndices.emplace_back(i);
+		GetMultiset(List, UsedIndices, CountToGo - 1);
+		UsedIndices.pop_back();
+	}
+}
+
+void GetCombination(const vector<int>& List, vector<int>& UsedIndices, int CountToGo)
+{
+	if (CountToGo == 0)
+	{
+		DisplayGroup(List, UsedIndices);
+		return;
+	}
+
+	int offset{ (UsedIndices.size()) ? UsedIndices.back() + 1 : 0 };
+	for (int i = offset; i < (int)List.size(); ++i)
+	{
+		UsedIndices.emplace_back(i);
+		GetCombination(List, UsedIndices, CountToGo - 1);
+		UsedIndices.pop_back();
+	}
+}
+
+int main()
+{
+	vector<int> used_indices{};
+
+	GetCombination({ 1, 3, 5, 7, 9 }, used_indices, 3);
+
+	GetMultiset({ 1, 3, 5, 7, 9 }, used_indices, 3);
+
+	return 0;
+}
+```
+
+
+
+#### 동적 계획법 + 점화식 활용 ??
+
+
+
+
+
+
 
 ### PALINDROME ...?
 
