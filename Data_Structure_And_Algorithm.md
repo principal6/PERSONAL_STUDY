@@ -708,7 +708,7 @@ for (int i = 0; i < (int)v.size() - 1; ++i) // 문제 해결!
 
 #### 재귀 활용
 
-##### 기저 사례(base case)
+##### 기저 사례(base case)★ -> return 을 잘 해야....
 
 ##### 문제(problem)와 부분문제(subproblem) -> 점화식!★★
 
