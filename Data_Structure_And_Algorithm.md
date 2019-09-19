@@ -830,6 +830,47 @@ int main()
 }
 ```
 
+##### 예) 순열 (permutation)
+
+```cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void DisplayPermutations(const vector<int>& List, int Count, int Depth, vector<vector<int>>& Prevs)
+{
+	for (auto& i : List)
+	{
+		if (Depth < Count - 1)
+		{
+			if (Depth == 0) Prevs.resize(Prevs.size() + 1);
+
+			Prevs.back().emplace_back(i);
+			DisplayPermutations(List, Depth + 1, Count, Prevs);
+			Prevs.back().pop_back();
+		}
+		else
+		{
+			for (auto& j : Prevs.back())
+			{
+				cout << '[' << j << ']';
+			}
+			cout << '[' << i << "]\n";
+		}
+	}
+}
+
+int main()
+{
+	vector<int> l{ 1, 3, 5, 7, 9 };
+	vector<vector<int>> prevs{};
+	DisplayPermutations(l, 3, 0, prevs);
+
+	return 0;
+}
+```
+
 
 
 #### 동적 계획법 + 점화식 활용 ??
