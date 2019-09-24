@@ -43,3 +43,7 @@ for (int i = 0; i < (int)text.length(); ++i)
 }
 ```
 
+### NeonInvader && DirectX11Tutorial
+
+- SetAnimation(): Fx의 경우 강제로 처음부터 애니메이션을 시작해야할 일이 있으므로 bool ForcedSet = false 매개변수를 추가하자.
+- CreateRectangle() 기본 옵션은 가운데 정렬된 직사각형이지만, offset이 필요한 경우도 있으므로 오버로딩 실시
