@@ -47,3 +47,9 @@ for (int i = 0; i < (int)text.length(); ++i)
 
 - SetAnimation(): Fx의 경우 강제로 처음부터 애니메이션을 시작해야할 일이 있으므로 bool ForcedSet = false 매개변수를 추가하자.
 - CreateRectangle() 기본 옵션은 가운데 정렬된 직사각형이지만, offset이 필요한 경우도 있으므로 오버로딩 실시
+
+## 2019-09-26
+
+### NeonInvader && DirectX11Tutorial
+
+CNeonInvader가 CEntityPool을 상속★받으면 모든 게 훨씬 편해진다...! ㅠㅠ 이걸 이제야 깨닫다니 -> ShakeCamera()할 때 특정 object2d는 영향을 안 받게 하고 싶다면..? 그럴 때 CEntityPool의 DrawEntitiesInAddedOrder()에 관여할 수 있으면 좋다!
