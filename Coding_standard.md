@@ -2,19 +2,13 @@
 
 ## 1. Class organization
 
-- Public -> protected -> private
+- public methods -> public members -> protected methods -> protected members -> private methods -> private members
 
 (Since most readers will be using the public interface of the class, that should be declared first, followed by the class's private implementation.)
 
 
 
 ## 2. Naming conventions
-
-Normally the first letter of every name is capitalized  (e.g. ... )
-
-Type and variable names are nouns
-
-
 
 ### 2-1. Namespace
 
@@ -81,52 +75,13 @@ bool IsTeaFresh(FTea Tea);
 
 All variables should be declared one at a time, so that a comment on the meaning of the variable can be provided.
 
-- Enum flag -> **EFLAG-**
+Avoid using prepositions `int NumberOfUsers` => `int UserCount`
 
-```cpp
-enum EFLAGRenderOption : uint8_t
-{
-	JWFlagRenderOption_UseLighting = 0b1,
-	JWFlagRenderOption_UseAnimationInterpolation = 0b10,
-	JWFlagRenderOption_DrawNormals = 0b100,
-	JWFlagRenderOption_DrawTPose = 0b1000,
-};
-
-using JWFlagRenderOption = uint8_t;
-
-int main()
-{
-	using namespace std;
-	
-	JWFlagRenderOption opt = JWFlagRenderOption_UseLighting | JWFlagRenderOption_DrawNormals;
-    
-    // Toggle
-    opt = opt ^ JWFlagRenderOption_DrawTPose;
-
-	if (opt & JWFlagRenderOption_UseLighting)
-	{
-		cout << "JWFlagRenderOption_UseLighting" << endl;
-	}
-
-	if (opt & ~JWFlagRenderOption_UseAnimationInterpolation)
-	{
-		cout << "[NOT] JWFlagRenderOption_UseAnimationInterpolation" << endl;
-	}
-
-	if (opt & JWFlagRenderOption_DrawNormals)
-	{
-		cout << "JWFlagRenderOption_DrawNormals" << endl;
-	}
-
-	return 0;
-}
-```
-
-- Enum class -> **E-**
+- bool variable names -> `b-`
+- Enum class -> `E-`
 
 ```cpp
 // enum class's default size = int (4 bytes)
-
 enum class ERasterizerState : uint8_t
 {
 	WireFrame,
@@ -145,8 +100,64 @@ enum class EComponentType : uint8_t
 };
 ```
 
-- Struct -> **S-**
-- Interface -> I-
+- Enum class flag -> `EFlags-`
+
+```cpp
+#define ENUM_CLASS_FLAG(enum_type)\
+enum_type operator|(enum_type a, enum_type b)\
+{\
+	return static_cast<enum_type>(static_cast<int>(a) | static_cast<int>(b));\
+}\
+enum_type& operator|=(enum_type& a, enum_type b)\
+{\
+	a = static_cast<enum_type>(static_cast<int>(a) | static_cast<int>(b));\
+	return a;\
+}\
+enum_type operator&(enum_type a, enum_type b)\
+{\
+	return static_cast<enum_type>(static_cast<int>(a) & static_cast<int>(b));\
+}\
+enum_type& operator&=(enum_type& a, enum_type b)\
+{\
+	a = static_cast<enum_type>(static_cast<int>(a) & static_cast<int>(b));\
+	return a;\
+}\
+enum_type operator^(enum_type a, enum_type b)\
+{\
+	return static_cast<enum_type>(static_cast<int>(a) ^ static_cast<int>(b)); \
+}\
+enum_type& operator^=(enum_type& a, enum_type b)\
+{\
+	a = static_cast<enum_type>(static_cast<int>(a) ^ static_cast<int>(b)); \
+	return a; \
+}\
+enum_type operator~(enum_type a)\
+{\
+	return static_cast<enum_type>(~static_cast<int>(a)); \
+}
+
+enum class EFlagsPosition
+{
+	None	= 0x00,
+	Top		= 0x01,
+	Bottom	= 0x02,
+	Left	= 0x04,
+	Right	= 0x08,
+};
+ENUM_CLASS_FLAG(EFlagsPosition)
+
+int main()
+{
+	EFlagsPosition eFlagsPosition{ EFlagsPosition::Top | EFlagsPosition::Bottom };
+	eFlagsPosition |= EFlagsPosition::Left;
+
+	return 0;
+}
+```
+
+- Struct -> `S-`
+
+- Interface -> `I-`
 
 ```cpp
 float TeaWeight;
@@ -158,6 +169,10 @@ UClass* TeaClass;
 USoundCue* TeaSound;
 UTexture* TeaTexture;
 ```
+
+### 2-4. Macro
+
+Upper-case only & use underscore(_)
 
 
 
@@ -209,3 +224,39 @@ UTexture* TeaTexture;
   // we know there is another tea leaf
   ++Leaves;
   ```
+
+## 4. C++
+
+### auto
+
+Avoid using `auto` except for lamda, range-based for and template
+
+### forward declaration
+
+Prefer forward declaration to including a header
+
+### variable
+
+Declare a variable right before using it, whenever possible.
+
+Use intermediate variables to avoid making expressions long. (Especially for `if` statements)
+
+Always prefer `const` variables to literals
+
+### function
+
+Avoid doing multiple things in one function. Instead, divide it into multiple sub-functions
+
+Avoid getting multiple parameters in a function. Instead, bind them into a `struct`.
+
+### loop
+
+Avoid calling the same function in a loop. Get it out of the loop.
+
+
+
+
+
+## 5. File name
+
+Avoid using prefix in file names?
