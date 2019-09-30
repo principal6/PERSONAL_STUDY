@@ -53,3 +53,31 @@ for (int i = 0; i < (int)text.length(); ++i)
 ### NeonInvader && DirectX11Tutorial
 
 CNeonInvader가 CEntityPool을 상속★받으면 모든 게 훨씬 편해진다...! ㅠㅠ 이걸 이제야 깨닫다니 -> ShakeCamera()할 때 특정 object2d는 영향을 안 받게 하고 싶다면..? 그럴 때 CEntityPool의 DrawEntitiesInAddedOrder()에 관여할 수 있으면 좋다!
+
+## 2019-10-01
+
+## DirectX113DTutorial
+
+XMMATRIX처럼 __declspec(align(16))이 된 객체는 힙에 할당 시 new/delete가 8바이트 정렬을 하여 16바이트 정렬이 깨질 수 있다. 따라서 new와 delete 연산자를 오버로딩 해야한다!
+
+```cpp
+class CAny
+{
+public:
+    void* operator new(size_t Size)
+	{
+		return _aligned_malloc(Size, 16);
+	}
+
+	void operator delete(void* Pointer)
+	{
+		_aligned_free(Pointer);
+	}
+
+public:
+    CAny() {}
+    ~CAny() {}
+// ...
+};
+```
+

@@ -104,34 +104,34 @@ enum class EComponentType : uint8_t
 
 ```cpp
 #define ENUM_CLASS_FLAG(enum_type)\
-enum_type operator|(enum_type a, enum_type b)\
+static enum_type operator|(enum_type a, enum_type b)\
 {\
 	return static_cast<enum_type>(static_cast<int>(a) | static_cast<int>(b));\
 }\
-enum_type& operator|=(enum_type& a, enum_type b)\
+static enum_type& operator|=(enum_type& a, enum_type b)\
 {\
 	a = static_cast<enum_type>(static_cast<int>(a) | static_cast<int>(b));\
 	return a;\
 }\
-enum_type operator&(enum_type a, enum_type b)\
+static enum_type operator&(enum_type a, enum_type b)\
 {\
 	return static_cast<enum_type>(static_cast<int>(a) & static_cast<int>(b));\
 }\
-enum_type& operator&=(enum_type& a, enum_type b)\
+static enum_type& operator&=(enum_type& a, enum_type b)\
 {\
 	a = static_cast<enum_type>(static_cast<int>(a) & static_cast<int>(b));\
 	return a;\
 }\
-enum_type operator^(enum_type a, enum_type b)\
+static enum_type operator^(enum_type a, enum_type b)\
 {\
 	return static_cast<enum_type>(static_cast<int>(a) ^ static_cast<int>(b)); \
 }\
-enum_type& operator^=(enum_type& a, enum_type b)\
+static enum_type& operator^=(enum_type& a, enum_type b)\
 {\
 	a = static_cast<enum_type>(static_cast<int>(a) ^ static_cast<int>(b)); \
 	return a; \
 }\
-enum_type operator~(enum_type a)\
+static enum_type operator~(enum_type a)\
 {\
 	return static_cast<enum_type>(~static_cast<int>(a)); \
 }
