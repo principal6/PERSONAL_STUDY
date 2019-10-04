@@ -14,7 +14,65 @@
 9. 포인터 (pointer), 참조형 (reference type)
 10. 상속 (inheritance) 과 다형성(polymorphism) + private, protected, public
 11. 열거형 (enum class)
-12. 
+
+
+
+## enum flags
+
+```cpp
+#define ENUM_CLASS_FLAG(enum_type)\
+static enum_type operator|(enum_type a, enum_type b)\
+{\
+	return static_cast<enum_type>(static_cast<int>(a) | static_cast<int>(b));\
+}\
+static enum_type& operator|=(enum_type& a, enum_type b)\
+{\
+	a = static_cast<enum_type>(static_cast<int>(a) | static_cast<int>(b));\
+	return a;\
+}\
+static enum_type operator&(enum_type a, enum_type b)\
+{\
+	return static_cast<enum_type>(static_cast<int>(a) & static_cast<int>(b));\
+}\
+static enum_type& operator&=(enum_type& a, enum_type b)\
+{\
+	a = static_cast<enum_type>(static_cast<int>(a) & static_cast<int>(b));\
+	return a;\
+}\
+static enum_type operator^(enum_type a, enum_type b)\
+{\
+	return static_cast<enum_type>(static_cast<int>(a) ^ static_cast<int>(b)); \
+}\
+static enum_type& operator^=(enum_type& a, enum_type b)\
+{\
+	a = static_cast<enum_type>(static_cast<int>(a) ^ static_cast<int>(b)); \
+	return a; \
+}\
+static enum_type operator~(enum_type a)\
+{\
+	return static_cast<enum_type>(~static_cast<int>(a)); \
+}
+
+enum class EFlagsPosition
+{
+	None	= 0x00,
+	Top		= 0x01,
+	Bottom	= 0x02,
+	Left	= 0x04,
+	Right	= 0x08,
+};
+ENUM_CLASS_FLAG(EFlagsPosition)
+
+int main()
+{
+	EFlagsPosition eFlagsPosition{ EFlagsPosition::Top | EFlagsPosition::Bottom };
+	eFlagsPosition |= EFlagsPosition::Left;
+
+	return 0;
+}
+```
+
+
 
 ## 1. Base
 
