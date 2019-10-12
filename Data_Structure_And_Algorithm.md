@@ -124,21 +124,31 @@ size(), capacity(), display() & push_front(), pop_front(), push_back(), pop_back
 
 ### 5. 비선형 - 트리
 
-뿌리(Root)
+**노드(Node)**
 
-부모(Parent)
+근노드(Root)
 
-자식(Child)
+부모 노드(Parent)
 
-잎(Leaf) = 자식이 없는 노드
+자식 노드(Child) => 자식의 수 == **차수(Degree)**
+
+단말 노드(Leaf) = 자식이 없는 말단 노드
 
 크기(Size) = 총 노드의 개수
 
-깊이(Depth) = 총 계층의 개수 - 1
+**레벨(Level)** - **근노드에서 특정 노드까지 경로의 길이**
+
+깊이(Depth) = 트리의 최대 레벨
+
+#### Traverse방식
 
 #### 1) 이진 트리 (Binary tree)
 
-#### 2) 이진 탐색 트리 (BST, Binary search tree)
+- 완전 이진 트리??
+
+#### 2) 이진 탐색 트리 (BST, Binary search tree) ★
+
+- 균형이 안 맞으면 탐색/삽입/삭제 시간이 O(n)이 된다...
 
 단어장, 사전
 
@@ -148,13 +158,29 @@ size(), capacity(), display() & push_front(), pop_front(), push_back(), pop_back
 
 #### 4) AVL 트리 (AVL tree) 
 
-#### 5) B트리 (B-Tree)
+#### 5) B트리 (B-Tree) ★★
 
-#### 6) R-B트리 (Red-black tree)
+- 데이터베이스, 파일 시스템에 주로 사용됨
+- 노드에 들어가는 값: key
+- 자식 개수 최대치: **order**
+- key가 4개가 최대면 Order-5 B-Tree (5차 B-Tree)
+- ★ 루트 노드는 (leaf 노드가 아닌 경우) 최소 두 개의 child 노드가 있어야 한다
+- ★ non-leaf 노드의 자식 노드가 k 개면 키는 k-1개다
+- ★ (루트 제외) non-leaf 노드는 최소 Order / 2개의 키를 가진다.
+- **★★ 모든 leaf는 같은 level에 존재해야 한다.**
+
+#### 6) R-B트리 (Red-black tree) ★★
+
+- 모든 노드는 R/B
+- **★ root와 leaf는 항상 B**
+- **★ 노드가 R이면 자식은 무조건 B**
+- **★★root에서 leaf까지 모든 경로에서 B의 갯수는 같아야 한다** (가장 짧으면 B만 나오는 경로, 가장 길면 B-R-B-R-B처럼 번갈아 나오는 경우)
 
 
 
 ### 6. 비선형 - 그래프
+
+구현은 인접 행렬(adjacent matrix)로
 
 #### 1) 그래프
 
@@ -427,6 +453,31 @@ int main()
 
 
 ### 3. 재귀 (Recursion)
+
+★★ 하노이의 탑 ★★
+
+```cpp
+void Move(int From, in To)
+{
+    std::cout << "Move from " << From << " to " << To << '\n';
+}
+
+void Hanoi(int N, int From, int By, int To)
+{
+	if (n == 1)
+	{
+		Move(From, To);
+	}
+	else
+	{
+		Hanoi(N - 1, From, To, By);
+		Move(From, To);
+		Hanoi(N - 1, By, From, To);
+	}
+}
+```
+
+
 
 ### 4. 해시 (Hash) - 해시 테이블
 
