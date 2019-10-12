@@ -214,7 +214,76 @@ $T(n)=\Theta(f(n))$
 
 시간 복잡도: $\Theta(n\log{n})$ ~ $\mathcal{O}(n^2)$★
 
+```
+// P 기준 왼쪽은 작고, 오른쪽은 커야 한다 ★
+// => S는 작거나 같으면 무시 (크면 E랑 바꿔야 한다)
+// => E는 크거나 같으면 무시 (작으면 S랑 바꿔야 한다)
+// S, E가 뒤집히면 분할 완료!
+// 5, 9, 8, 7, 1, 2, 3 ★
+   P  S!             E!
+// 5, 3, 8, 7, 1, 2, 9
+   P     S!       E!
+// 5, 3, 2, 7, 1, 8, 9
+   P        S! E!
+// 5, 3, 2, 1, 7, 8, 9 ★ (S > E)
+   P        E  S
+// 1, 3, 2, 5, 7, 8, 9
+   [     ]  P  [     ]
+            
+// 1, 3, 2
+   P  S  E
+// 1, 3, 2 ★★ (같은 경우 무시!!)
+   P  S
+      E
+// 1, 3, 2 ★★ (S > E == 분할 완료!)
+   P  S
+   E
+```
 
+```cpp
+#include <vector>
+
+using std::vector;
+using std::swap;
+
+void QuickSort(vector<int>& Data, int iLeft, int iRight)
+{
+	if (iLeft >= iRight) return;
+
+	int iPivot{ iLeft };
+	int iStart{ iLeft + 1 };
+	int iEnd{ iRight };
+
+	while (true)
+	{
+		if (Data[iStart] <= Data[iPivot]) ++iStart;
+		if (Data[iEnd] >= Data[iPivot]) --iEnd;
+
+		if (iStart > iEnd)
+		{
+			swap(Data[iPivot], Data[iEnd]);
+
+			QuickSort(Data, iLeft, iEnd - 1);
+			QuickSort(Data, iEnd + 1, iRight);
+
+			return;
+		}
+		else
+		{
+			swap(Data[iStart], Data[iEnd]);
+		}
+	}
+}
+
+int main()
+{
+	vector<int> v{ 5, 3, 8, 4, 9, 1, 6, 2, 7 };
+
+	QuickSort(v, 0, v.size() - 1);
+
+	return 0;
+}
+```
 
 #### 2) 합병 정렬 (Merge sort) ★
 
@@ -222,7 +291,57 @@ $T(n)=\Theta(f(n))$
 
 합병 시 두 개의 목록의 원소에서 조건에 맞게 합병된 공간으로 옮긴다!
 
+```cpp
+void Merge(vector<int>& V, int iLeft, int iMid, int iRight)
+{
+	vector<int> Sorted{};
+	int iLeftPartitionStart{ iLeft };
+	int iRightPartitionStart{ iMid + 1 };
 
+	while (iLeftPartitionStart <= iMid && iRightPartitionStart <= iRight)
+	{
+		if (V[iLeftPartitionStart] < V[iRightPartitionStart])
+		{
+			Sorted.emplace_back(V[iLeftPartitionStart]);
+			++iLeftPartitionStart;
+		}
+		else
+		{
+			Sorted.emplace_back(V[iRightPartitionStart]);
+			++iRightPartitionStart;
+		}
+	}
+
+	while (iLeftPartitionStart <= iMid)
+	{
+		Sorted.emplace_back(V[iLeftPartitionStart]);
+		++iLeftPartitionStart;
+	}
+
+	while (iRightPartitionStart <= iRight)
+	{
+		Sorted.emplace_back(V[iRightPartitionStart]);
+		++iRightPartitionStart;
+	}
+
+	for (int i = iLeft; i <= iRight; ++i)
+	{
+		V[i] = Sorted[i - iLeft];
+	}
+}
+
+void MergeSort(vector<int>& V, int iLeft, int iRight)
+{
+	if (iLeft == iRight) return;
+
+	int iMid{ static_cast<int>((iLeft + iRight) / 2) };
+
+	MergeSort(V, iLeft, iMid);
+	MergeSort(V, iMid + 1, iRight);
+
+	Merge(V, iLeft, iMid, iRight);
+}
+```
 
 #### 3) 힙 정렬 (Heap sort)
 
@@ -231,6 +350,35 @@ $T(n)=\Theta(f(n))$
 #### 5) 삽입 정렬 (Insertion sort) ★
 
 왼쪽이 정렬된 부분, 정렬 안 된 맨 처음 항목을 앞의 정렬된 항목과 비교해서 교환(swap)★
+
+```cpp
+#include <vector>
+
+using std::vector;
+using std::swap;
+
+void InsertionSort(vector<int>& V)
+{
+	int SortedCount{};
+	while (SortedCount < (int)V.size())
+	{
+		for (int j = 0; j < SortedCount; ++j)
+		{
+			if (V[SortedCount] < V[j]) swap(V[SortedCount], V[j]);
+		}
+		++SortedCount;
+	}
+}
+
+int main()
+{
+	vector<int> v{ 5, 3, 8, 4, 9, 1, 6, 2, 7 };
+
+	InsertionSort(v);
+
+	return 0;
+}
+```
 
 #### 6) 선택 정렬 (Selection sort)
 

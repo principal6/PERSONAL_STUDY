@@ -6,7 +6,7 @@ Period:  `2019. 09. 29. ~`
 
 IDE: Visual Studio 2019
 
-Library: DirectXTK (2019. 08. 21. ver.), Assimp (2019. 10. 01. ver.)
+Library: DirectXTK x86=>x64 (2019. 08. 21. ver.), Assimp x64 (2019. 10. 01. ver.)
 
 
 
@@ -278,40 +278,306 @@ Specular highlight (거울의 밝은빛)
 
 
 
-## #10. Assimp static model loading
+## #10. Mesh and material
+
+```
+#Core
+##CGameWindow
+###CShader
+###CObject3D (+= ★SMesh, SMaterial, SMeshBufers)
+###CTexture
+###CGameObject (-= SComponentRender::SMaterial)
+##SharedHeader.h
+##PrimitiveGenerator.h
+#DirectXTK
+#Shader
+##Header.hlsli
+##VSBase.hlsl
+##PSBase.hlsl
+##GSNormal.hlsl
+##PSNormal.hlsl
+```
 
 
 
+## #11. Assimp static model loading
+
+```
+#Core
+##CGameWindow
+###CShader
+###CObject3D (+= ★SModel)
+###CTexture
+###CGameObject
+##SharedHeader.h
+##PrimitiveGenerator.h
+##AssimpLoader.h(+★)
+#DirectXTK
+#Shader
+##Header.hlsli
+##VSBase.hlsl
+##PSBase.hlsl
+##GSNormal.hlsl
+##PSNormal.hlsl
+```
 
 
 
+## #12. Assimp animated model loading
+
+Use multiple vertex buffer (one for mesh, the other for rigging)
+
+Bone offset : Vertex (Local space -> Bone space)
+
+aiNode - transformation matrix (node space -> parent node space)
+
+Node $\supset$ Bone
+
+LoadNodes() => LoadMeshesFromNodes()
+
+```
+#Core
+##CGameWindow
+###CShader
+###CObject3D
+###CTexture
+###CGameObject
+##SharedHeader.h
+##PrimitiveGenerator.h
+##AssimpLoader.h
+#DirectXTK
+#Shader
+##Header.hlsli
+##VSBase.hlsl
+##VSAnimation.hlsl(+★)
+##GSNormal.hlsl
+##PSBase.hlsl
+##PSNormal.hlsl
+```
 
 
 
-## #11. Assimp dynamic model loading - Dynamic vertex buffer??
+```cpp
+static void SerializeNodes(const vector<SModelNode>& vNodes, uint32_t NodeIndex, uint32_t Depth, string& SerializedString)
+{
+	for (uint32_t i = 0; i < Depth; ++i)
+	{
+		SerializedString += "_ ";
+	}
 
-## #12. GPU skinned animation -> multiple vertex buffer (for rigging)
+	auto& Node{ vNodes[NodeIndex] };
+	SerializedString += "[" + to_string(Node.Index) + "]";
+	SerializedString += "[" + Node.Name + "]";
+	if (Node.ParentNodeIndex != -1) SerializedString += "[Parent: " + to_string(Node.ParentNodeIndex) + "]";
+	if (Node.bIsBone) SerializedString += "[Bone: " + to_string(Node.BoneIndex) + "]";
+	SerializedString += '\n';
 
-## #13. Sky sphere and time flow
+	for (auto& iChild : Node.vChildNodeIndices)
+	{
+		SerializeNodes(vNodes, iChild, Depth + 1, SerializedString);
+	}
+}
+```
+
+```cpp
+static string SerializeXMMATRIX(const XMMATRIX& Matrix)
+{
+	string Result{};
+
+	for (int iRow = 0; iRow < 4; ++iRow)
+	{
+		Result += '\t';
+		for (int iCol = 0; iCol < 4; ++iCol)
+		{
+			Result += "[" + to_string(Matrix.r[iRow].m128_f32[iCol]) + "]";
+		}
+		Result += '\n';
+	}
+	Result += '\n';
+
+	return Result;
+}
+```
+
+```cpp
+string SerializedWeights{ BoneNode.Name + '\n' };
+for (unsigned int iWeight = 0; iWeight < aiBone->mNumWeights; ++iWeight)
+{
+    SerializedWeights += "[Vertex: " + to_string(aiBone->mWeights[iWeight].mVertexId) + "]";
+    SerializedWeights += "[" + to_string(aiBone->mWeights[iWeight].mWeight) + "]\n";
+}
+```
+
+
+
+## #13. Sky and time
 
 구름은 따로 vertex 만들어 하늘은 하늘색, 구름은 계속 움직이게, 하늘 색도 계속 변하게!
 
 구름 일단 하나만 해서 테스트!
 
-해랑 달도 따로 vertex? 
+해랑 달도 따로 vertex?  -> 시간에 따라 원으로 회전하도록!!
+
+```
+#Core
+##CGameWindow
+###CShader
+####CConstantBuffer(+★)
+###CObject3D
+###CTexture
+###CGameObject
+##SharedHeader.h
+##PrimitiveGenerator.h (+= ★)
+##AssimpLoader.h
+#DirectXTK
+#Shader
+##Header.hlsli
+##VSBase.hlsl
+##VSAnimation.hlsl
+##VSSky.hlsl(+★)
+##GSNormal.hlsl
+##PSBase.hlsl
+##PSNormal.hlsl
+##PSSky.hlsl(+★)
+```
+
+
+
+## #14. Picking
+
+bounding sphere picking
+
+(static model) triangle picking
+
+```
+#Core
+##CGameWindow
+###CShader
+####CConstantBuffer
+###CObject3D
+###CObjectLine
+###CTexture
+###CGameObject [+= SComponentPhysics, SBoundingSphere]
+##SharedHeader.h
+##PrimitiveGenerator.h
+##AssimpLoader.h
+##(+★)Math.h
+#DirectXTK
+#Shader
+##Header.hlsli
+##VSBase.hlsl
+##VSAnimation.hlsl
+##VSSky.hlsl
+##(+★)VSLine.hlsl
+##GSNormal.hlsl
+##PSBase.hlsl
+##PSNormal.hlsl
+##PSSky.hlsl
+##(+★)PSLine.hlsl
+```
+
+
+
+## #15. 2D drawing (+ 설계 구조 정리)
+
+```
+#Core
+##CGame
+###CShader
+####CConstantBuffer
+###CObject3D
+###(+★)CObject2D
+###CObject3DLine
+###CCamera
+###CTexture
+###CGameObject3D
+###(+★)CGameObject2D
+###(+★)CGameObject3DLine
+##SharedHeader.h
+##PrimitiveGenerator.h
+##(+★)Serialization.h
+##AssimpLoader.h
+##Math.h
+#DirectXTK
+#Shader
+##Header.hlsli
+##(+★)Header2D.hlsli
+##VSBase.hlsl
+##(+★)VSBase2D.hlsl
+##VSAnimation.hlsl
+##VSSky.hlsl
+##VSLine.hlsl
+##GSNormal.hlsl
+##PSBase.hlsl
+##(+★)PSBase2D.hlsl
+##PSVertexColor.hlsl
+##PSSky.hlsl
+##PSLine.hlsl
+```
+
+
+
+## #16. 3D gizmos
+
+```
+#Core
+##CGame [+=★]
+###CShader
+####CConstantBuffer
+###CObject3D
+###CObject3DLine
+###CObject2D
+###CCamera
+###CTexture
+###CGameObject3D
+###CGameObject3DLine
+###CGameObject2D
+##SharedHeader.h
+##PrimitiveGenerator.h [+=★]
+##Serialization.h
+##AssimpLoader.h
+##Math.h
+#DirectXTK
+#Shader
+##Header.hlsli
+##Header2D.hlsli
+##VSBase.hlsl
+##VSBase2D.hlsl
+##VSAnimation.hlsl
+##VSSky.hlsl
+##VSGizmo.hlsl
+##VSLine.hlsl
+##GSNormal.hlsl
+##PSBase.hlsl
+##PSBase2D.hlsl
+##PSVertexColor.hlsl
+##PSSky.hlsl
+##PSGizmo.hlsl
+##PSLine.hlsl
+```
+
+
+
+## ## Height-map level editor
 
 
 
 
 
-### Picking and bounding volume(sphere)
+## # Height-map terrain & normal mapping
 
-### Height-map terrain & normal mapping
 
-### Frustum culling
 
-### Reflection (water, mirror)
+## # Frustum culling
 
-### RTT(Render to texture)
 
-### 2D Drawing, Billboarding???
+
+## # Animation interpolation and GPU skinned animation
+
+## # Reflection (water, mirror)
+
+## # RTT(Render to texture)
+
+## # Billboarding???
+
+## # Collision - Collision mesh★

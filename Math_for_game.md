@@ -635,7 +635,95 @@ $\hat{q}^*= (\vec{q_v},q_w)^* = (-\vec{q_v},q_w)$
 
 ## 3. 교차 (Intersection) & 충돌 (Collision)
 
-### 1) 움직이는 단위 구 - 삼각형 충돌 Unit sphere- triangle collision
+### 1) 반직선 - 단위 구 교차 (Ray - unit sphere intersection)
+
+반직선의 시작점: $O$
+
+반직선의 방향: $D$
+
+구의 중심: $C$
+
+구의 반지름: $r$
+
+
+
+구의 방정식 $(P_x-C_x)^2+(P_y-C_y)^2+(P_y-C_y)^2=r^2$ 을 벡터를 사용해 간단히 나타내면
+
+$\vec{P}=\{P_x, P_y, P_z\}$
+
+$\vec{C}=\{C_x, C_y, C_z\}$
+
+구의 방정식: $(\vec{P}-\vec{C})\bull(\vec{P}-\vec{C})=r^2$
+
+반직선의 방정식: $\vec{R}=\vec{O}+t\vec{D}$
+
+두 방정식을 연립하면
+
+$(\vec{O}+t\vec{D}-\vec{C})\bull(\vec{O}+t\vec{D}-\vec{C})=r^2$
+
+=> $(O_x+tD_x-C_x)^2+(O_y+tD_y-C_y)^2+(O_z+tD_z-C_z)^2=r^2$
+
+
+
+이때, $(O_x+tD_x-C_x)^2$
+
+$= O_x^2+tO_xD_x-O_xC_x+tO_xD_x+t^2D_x^2-tD_xC_x-O_xC_x-tD_xC_x+C_x^2$
+
+$= O_x^2 +t^2D_x^2 +C_x^2 +2tO_xD_x -2O_xC_x -2tD_xC_x$
+
+이므로
+
+
+
+$(O_x+tD_x-C_x)^2+(O_y+tD_y-C_y)^2+(O_z+tD_z-C_z)^2=r^2$
+
+=> $O_x^2 +t^2D_x^2 +C_x^2 +2tO_xD_x -2O_xC_x -2tD_xC_x +\\ O_y^2 +t^2D_y^2 +C_y^2 +2tO_yD_y -2O_yC_y -2tD_yC_y +\\ O_z^2 +t^2D_z^2 +C_z^2 +2tO_zD_z -2O_zC_z -2tD_zC_z = r^2$
+
+=> $\vec{O}\bull\vec{O} + t^2\vec{D}\bull\vec{D} + \vec{C}\bull\vec{C} + 2t\vec{O}\bull\vec{D} -2\vec{O}\bull\vec{C} -2t\vec{D}\bull\vec{C}=r^2$
+
+=> $\vec{D}\bull\vec{D}t^2 + 2(\vec{O}\bull\vec{D}-\vec{D}\bull\vec{C})t + \vec{O}\bull\vec{O} + \vec{C}\bull\vec{C} -2\vec{O}\bull\vec{C} =r^2$
+
+=> $\vec{D}\bull\vec{D}t^2 + 2(\vec{O}\bull\vec{D}-\vec{D}\bull\vec{C})t + \vec{O}\bull\vec{O} + \vec{C}\bull\vec{C} -2\vec{O}\bull\vec{C} =r^2$
+
+=> $\vec{D}\bull\vec{D}t^2 + 2(\{\vec{O}-\vec{C}\}\bull\vec{D})t + (\vec{O}-\vec{C})\bull(\vec{O}-\vec{C}) - r^2 = 0$
+
+
+
+위의 t에 관한 2차 방정식에서 판별식 $b^2-4ac \ge 0$ 일 때 근이 존재하므로 교차한다!
+
+이때 근의 공식을 이용해 t를 구하면 교차한 지점의 좌표를 구할 수 있다.
+
+
+
+### 2) 반직선- 삼각형 교차 (Ray - triangle intersection)
+
+반직선 시작점 $R_o$
+
+반직선 방향 $R_d$
+
+삼각형 평면 법선 $N$
+
+삼각형을 이루는 정점 $V0, V1, V2$
+
+평면의 방정식: $\vec{P}\bull\vec{N}+\vec{C}=0$ (단, $C=-\vec{V0}\bull\vec{N}$)
+
+반직선의 방정식: $\vec{R_o}+t\vec{R_d}$
+
+연립
+
+$(\vec{R_o}+t\vec{R_d})\bull\vec{N}+\vec{C}=0$
+
+$\vec{R_o}\bull\vec{N}+t\vec{R_d}\bull\vec{N}+\vec{C}=0$
+
+$t\vec{R_d}\bull\vec{N}=-\vec{R_o}\bull\vec{N}-\vec{C}$
+
+$t=\dfrac{-\vec{R_o}\bull\vec{N}-\vec{C}}{\vec{R_d}\bull\vec{N}}$
+
+
+
+
+
+### 3) 움직이는 단위 구 - 삼각형 충돌 Unit sphere- triangle collision
 
 처음 구의 중심의 위치: $C$
 
@@ -791,7 +879,9 @@ $c= - (\vec{c} \bull \vec{e})(\vec{c} \bull \vec{e}) + \| \vec{e} \|^2(\vec{c} \
 
 $t=\dfrac{-b \pm \sqrt{b^2-4ac} }{2a}$ 이다.
 
-### 2) 단위 구 - 타원체 충돌 (Unit sphere - ellipsoid collision) ??
+
+
+### 4) 단위 구 - 타원체 충돌 (Unit sphere - ellipsoid collision) ??
 
 다른 모든 타원체를 기준이 되는 타원체의 공간으로 변환한다
 
