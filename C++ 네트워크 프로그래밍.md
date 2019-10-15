@@ -50,6 +50,12 @@ htons()
 // Network는 ★★Big Endian★★ 사용!
 ```
 
+### octet (== 8 bits)
+
+## Maximum Transmission Unit (MTU)
+
+Datagram은 IPv4에서 최대 576 octets 까지, IPv6에서 최대 1280 octets 까지 전송 가능 ?
+
 ## getaddrinfo()
 
 ### address info (ai_)
@@ -84,4 +90,8 @@ IPPROTO_UDP
 ```
 AI_PASSIVE // 소켓 주소가 bind() 호출에서 사용됨
 ```
+
+
+
+recvfrom, sendto ??
 

@@ -272,7 +272,7 @@ $T(n)=\Theta(f(n))$
 using std::vector;
 using std::swap;
 
-void QuickSort(vector<int>& Data, int iLeft, int iRight)
+void QuickSort(vector<int>& V, int iLeft, int iRight)
 {
 	if (iLeft >= iRight) return;
 
@@ -282,32 +282,23 @@ void QuickSort(vector<int>& Data, int iLeft, int iRight)
 
 	while (true)
 	{
-		if (Data[iStart] <= Data[iPivot]) ++iStart;
-		if (Data[iEnd] >= Data[iPivot]) --iEnd;
+		while (V[iStart] <= V[iPivot] && iStart < iRight) ++iStart;
+		while (V[iEnd] >= V[iPivot] && iEnd > iLeft) --iEnd;
 
-		if (iStart > iEnd)
+		if (iStart >= iEnd)
 		{
-			swap(Data[iPivot], Data[iEnd]);
+			swap(V[iPivot], V[iEnd]);
 
-			QuickSort(Data, iLeft, iEnd - 1);
-			QuickSort(Data, iEnd + 1, iRight);
+			QuickSort(V, iLeft, iEnd - 1);
+			QuickSort(V, iEnd + 1, iRight);
 
 			return;
 		}
 		else
 		{
-			swap(Data[iStart], Data[iEnd]);
+			swap(V[iStart], V[iEnd]);
 		}
 	}
-}
-
-int main()
-{
-	vector<int> v{ 5, 3, 8, 4, 9, 1, 6, 2, 7 };
-
-	QuickSort(v, 0, v.size() - 1);
-
-	return 0;
 }
 ```
 

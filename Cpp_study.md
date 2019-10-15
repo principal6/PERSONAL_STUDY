@@ -330,6 +330,23 @@ int TwoXPlusOne(int input)
 
 위의 `TwoXPlusOne()` 함수는 정수(int) 값을 `input`이라는 이름의 변수에 입력받는다. 그리고 `input`변수에 저장된 값에 2를 곱하여 리턴(return)한다. int값에 2를 곱하면 결과 역시 int이므로 리턴자료형은 int여야 한다.
 
+## scope
+
+```cpp
+void foo()
+{
+    a = 4;
+}
+int main()
+{
+    int a{};
+    foo();
+    return 0;
+}
+```
+
+
+
 ## 포인터
 
 32비트에선 4바이트, 64비트에선 8바이트!!

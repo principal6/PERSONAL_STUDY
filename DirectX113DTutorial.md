@@ -558,13 +558,86 @@ bounding sphere picking
 
 
 
-## ## Height-map level editor
+## #17. Height-map terrain editor
+
+### ImGui 기본
+
+```cpp
+#include "imgui.h"
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+```
+
+```cpp
+IMGUI_CHECKVERSION();
+ImGui::CreateContext();
+ImGui::StyleColorsDark();
+ImGui_ImplWin32_Init(Game.GethWnd());
+ImGui_ImplDX11_Init(Game.GetDevicePtr(), Game.GetDeviceContextPtr());
+
+ImGuiIO& igIO{ ImGui::GetIO() };
+igIO.Fonts->AddFontDefault();
+ImFont* igFont{ igIO.Fonts->AddFontFromFileTTF("Asset/D2Coding.ttf", 16.0f, nullptr, igIO.Fonts->GetGlyphRangesKorean()) };
+```
+
+```cpp
+ImGui_ImplDX11_NewFrame();
+ImGui_ImplWin32_NewFrame();
+ImGui::NewFrame();
+
+ImGui::PushFont(igFont);
+
+{
+    static float f{};
+    static int counter{};
+
+    if (ImGui::Begin("Hello, world!"))
+    {
+        ImGui::Text("This is some useful text.");
+        ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+        if (ImGui::Button("Button")) counter++;
+        ImGui::SameLine();
+        ImGui::Text("counter = %d", counter);
+	}
+
+    ImGui::End();
+}
+
+ImGui::PopFont();
+
+ImGui::Render();
+ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+```
+
+```cpp
+ImGui_ImplDX11_Shutdown();
+ImGui_ImplWin32_Shutdown();
+ImGui::DestroyContext();
+```
+
+```cpp
+LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+        return true;
+
+    switch (msg)
+    {
+    case WM_SYSCOMMAND:
+        if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
+            return 0;
+        break;
+    case WM_DESTROY:
+        ::PostQuitMessage(0);
+        return 0;
+    }
+    return ::DefWindowProc(hWnd, msg, wParam, lParam);
+}
+```
 
 
 
-
-
-## # Height-map terrain & normal mapping
+## # Height-map terrain & decals?
 
 
 
