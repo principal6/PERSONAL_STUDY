@@ -92,6 +92,19 @@ Constant buffer - World, View, Projection
 
 MakeSpriteFont
 
+```
+/Sharp
+/FontStyle:Bold
+
+MakeSpriteFont "돋움체" dotumche_10_korean.spritefont /FontSize:10 /CharacterRegion:0x0-0xFF /CharacterRegion:0xAC00-0xD7AF /FastPack
+MakeSpriteFont "D2Coding" d2coding_10_korean.spritefont /FontSize:10 /CharacterRegion:0x0-0xFF /CharacterRegion:0xAC00-0xD7AF /FastPack
+
+0x0000-0x00FF
+유니코드 한글 총 11172자 0xAC00 [가] ~ 0xD7A3 [힣]
+
+
+```
+
 DepthStencilState
 
 ```
@@ -635,13 +648,37 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 }
 ```
 
+### Auto-generate MipMaps ★
+
+```cpp
+wstring wFileName{ m_TextureFileName.begin(), m_TextureFileName.end() };
+ComPtr<ID3D11Texture2D> NonMipMappedTexture{};
+CreateWICTextureFromFile(m_PtrDevice, wFileName.c_str(), (ID3D11Resource**)NonMipMappedTexture.GetAddressOf(), nullptr);
+
+D3D11_TEXTURE2D_DESC Texture2DDesc{};
+NonMipMappedTexture->GetDesc(&Texture2DDesc);
+Texture2DDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET; // D3D11_RESOURCE_MISC_GENERATE_MIPS와 반드시 같이 쓰여야 한다!★
+Texture2DDesc.CPUAccessFlags = 0;
+Texture2DDesc.MipLevels = 0; // MipLevels가 0이어야 MipLevels를 계산해 준다! (MipLevels가 1이면 가장 큰 텍스쳐 하나만 쓴다는 뜻이므로)
+Texture2DDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
+Texture2DDesc.Usage = D3D11_USAGE_DEFAULT;
+
+assert(SUCCEEDED(m_PtrDevice->CreateTexture2D(&Texture2DDesc, nullptr, m_Texture2D.GetAddressOf())));
+
+m_PtrDeviceContext->ResolveSubresource(m_Texture2D.Get(), 0, NonMipMappedTexture.Get(), 0, Texture2DDesc.Format); // MipMap이 없는 텍스쳐를 MipMap이 있는 텍스쳐로 복사해야 하므로 CopyResource()를 사용할 수 없다. (0번 텍스쳐 == 가장 큰 텍스쳐가 복사된다.)
+
+m_PtrDevice->CreateShaderResourceView(m_Texture2D.Get(), nullptr, m_ShaderResourceView.GetAddressOf());
+
+m_PtrDeviceContext->GenerateMips(m_ShaderResourceView.Get()); // 0번 텍스쳐를 기반으로 크기를 절반씩 줄이면서 텍스쳐를 생성해 준다.
+```
 
 
-## # Height-map terrain & decals?
+
+## #18. Height-map terrain
 
 
 
-## # Frustum culling
+## # Bounding volume
 
 
 
@@ -652,5 +689,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 ## # RTT(Render to texture)
 
 ## # Billboarding???
+
+## # Frustum Culling
 
 ## # Collision - Collision mesh★

@@ -621,6 +621,36 @@ JW_RELEASE(texture);
 JW_RELEASE(texture_srv);
 ```
 
+```cpp
+wstring wFileName{ m_TextureFileName.begin(), m_TextureFileName.end() };
+CreateWICTextureFromFile(m_PtrDevice, wFileName.c_str(), (ID3D11Resource**)m_Texture2D.GetAddressOf(), &m_ShaderResourceView);
+
+D3D11_TEXTURE2D_DESC Texture2DDesc{};
+m_Texture2D->GetDesc(&Texture2DDesc);
+if (Texture2DDesc.Format == DXGI_FORMAT_R8G8B8A8_UNORM)
+{
+    Texture2DDesc.BindFlags = 0;
+    Texture2DDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+    Texture2DDesc.Usage = D3D11_USAGE_STAGING;
+
+    ComPtr<ID3D11Texture2D> ReadableTexture{};
+    assert(SUCCEEDED(m_PtrDevice->CreateTexture2D(&Texture2DDesc, nullptr, ReadableTexture.GetAddressOf())));
+
+    m_PtrDeviceContext->CopyResource(ReadableTexture.Get(), m_Texture2D.Get());
+
+    UINT PixelCount{ static_cast<UINT>((size_t)Texture2DDesc.Width * Texture2DDesc.Height) };
+    vector<SPixelUNorm> vPixels{};
+    vPixels.resize(PixelCount);
+
+    D3D11_MAPPED_SUBRESOURCE MappedSubresource{};
+    if (SUCCEEDED(m_PtrDeviceContext->Map(ReadableTexture.Get(), 0, D3D11_MAP_READ, 0, &MappedSubresource)))
+    {
+        memcpy(&vPixels[0], MappedSubresource.pData, static_cast<size_t>(MappedSubresource.RowPitch) * Texture2DDesc.Height);
+        m_PtrDeviceContext->Unmap(ReadableTexture.Get(), 0);
+    }
+}
+```
+
 
 
 ### 0-3. Windows OS에서 윈도우 생성
