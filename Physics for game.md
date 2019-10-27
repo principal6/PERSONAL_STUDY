@@ -32,13 +32,25 @@ $F=ma$
 
 
 
-## 운동량(momentum 모멘텀)
+## 운동량 (momentum 모멘텀★★ => 모멘트 아님!!!)
+
+운동량 (즉 선형 운동량) = 질량 * 속도
+
+$\vec{p}=m\vec{v}\ [kg\cdot m/s]$ ★ (질량 * 속도)
+
+보통 라틴 소문자 p로 나타낸다.
+
+### 충격량
+
+특정 시간 동안 운동량의 변화 (단위가 운동량이랑 같다!)
+
+### 운동량 보존 법칙
 
 ### Types of momentum
 
 #### 1) Linear momentum 선형 모멘텀
 
-**(Linear) momentum** $\vec{p}=m\vec{v}\ [kg\cdot m/s]$ ★
+**(Linear) momentum** $\vec{p}=m\vec{v}\ [kg\cdot m/s]$ ★ (질량 * 속도)
 
 kinetic energy $k=\dfrac{1}{2}m\vec{v}^2$ (unit = $J$)
 
@@ -98,7 +110,27 @@ velocity  $\vec{v}=r\vec{\omega}$ ($r$ 은 회전축으로부터의 거리. 즉 
 
 angular impulse = $\tau \times \Delta t$
 
-## 관성 모멘트 Moment of inertia
+## 모멘트 moment ★★
+
+물리적 효과가 물리량의 분포 상태에 따라 달라질 때 정의되는 양
+
+**★모멘트 = 물리량(physical quantity) $\times$ 거리** (예, 질량 $\times$ 거리, 힘 $\times$ 거리)
+
+특정 축을 기준으로 거리를 잰다.
+
+스칼라 모멘트 $\mu_n=r^nQ$
+
+벡터 모멘트 $\mu_n=\vec{r^n}Q$
+
+(n은 차수, n이 1이면 1차 모멘트, 2면 2차 모멘트)
+
+예) **토크**(torque, 돌림힘) == moment of force ??
+
+
+
+
+
+### 관성 모멘트 Moment of inertia
 
 $\displaystyle I=\sum_{i=1}^{n}m_ir_i^2=\int r^2dm$
 
