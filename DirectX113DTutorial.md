@@ -891,6 +891,37 @@ float4 GetBezier(float4 P1, float4 P2, float4 P3, float4 N1, float4 N2, float4 N
 ##PSLine.hlsl
 ```
 
+## ##. Particle
+
+Collision particle - 불똥, 비 (collision detection 필요)
+
+non-Collision particle - 구름, 연기, 불, 폭발 (위치, 방향, 크기 정보만 필요)
+
+```
+struct SParticleData
+{
+    XMVECTOR Position
+    float Angle
+    float ScalarX
+    float ScalarY
+    ---
+    bool IsPhysical
+    float LifeTime
+    float AgingFactor
+    float 
+    XMVECTOR Acceleration
+    XMVECTOR Velocity
+}
+```
+
+point vertices & GSParticle
+
+
+
+## ##. Scene save & load
+
+Object3D list, Terrain, Sky, Light 저장하기
+
 
 
 ## #17. Height-map terrain

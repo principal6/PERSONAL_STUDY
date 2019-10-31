@@ -24,17 +24,17 @@
 
 벡터 $\vec{a}=(a_x,a_y,a_z)$를 정규화하면 $\hat{a}=\dfrac{\vec{a}}{\|\vec{a}\|}$
 
-### 2). Dot product 내적
+### 2). Dot product 스칼라 곱
 
 #### (1). 내적 계산 #1 (원소의 곱)
 
-벡터 $\vec{a}$가 $(a_x,\ a_y,\ a_z)$이고
+벡터 $\bold{a}=(a_x,a_y,a_z)$ 이고
 
-벡터 $\vec{b}$가 $(b_x,\ b_y,\ b_z)$이면
+벡터 $\bold{b}=(b_x,\ b_y,\ b_z)$ 일 때
 
-두 벡터의 내적은 $\vec{a}\bull\vec{b}$와 같이 나타내고 그 계산은 다음과 같다.
+두 벡터의 스칼라 곱은 $\bold{a}\cdot\bold{b}$와 같이 나타내고 그 계산은 다음과 같다.
 $$
-\vec{a}\bull\vec{b}=a_xb_x+a_yb_y+a_zb_z
+\bold{a}\cdot\bold{b}=a_xb_x+a_yb_y+a_zb_z
 $$
 즉, 내적의 결과는 **벡터**가 아니라 **스칼라** 값이다!!
 
@@ -43,7 +43,7 @@ $$
 #### (2). 내적 계산 #2 (삼각함수)
 
 $$
-\vec{a}\bull\vec{b}=\|\vec{a}\| \|\vec{b}\| \cos\theta
+\bold{a}\cdot\bold{b}=\|\bold{a}\| \|\bold{b}\| \cos\theta
 $$
 
 두 벡터가 단위벡터 (**정규화된 벡터)**인 경우 내적은 곧 **두 벡터의 사이각**의 cos과 같다!
@@ -55,14 +55,14 @@ $$
 #### (3). 내적 계산 #3 (결론)
 
 $$
-\vec{a}\bull\vec{b}=a_xb_x+a_yb_y+a_zb_z=\|\vec{a}\| \|\vec{b}\| \cos\theta
+\bold{a}\cdot\bold{b}=a_xb_x+a_yb_y+a_zb_z=\|\bold{a}\| \|\bold{b}\| \cos\theta
 $$
 
 
 
 #### (4). 내적 계산 증명
 
-* 피타고라스의 정리 삼각함수 버전: $\sin^2\theta+\cos^2\theta=1$
+* **피타고라스 정리**의 삼각함수 버전: $\sin^2\theta+\cos^2\theta=1$
 
   ![](Asset\trigonometry.png)
 
@@ -80,43 +80,47 @@ $$
 
 ![](Asset\vector_dot.png)
 
-$\vec{a}=(a_x,a_y)$
+$\bold{a}=(a_x,a_y)$
 
-$\vec{b}=(b_x,b_y)$
+$\bold{b}=(b_x,b_y)$
 
-$\vec{c}=\vec{a}-\vec{b}=(a_x-b_x,a_y-b_y)$
+$\bold{c}=\bold{a}-\bold{b}=(a_x-b_x,a_y-b_y)$
 
-i) 피타고라스의 정리에 의해 $\|\vec{c}\|^2=h^2+i^2$이다.
+i) 피타고라스의 정리에 의해 $\|\bold{c}\|^2=h^2+i^2$이다.
 
-​	이때, $h=\|\vec{b}\|sin\theta$이고  $i=\|\vec{a}\|-\|\vec{b}\|cos\theta$이므로
+이때, $h=\|\bold{b}\|sin\theta$이고  $i=\|\bold{a}\|-\|\bold{b}\|cos\theta$이므로
 
-​	$\|\vec{c}\|^2=(\|\vec{b}\|sin\theta)^2 + (\|\vec{a}\|-\|\vec{b}\|cos\theta)^2$이다.
+$\|\bold{c}\|^2=(\|\bold{b}\|sin\theta)^2 + (\|\bold{a}\|-\|\bold{b}\|cos\theta)^2$ 이다.
 
-​	$\|\vec{c}\|^2=\|\vec{b}\|^2sin^2\theta + \|\vec{a}\|^2-2\|\vec{a}\| \|\vec{b}\| cos\theta+\|\vec{b}\|^2cos^2\theta$
+$\|\bold{c}\|^2=\|\bold{b}\|^2sin^2\theta + \|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2cos^2\theta$
 
-​	$\|\vec{c}\|^2=\|\vec{a}\|^2-2\|\vec{a}\| \|\vec{b}\| cos\theta+\|\vec{b}\|^2(cos^2\theta+sin^2\theta)$
+$\|\bold{c}\|^2=\|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2(cos^2\theta+sin^2\theta)$
 
-​	이때, $cos^2\theta+sin^2\theta=1$이므로
+이때, $cos^2\theta+sin^2\theta=1$이므로
 
-​	$\|\vec{c}\|^2=\|\vec{a}\|^2-2\|\vec{a}\| \|\vec{b}\| cos\theta+\|\vec{b}\|^2$
+$\|\bold{c}\|^2=\|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2$
 
-ii) 피타고라스 정리에 의해 $\|\vec{c}\|^2=(a_x-b_x)^2+(a_y-b_y)^2$이고,
 
-​	따라서 $\|\vec{c}\|^2=a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2$이다.
+
+ii) 피타고라스 정리에 의해 $\|\bold{c}\|^2=(a_x-b_x)^2+(a_y-b_y)^2$이고,
+
+따라서 $\|\bold{c}\|^2=a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2$이다.
+
+
 
 iii) i)과 ii)을 조합하면
 
-​	$a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=\|\vec{a}\|^2-2\|\vec{a}\| \|\vec{b}\| cos\theta+\|\vec{b}\|^2$
+$a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=\|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2$
 
-​	이때, $\|\vec{a}\|^2=a_x^2+a_y^2$이며, $\|\vec{b}\|^2=b_x^2+b_y^2$ 이므로
+이때, $\|\bold{a}\|^2=a_x^2+a_y^2$이며, $\|\bold{b}\|^2=b_x^2+b_y^2$ 이므로
 
-​	$a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=a_x^2+a_y^2-2\|\vec{a}\| \|\vec{b}\| cos\theta+b_x^2+b_y^2$
+$a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=a_x^2+a_y^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+b_x^2+b_y^2$
 
-​	$-2a_bb_x-2a_yb_y=-2\|\vec{a}\| \|\vec{b}\| cos\theta$
+$-2a_bb_x-2a_yb_y=-2\|\bold{a}\| \|\bold{b}\| cos\theta$
 
-​	$-2(a_bb_x+a_yb_y)=-2(\|\vec{a}\| \|\vec{b}\| cos\theta)$
+$-2(a_bb_x+a_yb_y)=-2(\|\bold{a}\| \|\bold{b}\| cos\theta)$
 
-​	$a_xb_x+a_yb_y=\|\vec{a}\| \|\vec{b}\|cos\theta$
+$a_xb_x+a_yb_y=\|\bold{a}\| \|\bold{b}\|cos\theta$
 
 
 
@@ -141,7 +145,15 @@ iii) i)과 ii)을 조합하면
   * $\vec{a}\bull(\vec{a}+\vec{b})+\vec{b}\bull(\vec{a}+\vec{b})$
   * $(\vec{a}+\vec{b})\bull(\vec{a}+\vec{b})$
 
-### 3). Cross product 외적
+### 3). Cross product 벡터 곱
+
+$\bold{v}\times\bold{w}=(v_yw_z-v_zw_y,\ v_zw_x-v_xw_z,\ v_xw_y-v_yw_x)$
+
+$\bold{v}\times\bold{v}=(v_yv_z-v_zv_y,\ v_zv_x-v_xv_z,\ v_xv_y-v_yv_x)=\bold{0}$
+
+$\bold{v}\times-\bold{v}=(-v_yv_z+v_zv_y,\ -v_zv_x+v_xv_z,\ -v_xv_y+v_yv_x)=\bold{0}$
+
+
 
 ### 4). Projection 투영(사영)
 
@@ -221,9 +233,22 @@ $=(1\times0.8944+3\times0.4472,1\times(-0.4472)+3\times0.8944)$
 
 $=(0.8944+1.3416,-0.4472+2.6832)=(2.2236,2.2236)=(\sqrt{5},\sqrt{5})$
 
+## 변환(transform)
+
+### 선형 변환 (linear transform)
+
+벡터 덧셈(vector addition), 스칼라 곱셉(scalar multiplication)
+
+$\mathrm{f(\bold{x})+f(\bold{y})=f(\bold{x}+\bold{y})}$
+$k\mathrm{f(\bold{x})=f(}k\mathrm{\bold{x})}$
+
+### 평행 이동 (translation)
+
+선형 변환과 평행 이동을 같이 하려면 아핀 변환(affine transform)이 필요하다.
 
 
-## 평면의 방정식 ★★
+
+## 평면★★
 
 평면의 법선 벡터와 평면 위의 한 점을 알면 평면의 방정식을 구할 수 있다.
 
@@ -240,6 +265,17 @@ $=(0.8944+1.3416,-0.4472+2.6832)=(2.2236,2.2236)=(\sqrt{5},\sqrt{5})$
 -> $(x-x_0,\ y-y_0,\ z-z_0)\bull (a,\ b,\ c)=0\\$
 -> $a(x-x_0)+b(y-y_0)+c(z-z_0)=0\\$
 -> $ax+by+cz+d=0\\$  (단, $d=-ax_0-by_0-cz_0$)
+
+평면의 법선 벡터 $\vec{\mathrm{n}}=(a, b, c)$
+
+평면 위의 점 $\vec{\mathrm{x}}=(x, y, z)$
+
+평면 $\pi:\ \vec{\mathrm{n}} \cdot \vec{\mathrm{x}}+d=0$
+
+$\vec{\mathrm{n}} \cdot \vec{\mathrm{x}}+d>0$ 일 경우 **양의 절반 공간(positive half space)**
+$\vec{\mathrm{n}} \cdot \vec{\mathrm{x}}+d<0$ 일 경우 **음의 절반 공간(negative half space)**
+
+
 
 예) $x + y + z - 5 = 0$
 
@@ -611,31 +647,79 @@ $\therefore M_{ortho}=\begin{bmatrix}\dfrac{2}{width}&0&0&0 \\ 0&\dfrac{2}{heigh
 
 ### 정의
 
-사원수 $\hat{q}=(\vec{q_v}, q_w) = iq_x+jq_y+kq_z+q_w$이다.
+사원수 $\hat{q}$는 다음과 같이 정의될 수 있다.
+
+$\hat{\bold{q}}=(\bold{q_v},\ q_w) = iq_x+jq_y+kq_z+q_w=\bold{q_v}+q_w$
+
+$\bold{q_v}=iq_x+jq_y+kq_z=(q_x,q_y,q_z)$
 
 이때, $i=j=k=\sqrt{-1}$이고,
 
 $i^2=j^2=k^2=-1$ 이고,  $ij=-ji=k$, $jk=-kj=i$, $ki=-ik=j$ 이다.
 
+$q_w$는 사원수 $\hat{\bold{q}}$의 실수부이다.
+
+$\bold{q_v}$는 허수부이다.
+
+
+
+
+
 ### 곱셈
 
-$\hat{q}\hat{r}=(iq_x+jq_y+kq_z+q_w)(ir_x+jr_y+kr_z+r_w)$
+$\bold{\hat{q}\hat{r}}=(iq_x+jq_y+kq_z+q_w)(ir_x+jr_y+kr_z+r_w)$
 
 => $-q_xr_x +kq_xr_y -jq_xr_z +iq_xr_w \\ -kq_yr_x -q_yr_y +iq_yr_z+jq_yr_w \\ +jq_zr_x -iq_zr_y -q_zr_z +kq_zr_w \\ +iq_wr_x +jq_wr_y +kq_wr_z +q_wr_w$
 
-=> $i(q_yr_z -q_zr_y +r_wq_x +q_wr_x) \\ + j(q_zr_x -q_xr_z +r_wq_y +q_wr_y) \\ +k(q_xr_y -q_yr_x +r_wq_z +q_wr_z) \\ q_wr_w -q_xr_x -q_yr_y -q_zr_z$
+=> $i(q_yr_z -q_zr_y +r_wq_x +q_wr_x) \\ + j(q_zr_x -q_xr_z +r_wq_y +q_wr_y) \\ + k(q_xr_y -q_yr_x +r_wq_z +q_wr_z) \\ + q_wr_w -q_xr_x -q_yr_y -q_zr_z$
 
-이때 $\vec{q_v} \times \vec{r_v}=(q_yr_z-q_zr_y, q_zr_x-q_xr_z, q_xr_y-q_yr_x)$ 이고
+이때 $\bold{q_v} \times \bold{r_v}=(q_yr_z-q_zr_y, q_zr_x-q_xr_z, q_xr_y-q_yr_x)$ 이고
 
-$r_w\vec{q_v}=(r_wq_x, r_wq_y, r_wq_z)$, $q_w\vec{r_v}=(q_wr_x, q_wr_y, q_wr_z)$ 이므로
+$r_w\bold{q_v}=(r_wq_x, r_wq_y, r_wq_z)$, $q_w\bold{r_v}=(q_wr_x, q_wr_y, q_wr_z)$ 이므로
 
-$\therefore \hat{q}\hat{r}=(\vec{q_v} \times \vec{r_v} + r_w\vec{q_v} +q_w\vec{r_v}, q_wr_w -\vec{q_v} \bull \vec{r_v})$
+$\therefore \bold{\hat{q}\hat{r}}=(\bold{q_v} \times \bold{r_v} + r_w\bold{q_v} +q_w\bold{r_v},\ q_wr_w -\bold{q_v} \bull \bold{r_v})$
+
+
 
 ### 덧셈
 
-### Conjugate
+$\bold{\hat{q}+\hat{r}}=(\bold{q_v},q_w)+(\bold{r_v},r_w)=(\bold{q_v+r_v},q_w+r_w)$
 
-$\hat{q}^*= (\vec{q_v},q_w)^* = (-\vec{q_v},q_w)$
+
+
+### 켤레 Conjugate
+
+$\bold{\hat{q}}^*= (\bold{q_v},q_w)^* = (-\bold{q_v},q_w)$ (허수부 방향이 반대)
+
+
+
+### 노름 Norm
+
+$n(\bold{\hat{q}})=\sqrt{\bold{\hat{q}\hat{q}^*}}= \sqrt{\bold{\hat{q}^*\hat{q}}} =\sqrt{\bold{q_v \cdot q_v}+q_w^2}$
+
+$=\sqrt{q_x^2+q_y^2+q_z^2+q_w^2}$
+
+
+
+### 단위? identity
+
+$\bold{\hat{i}}=(\bold{0}, 1)$
+
+
+
+### 단위 사원수 unit quaternion
+
+$n(\bold{\hat{q}})=1$인 사원수 $\bold{\hat{q}}$ 를 단위 사원수라고 한다.
+
+$\bold{\hat{q}}=(\bold{q_v},q_w)$
+
+이때, $\bold{\hat{q}}=(sin\phi\bold{u},cos\phi)$ (단, $\bold{u}$는 단위 벡터) 라고 두면
+
+$n(\bold{\hat{q}}) = \sqrt{sin^2\phi\bold{u \cdot u}+cos^2\phi} = \sqrt{sin^2\phi+cos^2\phi} = 1$ 이다.
+
+
+
+특정 축을 기준으로 각도가 주어지면 회전!!
 
 
 
