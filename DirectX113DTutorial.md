@@ -922,28 +922,51 @@ point vertices & GSParticle
 
 Object3D list, Terrain, Sky, Light 저장하기
 
+## ##. GPU skinning & animation interpolation
+
+## ##. Editor to Game Engine
+
+## ##. Edge detection
+
+Full-screen quad => Render to texture (RTT)
+
+```
+Draw(6, 0)
+VS => SV_VertexID
+```
+
+Sobel kernel
 
 
-## #17. Height-map terrain
+
+## ##. Instance animation
 
 
 
 
 
-## # Bounding volume
+## ##. Global fog
+
+Distance fog, height fog => Save into scene
+
+## ##. View frustum culling on CPU!
+
+## Ambient occlusion, Bloom★
+
+## Sun shaft
 
 
 
-## # Animation interpolation and GPU skinning
+## 
 
 ## # Reflection (water, mirror)
 
-## # RTT(Render to texture)
-
-## # Billboarding???
-
 ## # Collision - Collision mesh★
 
-## # ambient occlusion
-
 ## # shadow mapping
+
+## # (Tessellation) Patch edit system - for editor
+
+## # Scene animation edit system!!
+
+Set key frames and interpolate between the key frames!!!
