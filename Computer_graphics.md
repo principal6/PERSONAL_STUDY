@@ -2,6 +2,24 @@
 
 ## 수학
 
+### 삼각함수
+
+$\sin^2\theta+\cos^2\theta=1$
+
+$\sin\theta = \cos(\dfrac{\pi}{2}-\theta)$
+
+#### double angle formula ★
+
+$\sin2\theta = 2\sin\theta\cos\theta$
+
+#### integral ★
+
+##### $\displaystyle \int \sin ax dx = - \dfrac{1}{a} \cos ax + C$
+
+
+
+
+
 ### 기저 함수 basis function
 
 ### 편미분
@@ -16,7 +34,7 @@
 
 이계 편도함수 (second-order partial derivative) $\dfrac{\partial^2 f}{\partial x \partial y}$ 가 된다.
 
-### solid angle 입체각 (단위: steradian == sr, 기호 $\Omega$)
+### solid angle 입체각 (단위: steradian == sr, 기호 $\omega,\ \Omega$)
 
  => $\Omega=\dfrac{A}{r^2}$
 
@@ -30,13 +48,27 @@
 
 ​       $\Omega_{max}=\dfrac{4 \pi r^2}{r^2}=4 \pi \ \mathrm{sr}$ 이다.
 
+#### ★ 입체각과 구좌표계(spherical coordinates)
+
+![solid_angle_into_spherical](Asset\solid_angle_into_spherical.png)
+
 ### dirac delta function
+
+### Spherical Harmonics (SH)
+
+출처:  https://computergraphics.stackexchange.com/questions/4164/what-are-spherical-harmonics-light-probes/4166
+
+ https://en.wikipedia.org/wiki/Table_of_spherical_harmonics#Real_spherical_harmonics 
+
+Fourier transform의 구(Sphere) 버전
+
+polar functions $f(\theta,\phi)$
 
 
 
 ## 과학
 
-### work 일 (단위: $J$)
+### ★ energy 에너지 (단위: $J$ = joule, 줄) ★
 
 $J=Nm$
 
@@ -46,15 +78,85 @@ $J=Nm$
 
  $m$ : meter 미터
 
-### energy 에너지
-
-와트 ($W=\dfrac{J}{s}$)
-
 ## Radiometry 복사 측정학
 
 출처:  https://www.physics-in-a-nutshell.com/article/20/what-is-radiometry 
 
  http://www.pbr-book.org/3ed-2018/Color_and_Radiometry/Radiometry.html 
+
+<Newton HIGHLIGHT 21 빛이란 무엇인가?>
+
+### 빛의 분산
+
+태양빛이 프리즘을 통과하면 여러 색깔로 나누어지는데, 이를 빛의 **분산**이라고 한다.
+
+### 파동과 빛의 파장
+
+![wave](Asset\wave.gif)
+
+peak = crest 마루
+
+trough 골
+
+wavelength 파장
+
+빛은 파장의 차이로 인해 색깔의 차이가 발생한다. 빨간색은 파장이 길고, 보라색은 파장이 짧다
+
+### refraction (빛의 굴절)
+
+굴절이 일어나는 이유? 매질에서 빛의 속도가 달라지기 때문
+
+진공에서는 약 30만 km/s, 공기 중에서도 비슷하지만
+
+물 속에서는 약 23만 km/s, 석영 유리 안에서는 약 21만 km/s가 된다 (물이나 유리의 분자가 빛의 진행을 느리게 한다.)
+
+빛의 굴절은 물질에 따라 다르며, 이를 **굴절률(Index of Refraction, IOR)**로 나타낸다.
+
+굴절률이 클수록 해당 물질 속에서 빛의 속도가 느려진다.
+
+![index_of_refraction](Asset\index_of_refraction.jpg)
+
+
+
+#### Snell's Law 스넬의 법칙
+
+##### angle of incidence 입사각
+
+##### angle of refraction 굴절각
+
+입사각을 $\theta_1$ , 굴절각을 $\theta_2$ , 굴절률을 $n$ 이라 할 때
+
+$\dfrac{\sin \theta_1}{\sin \theta_2}=n$ 이 성립한다.
+
+진공 중에서 광속을 $c$, 굴절률이 $n$ 인 물질 속에서 광속을 $v$ 라 하면
+
+$\dfrac{c}{v}=n$ 이 성립한다.
+
+
+
+### 난반사
+
+흰 종이 vs. 거울
+
+사과 빨간색
+
+빛이 흡수되면 물질 내에서 사방팔방으로 움직인다 (빛의 산란)
+
+눈에 보이는 물체는 대부분 조명의 일부를 난반사한다. -> 우리가 어디서 보든 그 물체는 보인다
+
+
+
+### 전반사
+
+빛이 굴절률이 큰 물질에서 작은 물질로 나아갈 때 입사된 빛이 100% 반사되는 현상?
+
+전반사가 일어나기 시작하는 각도 = 임계각 (물의 경우 48도)
+
+
+
+### 파동의 간섭
+
+
 
 ### electromagnetic wave 전자기파
 
@@ -67,6 +169,8 @@ $c=3.0 \times 10^8 m/s$ 이다.
   => $v$ : 진동수
 
 ​       $\lambda$ : 파장
+
+
 
 ### photon 광자
 
@@ -82,11 +186,11 @@ Radiation refers to energy that is transported by means of photons/electromagnet
 
 
 
-### radiant energy
+### radiant energy (단위: $J$)
 
 전자기파의 에너지  energy of electromagnetic waves 
 
-$Q_e=\dfrac{hc}{\lambda}$
+$Q=\dfrac{hc}{\lambda}$
 
 $h$ 플랑크 상수
 
@@ -102,131 +206,175 @@ $\lambda$ 파장
 
 
 
-### ★ radiant flux (= radiant power, 복사 출력 = 복사속, 단위: $W$ 표기: $\Phi_e$)
+### ★ radiant flux (= radiant power, 복사 출력, 표기: $\Phi$, 단위: $W$)
 
-#### 단위 시간 당 방출되는 전자기파 에너지의 양
+#### 단위 시간($1 \text{s}$) 당 방출되는 전자기파 에너지($Q$)의 양
+
+#### $\displaystyle \Phi = \dfrac{Q}{t} = \dfrac{dQ }{dt}$
+
+  => 쉽게 말해, **빛이 1초 동안 얼만큼의 에너지를 방출하는가?** 이다.
+
+  => 정말 단순화해서 생각하자면 초당 방출되는 광자의 개수라고 생각하면 된다!
 
 ![flux](Asset\radiant_flux.png)
 
-$\displaystyle \Phi_e = \lim_{\Delta t \rightarrow 0}\dfrac{\Delta Q}{\Delta t} = \dfrac{\partial Q_e }{\partial t}$ (렌더링 관점에서...★)
+어떤 광원이 1시간($3,600s$) 동안 총 $200,000J$의 에너지를 방출했고, 단위 시간 당 방출되는 에너지의 양이 일정했다면 (즉, 상수였다면) 이때 광원의 복사 출력은 다음과 같다.
 
 
 
-  => 어떤 광원이 1시간 동안 총 $200,000W$의 에너지를 방출했고, 단위 시간 당 방출되는 에너지의 양이 일정했다면 (즉, 상수였다면) 이때 광원의 복사 출력은 다음과 같다.
-
-​       $\Phi_e=\dfrac{200,000J}{3,600s} \approx 55.6 W$
+​       $\Phi=\dfrac{200,000J}{3,600s} \approx 55.6 W$
 
 
 
-만약 $\Phi_e$ 가 시간에 대한 함수로 주어지면
+만약 $\Phi$ 가 시간에 대한 함수로 주어지면
 
-반대로
+일정 시간($t_0$ 에서 $t_1$ 까지) 동안 에너지 $Q$는
 
-$\displaystyle Q_e=\int_{t_0}^{t_1}{\Phi_e \mathrm{d} t}$  이다.
+$\displaystyle Q=\int_{t_0}^{t_1}{\Phi(t) \text{d} t}$  이다.
 
-
-
-### irradiance (복사 조도, 표기: $E_e$)
-
-#### ★단위 면적($\mathrm{m^2}$) 당 표면이 받는 복사 출력의 양
-
-  => 면적이 달라져도 irradiance는 그대로다!★
+ => 적분을 뜻풀이하자면 .. $\Phi(t)$ 를 **시간에 대해 잘개 쪼개서**($\text{d}t$) **다 더하는 것**($\displaystyle \int$) 이다. ★
 
 
 
-$E_e=\dfrac{\Phi_e}{\Omega r^2}$
+### irradiance (복사 조도, 표기: $E$)
+
+#### ★단위 면적($1 \text{m}^2$) 당 표면이 받는 복사 출력 $\Phi$ 의 양
+
+( == 입사광이 단위 시간 동안 단위 면적으로 내뿜는 에너지!)
+
+#### $E=\dfrac{\Phi}{A}=\dfrac{d\Phi}{dA}$ 
+
+
 
 ![irradiance](Asset\irradiance.png)
 
-점광원일 때 (입체각이 $\Omega = 4 \pi$ 일 때) 복사 조도는
+그림을 보자.
 
-$E_e=\dfrac{\Phi_e}{4\pi r^2}$ 와 같다.
+전체 면적(짙은 초록색)에 단위 시간($1\text{s}$) 동안 총 $2.5\text{W}$ 의 복사 출력 $\Phi=2.5\text{W}$ 이 도달한다고 해보자.
 
-  => 반지름이 $r$ 인 구의 표면적은 $4 \pi r^2$ 이다.
+짙은 사각형의 가로 길이가 $4\text{m}$이고, 세로 길이가 $3\text{m}$라고 할 때,
 
-  => 즉, 입체각이 $\Omega = 4 \pi\mathrm{sr}$ 일 때, 구의 면적이 $A = 4 \pi r^2\mathrm{m^2}$ 이므로
+전체 면적은 $A=3 \times 4=12\text{m}^2$ 이다.
 
-​       단위 면적 $\mathrm{1 m^2}$ 당 복사 출력을 구하기 위해서는 $\dfrac{1}{4 \pi r^2}$  을 곱해야 한다!
+이때, 단위 면적 ($1\text{m}^2$) 에 대한 복사 출력인 복사 조도 $E_e$ 는
 
-​       (단위 면적일 때 입체각은 $\Omega=\dfrac{1}{r^2}\mathrm{sr}$ 이다!)
-
-  **=> 거리가 멀어지면 빛은 거리의 제곱에 반비례하여 감쇠(attenuation)하는데, 그 이유가 여기 있다!**
-
-복사 조도가 주어졌을 때 복사 출력은
-
-$\displaystyle \Phi_e = \int_A E_e(\bold{x})dA$ 와 같다.
+$E = \dfrac{\Phi}{A}=\dfrac{2.5\text{W}}{12\text{m}^2} = 0.2083 \text{W/m} ^2$ 이다.
 
 
 
+### radiant intensity (복사 강도, 표기: $I$)
 
+#### 단위 입체각($1\text{sr}$) 당 복사 출력($\Phi$)
 
-### radiant intensity (복사 강도, 표기: $I_e$)
+#### $I = \dfrac{\Phi}{\omega} = \dfrac{d\Phi}{d\omega}$ 
 
-#### 단위 입체각 당 복사 출력
+복사 강도 $I$ 는 단위 입체각($\hat{\omega}=1sr$) 당 복사 출력($\Phi$)을 말한다.
 
-복사 출력 $\Phi_e$ 가 주어졌을 때, 단위 입체각 당 복사 출력은
+구 전체에 대한 입체각은 $\omega_{max} = 4 \pi \text{sr}$ 이므로
 
- $I_e=\dfrac{\Phi_e}{4 \pi}$ 와 같다.
-
-
-
-![radiant_intensity](Asset\radiant_intensity.png)
-
-빛의 복사 강도를 단위 입체각이 아니라 하나의 광선에 대해서 구하면
-
-$I_e=\dfrac{\partial \Phi_e}{\partial \Omega}$ 와 같다.
-
-  => $\Omega$ : 입체각
-
-![radiant_intensity_partial](Asset\radiant_intensity_partial.png)
+단위 입체각에 대한 복사 출력은 $I=\dfrac{\Phi}{4 \pi}$ 가 된다.
 
 
 
-★복사 강도가 주어졌을 때 복사 출력은
-
-$\displaystyle \Phi_e=\int_\Omega I_e d\Omega$ 이다.
+![unit_solid_angle](Asset\unit_solid_angle.png)
 
 
 
-### ★★ radiance (복사 휘도, 표기: $L_e$) ★★
+### ★ radiance (복사 휘도, 표기: $L$) ★
 
-(빛의 방향에 수직인) 단위 면적 당 표면에서 단위 입체각으로 방사되는 복사 출력의 양
+#### 입체각에 수직인 표면에 대해, 단위 면적 및 단위 입체각 당 방사되는 복사 출력($\Phi$)의 양
 
-  => 거리가 멀어져도 (즉, 면적이 달라지고 입체각이 달라져도) radiance는 달라지지 않는다!★
+#### $L = \dfrac{\Phi}{\omega A^\perp} = \dfrac{d^2 \Phi}{ d\omega dA_{\perp}}$  
 
-$L_e = \dfrac{d^2 \Phi_e}{ d\Omega dA_{\perp}}$
+  => 이때 $A^\perp = A \cos\theta$ 이다.
 
-  => $\Omega$ : 입체각
+  => 거리가 멀어져도 radiance는 달라지지 않는다!★
 
-  => $A_{\perp}$ : (단위 구로) 투영되었고, 광선에 수직인 면적
+![radiance](Asset\radiance.png)
 
-​       이때 $A_{\perp}=A\cos\theta$  이다.
+$L = \dfrac{d^2 \Phi}{ d\omega dA_{\perp}}$  는 공간 상의 점에 대해 특정 방향을 향하는 복사 휘도를 의미한다!
 
-![sphere_area_projection](Asset\sphere_area_projection.png)
+### ★★ radiance $L$ & irradiance $E$ ★★
 
-  => 따라서 $L_e = \dfrac{d^2 \Phi_e}{ d\Omega dA\cos\theta}$ 이다.
+#### $\displaystyle E = \int L \cos\theta d\omega$
 
+  => 복사 휘도 $L$ 은 $L = \dfrac{d^2 \Phi}{ d\omega dA \cos\theta}$ 로 정의된다. **(그냥 나누기 아니고 미분!)**
 
+​        이때 복사 휘도 $L$ 을 $\omega$ 에 대해 적분하면
 
-이때 $L_ed\Omega dA\cos\theta = d\Phi_e$ 이다
+​        $\displaystyle \int L d\omega = \dfrac{d\Phi}{dA \cos\theta}$ 이다.
 
-  => $\displaystyle \Phi_e=\int_{A}\int_{\Omega}L_e(\bold{x}, \Theta)dA\cos\theta d\Omega$  
+​        $\cos\theta$는 상수이므로 양변에 곱하면
 
-  => $\displaystyle d\Phi_e = dA\int_{\Omega}L_e(\bold{x}, \Theta)\cos\theta d\Omega$  
+​        $\displaystyle \int L \cos\theta d\omega = \dfrac{d\Phi}{dA}$  이고,
 
+​        복사 조도 $E$ 는 $E = \dfrac{d\Phi}{dA}$ 로 정의되므로
 
-
- $\displaystyle \Phi_e=\int_{A}\int_{\Omega}L_e(\bold{x}, \Theta)dA\cos\theta d\Omega$  
-
-(L_e는 )
-
-
+​        $\displaystyle E = \int L \cos\theta d\omega$ 이다! ★★
 
 
 
+#### diffuse light의 radiance와 irradiance
+
+컴퓨터 그래픽스에서 사용할 입체각의 범위는 보통 상반구(upper hemisphere)로 한정된다
+
+(하반구에서 오는 빛은 평면에 의해 차단된 것으로 생각하자!)
+
+diffuse light는 반구의 모든 방향으로 동일하게 퍼져나가는 빛이다.
+
+따라서 복사 조도($E$)와 복사 휘도($L$)의 관계식 $\displaystyle E = \int L \cos\theta d\omega$ 에서
+
+적분할 $\omega$의 범위는 반구 전체 ($\omega \in \Omega$, $\Omega=hemisphere$) 이다.
+
+$\displaystyle E = \int_{\Omega}L \cos\theta d\omega$
+
+이때 입체각을 구좌표계로 나타내면
+
+  $d\omega = \sin(\theta) d\theta d\phi$
+
+  (단, $\theta=[0,\dfrac{\pi}{2}], \phi=[0,2\pi]$)   이므로
+
+$\displaystyle E = \int_{0}^{\frac{\pi}{2}}d\theta \int_{0}^{2 \pi} L \cos\theta \sin\theta d\phi$ 이다.
+
+여기서 $\phi$ 는 어떤 함수에도 매개변수가 아니므로 $\displaystyle \int_{0}^{2 \pi}  d\phi = 2\pi$ 이고,
+
+$\displaystyle E = 2\pi \int_{0}^{\frac{\pi}{2}} L \cos\theta \sin\theta d\theta$ 이다.
+
+이때, 삼각함수의 **double angle formula**에 의해
+
+  $2\cos\theta\sin\theta=sin(2\theta)$ 이므로
+
+$\displaystyle E = \pi \int_{0}^{\frac{\pi}{2}} L \sin(2\theta) d\theta$ 이다.
+
+이제 $\sin$ 함수에 대해 적분을 하면
+
+$E = \pi \left[-\dfrac{1}{2} \cos(2\theta) \right]_0^{\frac{\pi}{2}} L d\theta$ 이고,
+
+$\left[-\dfrac{1}{2} \cos(2\theta) \right]_0^{\frac{\pi}{2}} = -\dfrac{1}{2} \cos\pi -\left( -\dfrac{1}{2} \cos0 \right) = 0 - (-1) = 1$  이므로
+
+$E = \pi L$  이고, $L=\dfrac{E}{\pi}$ 이다.
 
 
-## 공통 용어
+
+#### specular light의 radiance와 irradiance
+
+specular light는 반구 전체 방향에서 들어오는 빛에 대해, 한 방향으로만 반사되는 빛을 말한다.
+
+따라서 복사 조도($E$)와 복사 휘도($L$)의 관계식 $\displaystyle E = \int L \cos\theta d\omega$ 에서
+
+적분할 $\omega$의 범위는 반구 전체 ($\omega \in \Omega$, $\Omega=hemisphere$) 이다.
+
+ ==> $L=\dfrac{E}{\pi}$
+
+이때 특정 방향에 대한 복사 휘도 $L$  중에서 성공적으로 반사되는 빛의 비율을
+
+함수 $f_r$ 라고 정의하면, $L_s = f_rL$ ($L_s$ 는 specular light의 복사 휘도)
+
+$L_s = f_rL = \dfrac{f_rE}{\pi}$
+
+즉, $L_s = \dfrac{f_rE}{\pi}$ 이다.
+
+
 
 ### attenuation 감쇠
 
@@ -235,90 +383,6 @@ $L_e = \dfrac{d^2 \Phi_e}{ d\Omega dA_{\perp}}$
 ### index of refraction (IOR) 굴절율? 굴절지수?
 
 matt = mat = matte 무광
-
-
-
-## Photometry 측광학
-
-### luminous flux (광속 光束, 단위: lumen == lm, 표기 $\phi_v$) 
-
-#### 단위 시간 당 광원에서 방출되는 빛의 양. 즉, 방향에 관계 없이★ 방출되는 빛의 총량!
-
-**광속은 '빛의 묶음'이다. 속도가 아니라 속수무책 할 때 '속'!**
-
- =>  $\phi_v\ \ =\ I_v \ \ \times \ \Omega$ 
-
-​       $[lm] = [cd] \times [sr]$ 
-
-
-
-### luminous intensity (광도, 단위: candela == cd, 표기: $I_v$)
-
-#### 특정 방향으로 단위 입체각($\mathrm{sr}$) 당 방출되는 광속($\phi$)의 양. (즉, 모든 방향을 고려하는 게 아니고 딱 한 방향(직선)만 고려하는 것이다 ★★)
-
-​      $I_v=\dfrac{\phi_v}{\Omega}$
-
-​      **( 촛불 하나의 광도 = 1 candela )**
-
-​      ( 촛불은 점 광원의 대표적인 예 )
-
-
-
-촛불과 같은 **점 광원**은 빛을 **전방향**(구체)으로 방출하므로 방출되는 빛의 **입체각**은 $\Omega = 4\pi \ \mathrm{sr}$ 이다. 
-
-따라서 점 광원의 **광도**는 $I_v = \dfrac{\phi_v}{4 \pi}$  이고,
-
-점 광원의 **광속**은 $\phi_v=I_v \times 4 \pi$ 이다.
-
-  ( 따라서 촛불 하나의 **광속**은 $\phi_v=4 \pi \quad \approx (12.57\ \mathrm{lm})$ 이다. )
-
-
-
-### illuminance 조도 (단위: lux, 표기: $E_v$)
-
-#### 단위 면적($\mathrm{m^2}$) 당 표면에 입사되는 광속(lm)의 양
-
-  => $E_v \quad =\  \dfrac{\phi_v}{A}$
-
-​        $\mathrm{[lux]\  =\dfrac{[lm]}{[m^2]}}$
-
-
-
-#### 램버트 코사인 법칙 (Lambert's cosine law)
-
-기울기에 따라 조도의 양이 달라지는 것을 계산한다.
-
-기울기 $\theta$에 대해 조도 $E_v$ 는 $cos\theta$ 에 비례한다.
-
-
-
-#### 점광원의 조도
-
-점광원의 광도는  $I_v=\dfrac{\phi_v}{4 \pi}$ 이고, 광속은 $\phi_v= 4 \pi I_v$ 이다.
-
-이때 조도 $E_v=\dfrac{\phi_v}{A}$ 인데,
-
-구의 전체 면적은 $4 \pi r^2$ 이므로
-
-$E_v=\dfrac{4 \pi I_v}{4 \pi r^2}$ 이다.
-
-즉, $E_v=\dfrac{I_v}{r^2}$ 이다.
-
-$I_v$를 다시 바꿔 쓰면
-
-$E_v=\dfrac{\phi_v}{4 \pi r^2}$ 이다.
-
-램버트 코사인 법칙에 따라 조도 $E_v$는 기울기 $\theta$ 에 대해 $cos\theta$ 에 비례하므로
-
-점광원의 조도는 $E_v=\dfrac{\phi_v \cos\theta}{4 \pi r^2}$ 이다.
-
-
-
-### luminance 휘도 (표기: $L_v$)
-
-####   단위 면적($\mathrm{m^2}$) 당 물체 표면에서 주어진 방향으로 방사되는 광도($\mathrm{cd}$)의 양
-
-  => 단위 면적 ($\mathrm{m^2}$) 당 (방사되는) 광도($\mathrm{cd}$)의 양.
 
 
 
@@ -342,8 +406,6 @@ $E_v=\dfrac{\phi_v}{4 \pi r^2}$ 이다.
 
 
 
-**(texture) splatting 여러 레이어의 텍스쳐를 결합!**
-
 participating medium 참여 매질
 
 
@@ -352,27 +414,13 @@ participating medium 참여 매질
 
 optical depth 광학적 깊이
 
+spectral power distribution (SPD)
 
+index of refraction (IOR)
 
-**LUT (Look-Up Texture)**
+ => 매질을 지나는 빛의 속도 & 매질이 흡수하는 빛의 양
 
-Image Based Lighting ★
-
-
-
-### Spherical Harmonics (SH)
-
-출처:  https://computergraphics.stackexchange.com/questions/4164/what-are-spherical-harmonics-light-probes/4166
-
- https://en.wikipedia.org/wiki/Table_of_spherical_harmonics#Real_spherical_harmonics 
-
-Fourier transform의 구(Sphere) 버전
-
-polar functions $f(\theta,\phi)$
-
-
-
-## Light propagation 빛의 전파
+### Light propagation 빛의 전파
 
 특정 참여 매질에 대한 빛의 전파는 산란(scattering), 흡수(absoprtion), 방출(emission)으로 설명된다.
 
@@ -382,7 +430,7 @@ polar functions $f(\theta,\phi)$
 
 $\beta_\mathrm{Ex}=\beta_\mathrm{Sc}+\beta_\mathrm{Ab}$ 과 같다. (흡수와 산란으로 인한 에너지 손실을 의미한다.)
 
-### 광학적 깊이 (optical depth)
+#### 광학적 깊이 (optical depth)
 
 광학적 깊이 $\tau$ 는
 
@@ -396,17 +444,49 @@ $\displaystyle \bold{r}=\dfrac{\bold{P_1-P_0}}{\|\bold{P_1-P_0}\|}$ , $s$는 $\b
 
 광학적 깊이가 $\tau$인 매질을 지나는 빛은 그 세기가 $e^{-\tau}$ 의 곱만큼 줄어든다.
 
+## HDR (High Dynamic Range)
+
+https://learnopengl.com/Advanced-Lighting/HDR 
+
+https://gamedev.stackexchange.com/questions/62836/does-hdr-rendering-have-any-benefits-if-bloom-wont-be-applied 
+
+### LDR (Low Dynamic Range)
+
+### Tone mapping (HDR -> LDR)
+
+#### Reinhard tone mapping
+
+
+
+#### Exposure tone mapping
+
 
 
 ## PBR (Physically Based Rendering, 물리 기반 렌더링)
 
-참고:  https://learnopengl.com/PBR/Theory
+참고:	https://learnopengl.com/PBR/Theory
 
-PBR 기술은 모두 미세면 이론(Microfacet theory)에 기반을 둔다.
+​			http://www.codinglabs.net/article_physically_based_rendering.aspx 
+
+​			https://github.com/bartwronski/CSharpRenderer/blob/master/shaders/optimized-ggx.hlsl
+
+​			https://computergraphics.stackexchange.com/questions/8658/ggx-brdf-is-greater-than-1
+
+​			https://github.com/Nadrin/PBR/blob/master/data/shaders/hlsl/pbr.hlsl ★
+
+​			https://google.github.io/filament/Filament.html
+
+### 용어
+
+(texture) splatting 여러 레이어의 텍스쳐를 결합!
+
+LUT (Look-Up Texture)
+
+
 
 ### Microfacet theory (미세면 이론)
 
-미세면 이론에서는 모든 표면(surface)이 아주 가까이서 살펴보면 작은 거울(완전 평평하고, 빛을 반사만 시킨다)로 이루어져 있다고 여긴다.
+미세면 이론: 모든 표면(surface)은 아주 가까이서 살펴보면 작은 거울(완전 평평하고, 빛을 반사만 시킨다)의 모임으로 이루어져 있다.
 
 표면이 거칠면(rough) 이 작은 면들이 들쑥날쑥하게 배치되어 있는 것이고, 표면이 부드러우면(soft) 평평하게 배치되어 있는 것이다.
 
@@ -416,67 +496,71 @@ PBR 기술은 모두 미세면 이론(Microfacet theory)에 기반을 둔다.
 
 
 
-가시광선은 보통 파장(wavelength)이 400 ~ 700 nm이다!
-
-spectral power distribution (SPD)
-
-index of refraction (IOR)
-
- => 매질을 지나는 빛의 속도 & 매질이 흡수하는 빛의 양
-
-
-
 ### rendering equation ★
 
 $L$ radiance
 
-$L_i$ 
+$L_i$ incoming radiance
 
-$L_e$ 
+$L_e$ emitted radiance
 
-$L_o$ outgoing light
+$L_o$ outgoing radiance
 
 $\displaystyle L_o(\bold{x},\ \omega_o, \lambda, t) = L_e(\bold{x},\ \omega_o, \lambda, t) + \int_{\Omega}{f_r(\bold{x}, \omega_i, \omega_o, \lambda, t) L_i(\bold{x}, \omega_i, \lambda, t) (\omega_i \cdot n) d\omega_i}$
 
    $\bold{x}$ : 공간 내 위치
 
-   $\bold{n}$ : $\bold{x}$의 표면 법선
+   $\bold{n}$ : macrosurface의 법선(normal)
 
    $\lambda$ : 파장(wavelength)
 
 ​    $t$ : 시간
 
-   $\Omega$ : 단위 반구(hemisphere)
+   $\Omega$ : 단위 반구(unit hemisphere)
 
    $\omega_i$ : 입사되는 빛의 방향
 
-   $\omega_o$ : 반사?되는 빛의 방향
+   $\omega_o$ : 방사되는 빛의 방향
 
-   $f_r(\bold{x}, \omega_i, \omega_o, \lambda, t)$ : BRDF
-
-
-
-파장과 시간을 무시?
-
-$L_o(\bold{x},\ \omega_o) = L_e(\bold{x},\ \omega_o) + L_r(\bold{x},\ \omega_o)$
-
-  => $L_e(\bold{x}, \omega_i)$ 방출된 빛의 양
-
-​       $L_r(\bold{x}, \omega_i)$ 반사된 빛의 양
-
-$\displaystyle L_r(\bold{x},\ \omega_o) = \int_{\Omega}{f_r(\bold{x}, \omega_i, \omega_o) L_i(\bold{x}, \omega_i) (\omega_i \cdot n) d\omega_i}$
-
-  => 이때 $\theta_i$ 을 입사각이라 두면 $\omega_i \cdot n = \cos\theta_i$ 이다.
+   $f_r(\bold{x}, \omega_i, \omega_o, \lambda, t)$ : **BRDF**
 
 
+
+#### reflectance equation
+
+rendering equation에서 위치, 파장, 시간을 무시하자.
+
+(위치는 항상 반구의 중앙으로 잡고, 파장은 어차피 rgb로 한정되어 있고, 시간은 frame 단위로만 볼 것이므로)
+
+$\displaystyle L_o = L_e + \int_{\Omega}{f_r(\omega_i, \omega_o) L_i \omega_i \cdot n d\omega_i}$
+
+reflectance equation에서는 표면에서 방출되는 빛은 없다고 가정한다. (발광 표면을 고려하지 않음..)
+
+$\displaystyle L_o = \int_{\Omega}{f_r(\omega_i, \omega_o) L_i \omega_i \cdot n d\omega_i}$
 
 
 
 ### BRDF (Bidirectional Reflectance Distrubution Function)
 
- http://graphicrants.blogspot.com/2013/08/specular-brdf-reference.html 
+http://graphicrants.blogspot.com/2013/08/specular-brdf-reference.html 
 
-BDRF 종류에는 여러 개가 있다...
+BRDF 계산한다고 끝이 아니다..! BRDF는 rendering equation의 일부일 뿐!!! ★
+
+
+
+#### 용어
+
+$n$ : macrosurface의 법선
+
+$m$ : microsurface의 법선
+
+$l$ : macrosurface 위의 한 점에서 빛의 방향으로 향하는 단위 벡터
+
+$v$ : macrosurface 위의 한 점에서 눈의 방향으로 향하는 단위 벡터
+
+$h$ : $l$ 과 $v$ 의 중간을 향하는 단위 벡터
+
+(참고: 미세면의 법선은 $m$ 이지만, 이 중에 빛이 눈에 도달하는 경우는 $m = h$ 일 때 뿐이다! ★★)
 
 
 
@@ -486,35 +570,63 @@ $f(l,v) = k_d f_{diff} + k_s f_{spec}$
 
   => 금속일 경우 $k_d=0$ 이어야 한다! (금속은 specular만!)
 
-diffuse는 그냥 Lambert 사용해도 될 거 같다... 다른 모델들이랑 겉보기에 크게 차이가 없어서!
+금속성(metalness)를 $k_m = [0, 1]$  이라 할 경우
+
+$f(l,v) = lerp(k_d f_{diff},\ k_s f_{spec},\ k_m)$  이라고 할 수 있다?
 
 
+
+#### Diffuse BRDF
+
+##### Lambertian diffuse BRDF
+
+diffuse light의 radiance는 전체 irradiance를 $\pi$ 로 나눈 값이다.
 
 $f_{diff}(l,v)=\dfrac{\rho_d}{\pi}$
 
- => 빛이 반사되는 방향에 상관 없이 상수..!
+ => 빛이 반사되는 방향에 상관 없이 상수..! (diffuse 자체의 정의)
 
  => $\rho_d$ 는 diffuse albedo (r, g, b) 
 
- => 에너지 보존법칙을 지키기 위해 $\pi$ 로 나눠야 한다.
+ => 에너지 보존법칙을 지키기 위해 $\pi$ 로 나눠야 한다. (어느 한 방향에 대한 값이 아니고, 반구 내 모든 방향에 대한 값이기 때문에 $\pi$로 나눈다 <= 적분으로 증명)
 
 
 
+##### Harahan-Krueger diffuse BRDF
+
+ => 피부 subsurface scattering 구현할 때 쓰자
 
 
-$f_{spec}(l, v) = \dfrac{F(l, h)G(l, v, h)D(h)}{4(n \cdot l)(n \cdot v)}$
 
+#### Specular BRDF
 
+참고:	http://graphicrants.blogspot.com/2013/08/specular-brdf-reference.html 
 
-#### $F(l,h)$, Fresnel reflectance function
+​			https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/PhysicallyBased/index.html 
 
- https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/PhysicallyBased/index.html 
+##### Cook-Torrance specular BRDF
 
-$F(l,h)$ = fresnel reflectance (반사된 입사광 양 : 굴절된 입사광 양) 
+$f_{spec}(l, v) = \dfrac{F(l, m)}{\pi} \dfrac{G(l, v, m) D(m)}{(n \cdot l)(n \cdot v)}$
+
+  => macrosurface의 법선 $n$ 은 주어지므로, 상수값으로 간주한다.
+
+​       microsurface의 법선 $m$ 은 $l$ 과 $v$ 의 half-way 벡터이므로 (l, v)에 대한 상수값으로 간주한다.
+
+​       따라서 $f_{spec}$ 은 빛의 방향 $l$ 과 눈의 방향 $v$ 에 대한 함수다.
+
+##### GGX (and after) specular BRDF
+
+$f_{spec}(l, v) = \dfrac{F(l, m)G(l, v, m)D(m)}{4(n \cdot l)(n \cdot v)}$
+
+  => 분모의 $4$ 는 Cook-Torrance BSDF의 $\pi$ 에 해당한다.
+
+##### $F(l,m)$, Fresnel reflectance function
+
+$F(l,m)$ = fresnel reflectance (반사된 입사광 양 : 굴절된 입사광 양) 
 
 => 미세면은 모두 거울이므로 굴절을 무시한다!
 
-=> 즉, 미세면에 충돌한 빛 중 몇 퍼센트의 빛이 반사되는가? 를 말해준다.
+=> 즉, 미세면에 충돌한 빛 중 몇 퍼센트의 빛이 **반사**되는가를 말해준다. (즉, 재질의 **specular color**를 결정한다!)
 
 => 입사각이 90도에 가까워질 때에만 급격하게 변화하고, 0~50도까지는 상수에 가까울 정도로 변화가 거의 없다..!
 
@@ -524,8 +636,6 @@ $F(l,h)$ = fresnel reflectance (반사된 입사광 양 : 굴절된 입사광 �
 
 => $F_0=F(0^\circ)$
 
-=> 이게 바로 재질의 specular color(정반사 색상?)이다.
-
 금속의 경우 이 값이 대체로 높고, 비금속(dielectric)의 경우 (그레이 스케일로) 굉장히 낮다...
 
 ![PBS_65](Asset/SIGGRAPH2015_PBS_Physics and Math of Shading_Naty_Hoffman_65.png)
@@ -534,55 +644,51 @@ $F(l,h)$ = fresnel reflectance (반사된 입사광 양 : 굴절된 입사광 �
 
 비금속의 경우 다이아몬드가 흔하지는 않으므로... 대부분 4%정도의 $F_0$ 값을 갖는다고 생각할 수 있으므로 단순화할 수 있다.
 
-50도 이후에 변화가 있는 부분은 이를 approximate할 함수를 정의해야 한다
+하지만 50도 이후에는 변화가 있으므로 이를 approximate할 함수를 찾아야 한다...
 
-=> $F_{Schlick}$ 를 사용하면 0~90도 전체를 함수화할 수 있다.
+###### Schlick Fresnel approximation
 
-##### Schlick Fresnel approximation...
+$F_{Schlick}$은 $F_0$ ( $F_0 = F(0^\circ)$ 이다.) 을 매개변수로 받는 함수로, 법선 $n$ 에 대해
 
- $F_{Schlick}$은 $F_0$을 매개변수로 받는 함수로,
+$F_{Schlick}(F_0, l, n)=F_0+(1-F_0)(1-l \cdot n)^5 \quad \text{where }  l \cdot n = 0,\ \text{if } \ l \cdot n<0$
 
- => $F_{Schlick}(F_0, l, n)=F_0+(1-F_0)(1-l \cdot n)^5$
+와 같이 정의된다.
 
-​     ($l \cdot n = 0,\ \mathrm{where}\ \ n \cdot l<0$)
+미세면의 법선 $m$ 에 대해서도 동일하므로
 
- 와 같이 정의된다.
-
-미세면 이론에서는 n이 미세면의 법선인 m이고, 이 중에 눈에 들어오는 빛은 m = h일 때이므로
-
- $F_{Schlick}(F_0, l, h)=F_0+(1-F_0)(1-l \cdot h)^5$
-
-​     ($l \cdot h = 0,\ \mathrm{where}\ \ n \cdot h<0$)
-
- $F_{Schlick}(F_0, l, h) = \begin{cases} F_0+(1-F_0)(1-l \cdot h)^5 \\ F_0+(1-F_0) \end{cases}$
+$F_{Schlick}(F_0, l, m) = \begin{cases} F_0+(1-F_0)(1-l \cdot m)^5 & \text{where } (l \cdot m > 0) \\ 1 & \text{else } \end{cases}$
 
 와 같이 정의할 수 있다.
 
-(l과 h가 같다면, 즉 입사각이 0도라면 $l \cdot h=0$ 이므로 $F_0$임을 확인할 수 있다!)
+이때 $l=m$ 라면 (즉, 입사각이 0도라면)  $l \cdot m=1$ 이므로 $F_{Schlick}=F_0$ 이 성립함을 확인할 수 있다!
+
+입사각이 90도라면 $l \cdot m = 0$ 이므로 1이다!
+
+###### Cook-Torrance
 
 
 
-#### $D(h)$, Normal distribution function (NDF)
+##### $D(m)$, Normal distribution function (NDF)
 
-$D(h)$, Normal distribution function은
+**정규 분포가 아니라, 정말로 법선(normal)의 분포를 나타내는 함수이다! ★**
 
-총 미세면 중 얼만큼의 미세면이 눈을 향하고 있는가?를 알려준다.
+총 미세면 중 얼만큼의 미세면이 눈을 향하고 있는가에 대한 통계적인 수치이다.
 
-Phong NDF, Blinn-Phong NDF, Beckmann NDF, Trowbridge-Reitz NDF(== GGX NDF) 등등
+ $0 \le D(m) \le \infin$ 을 만족시킨다.
 
-##### Beckmann NDF
+Phong NDF, Blinn-Phong NDF, Beckmann NDF, Trowbridge-Reitz NDF(== GGX NDF) 등등 여러 가지 모델이 있다..
+
+###### Beckmann NDF
 
 $\Lambda(a) \approx \begin{cases}{} \dfrac{1-1.259a+0.396a^2}{3.535a+2.181a^2}, & (a < 1.6) \\ 0, & (a \ge 1.6) \end{cases}$
 
 
 
-##### GGX (Trowbridge-Reitz) NDF ★
+###### GGX (Trowbridge-Reitz) NDF ★
 
-$D(h)=\begin{cases} \dfrac{\alpha^2}{\pi(1+(n \cdot h)^2(\alpha^2 -  1))^2} & \text{where } n \cdot h>0 \\ 0 & \text{else} \end{cases}$
+$D(m)=\begin{cases} \dfrac{\alpha^2}{\pi(1+(n \cdot m)^2(\alpha^2 -  1))^2} & \text{where } n \cdot m > 0 \\ 0 & \text{else} \end{cases}$
 
-  => $n$ 은 macrofacet의 법선..?
-
-​       $\alpha$ 는 표면의 거침(roughness)을 나타내는 매개변수로,
+  => $\alpha$ 는 표면의 거침(roughness)을 나타내는 매개변수로,
 
 ​       $\alpha = r^2$로 두고 $r$을 0에서 1사이의 선형 값으로 지정하는 것이 좋다
 
@@ -596,17 +702,31 @@ GGX NDF는 shape-invariant이므로 람다 함수가 단순하다
 
  
 
-#### $G(l, v, h)$ Geometry function
+##### $G(l, v, m)$ Geometry function
 
-shadowing masking function이라고도 불린다
+shadowing-masking function이라고도 불린다
 
-전체 미세면 중 가리거나 그늘지지 않은 미세면(즉, 눈에 빛을 반사시키는) 미세면의 비율이다.
+전체 미세면 중 가리거나 그늘지지 않은 미세면(즉, 눈까지 빛을 도달시키는) 미세면의 비율이다.
 
 물리적으로는 미세면의 법선이 halfway vector여도 가려지거나(masked) 그늘지면(shadowed) 빛이 눈까지 오지 못할 수도 있고, 올 수도 있다...!!
 
+###### 1) 비율이므로 $0 \le G(l, v, m) \le 1$ 을 만족시킨다.
+
+###### 2) (양방향에 대해) 대칭이기 때문에 $G(l, v, m) = G(v, l, m)$ 를 만족시킨다. 
+
+###### 3) macrosurface가 뒷면이거나 microsurface가 뒷면이면 보이지 않으므로 $(l \cdot m)(l \cdot n) \le 0$ 이거나 $(v \cdot m)(v \cdot n) \le 0$ 일 경우 $G(l, v, m)=0$ 이다.
+
+
+
 여러 함수가 있지만 Smith G 함수가 제일 수학적으로/물리적으로 괜찮은 듯? (by Eric Heitz)
 
-##### Smith masking function ★
+###### Cook-Torrance
+
+$G(l, v, h) = min(1, \dfrac{2(n \cdot h)(n \cdot v)}{v \cdot h}, \dfrac{2(n \cdot l)(n \cdot v)}{v \cdot h})$
+
+
+
+###### Smith★
 
 $G_2(l, v, n) = G_{1}(n,l)G_{1}(n,v)$
 
@@ -614,9 +734,11 @@ $G_2(l, v, n) = G_{1}(n,l)G_{1}(n,v)$
 
 ​       $G_2$는 양방향에 대한 가시성!
 
- => $G_1(s) = \dfrac{n \cdot s}{(n \cdot s)(1-\alpha) + \alpha}$ (s는 l 또는 v이다.)
+ => $G_1(s) = \dfrac{n \cdot s}{(n \cdot s)(1-\alpha) + \alpha}$
 
-###### 근사치
+​      => $s$ 는 $l$ 또는 $v$ 이고, $n$ 은 macrofacet의 법선이다.
+
+근사값 계산
 
  => $G_1(s) \approx \dfrac{2(n \cdot s)}{(n \cdot s)(2-\alpha) + \alpha}$ (s는 l 또는 v이다.)
 
@@ -626,5 +748,44 @@ $G_2(l, v, n) = G_{1}(n,l)G_{1}(n,v)$
 
 
 
+macrosurface의 BRDF는 microsurface의 BDRF를 적분하여 얻을 수 있다
+
+
+
+### Diffuse roughness와 Specular roughness
+
 Specular roughness보다 Diffuse roughness가 훨씬 덜 정교하고, 변화가 덜하다
 
+### Image Based Lighting (IBL)
+
+https://learnopengl.com/PBR/IBL/Diffuse-irradiance 
+
+https://www.indiedb.com/features/using-image-based-lighting-ibl
+
+http://jacquesdiringer.blogspot.com/2017/08/ambient-lighting-for-pbr-materials.html
+
+옛날 ambient를 보다 정확히 (환경맵을 이용해) 구현하는 방법!
+
+#### environment map & irradiance map
+
+DirectX Texture Tool (64-Bit) (DirectX SDK)
+
+https://developer.nvidia.com/nvidia-texture-tools-adobe-photoshop
+
+https://github.com/Microsoft/DirectXTex/wiki/Texassemble 
+
+environment map이 원경의 radiance를 담고 있으니 **반구(hemisphere)** 위의 각 점에 대해, 모든 방향에서 오는 irradiance 정보를 샘플하면 해당 점의 irradiance를 알 수 있다! 하지만 모든 방향은 오래걸리니.. 샘플 횟수를 좀 줄여보자 (approximation)
+=> cubemap에서 irradiance_map을 만들자 (Integral 대신 Riemann sum을 활용) (convolute)
+   (integral이 아니므로 더한 후 평균을 구한다! 즉, 총 sample 수로 나눠야 한다!! == polar_count * azimuth count)
+=> cube map 뷰어 + irradiance map 생성기 ★★★
+ => irradiance map은 blur된 것처럼 detail이 줄어드니까... 해상도 낮춰서 저장하고 쓸 때는 linear filtering으로 샘플하면 되겠다!
+
+#### diffuse IBL
+
+#### specular IBL
+
+#### HDRi & equirectangular map
+
+https://matheowis.github.io/HDRI-to-CubeMap/ 
+
+어쨌든 HDRi를 실시간으로 투영해서 sample하는 것보단 전통 cubemap 방식이 빠르다... cubemap은 그냥 구의 좌표를 정규화한 벡터에 대해 1:1 대응이니까
