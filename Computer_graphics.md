@@ -8,6 +8,14 @@ $\sin^2\theta+\cos^2\theta=1$
 
 $\sin\theta = \cos(\dfrac{\pi}{2}-\theta)$
 
+#### 덧셈
+
+$\sin(x+h) = \sin x\cos h + \cos x \sin h$
+
+#### 삼각함수의 기본 극한
+
+#### L'Hôpital's rule (로피탈의 정리)
+
 #### double angle formula ★
 
 $\sin2\theta = 2\sin\theta\cos\theta$
@@ -51,6 +59,13 @@ $\sin2\theta = 2\sin\theta\cos\theta$
 #### ★ 입체각과 구좌표계(spherical coordinates)
 
 ![solid_angle_into_spherical](Asset\solid_angle_into_spherical.png)
+
+### probability density function (확률 밀도 함수)
+
+1. 모든 실수 값 $x$ 에 대해 $f(x) \ge 0$
+2. ${\displaystyle \int _{-\infty }^{\infty }f(x)dx=1}$
+
+
 
 ### dirac delta function
 
@@ -284,6 +299,8 @@ $E = \dfrac{\Phi}{A}=\dfrac{2.5\text{W}}{12\text{m}^2} = 0.2083 \text{W/m} ^2$ �
 
 #### 입체각에 수직인 표면에 대해, 단위 면적 및 단위 입체각 당 방사되는 복사 출력($\Phi$)의 양
 
+  => 표면에서 눈이 있는 방향으로 향하는 빛의 양
+
 #### $L = \dfrac{\Phi}{\omega A^\perp} = \dfrac{d^2 \Phi}{ d\omega dA_{\perp}}$  
 
   => 이때 $A^\perp = A \cos\theta$ 이다.
@@ -294,9 +311,11 @@ $E = \dfrac{\Phi}{A}=\dfrac{2.5\text{W}}{12\text{m}^2} = 0.2083 \text{W/m} ^2$ �
 
 $L = \dfrac{d^2 \Phi}{ d\omega dA_{\perp}}$  는 공간 상의 점에 대해 특정 방향을 향하는 복사 휘도를 의미한다!
 
+
+
 ### ★★ radiance $L$ & irradiance $E$ ★★
 
-#### $\displaystyle E = \int L \cos\theta d\omega$
+#### ★ $\displaystyle E = \int L \cos\theta d\omega$
 
   => 복사 휘도 $L$ 은 $L = \dfrac{d^2 \Phi}{ d\omega dA \cos\theta}$ 로 정의된다. **(그냥 나누기 아니고 미분!)**
 
@@ -334,9 +353,9 @@ $\displaystyle E = \int_{\Omega}L \cos\theta d\omega$
 
   (단, $\theta=[0,\dfrac{\pi}{2}], \phi=[0,2\pi]$)   이므로
 
-$\displaystyle E = \int_{0}^{\frac{\pi}{2}}d\theta \int_{0}^{2 \pi} L \cos\theta \sin\theta d\phi$ 이다.
+$\displaystyle E = \int_{0}^{\frac{\pi}{2}} d\theta \int_{0}^{2 \pi} L \cos\theta \sin\theta d\phi$ 이다.
 
-여기서 $\phi$ 는 어떤 함수에도 매개변수가 아니므로 $\displaystyle \int_{0}^{2 \pi}  d\phi = 2\pi$ 이고,
+여기서 $\phi$ 는 어떤 함수에도 매개변수가 아니고 $\displaystyle \int_{0}^{2 \pi}  d\phi = 2\pi$ 이므로
 
 $\displaystyle E = 2\pi \int_{0}^{\frac{\pi}{2}} L \cos\theta \sin\theta d\theta$ 이다.
 
@@ -476,13 +495,38 @@ https://gamedev.stackexchange.com/questions/62836/does-hdr-rendering-have-any-be
 
 ​			https://google.github.io/filament/Filament.html
 
+​			http://pauldebevec.com/ 
+
+​			https://wiki.jmonkeyengine.org/jme3/advanced/pbr_part1.html 
+
+​			https://seblagarde.wordpress.com/2014/04/14/dontnod-physically-based-rendering-chart-for-unreal-engine-4/ 
+
+​			http://artisaverb.info/PBT.html 
+
+​			https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/PhysicallyBased/index.html
+
+​			https://www.trentreed.net/blog/physically-based-shading-and-image-based-lighting/ (실제 이미지 예시 포함)
+
+ https://placeholderart.wordpress.com/2015/07/28/implementation-notes-runtime-environment-map-filtering-for-image-based-lighting/ 
+
+ https://chetanjags.wordpress.com/2015/08/26/image-based-lighting/ 
+
+ https://marmoset.co/posts/physically-based-rendering-and-you-can-too/
+https://marmoset.co/posts/pbr-texture-conversion/
+
 ### 용어
 
 (texture) splatting 여러 레이어의 텍스쳐를 결합!
 
 LUT (Look-Up Texture)
 
+#### albedo
 
+전체 태양 빛 중 얼만큼의 빛을 diffuse reflection 하는지에 대한 비율. RGB로 나타냈을 때 (0, 0, 0)이면 검정색, (1, 1, 1)이면 하얀색이라는 뜻이다.
+
+예를 들어, albedo가 (0.3, 0.5, 0.7)인 표면은 하얀색 빛(RGB: r, g, b)이 표면에 도달했을 때, 총 (0.3r, 0.5g, 0.7b) 만큼의 빛을 diffuse reflection 한다!
+
+### energy conservation
 
 ### Microfacet theory (미세면 이론)
 
@@ -490,7 +534,7 @@ LUT (Look-Up Texture)
 
 표면이 거칠면(rough) 이 작은 면들이 들쑥날쑥하게 배치되어 있는 것이고, 표면이 부드러우면(soft) 평평하게 배치되어 있는 것이다.
 
-
+거친(rough) 표면이어도, grazing angle에서는 거울에 가까워진다! (Fresnel reflectance)
 
 금속은 refracted lights를 전부 다 흡수해버린다!
 
@@ -526,7 +570,9 @@ $\displaystyle L_o(\bold{x},\ \omega_o, \lambda, t) = L_e(\bold{x},\ \omega_o, \
 
 
 
-#### reflectance equation
+#### ★★ reflectance equation ★★
+
+##### $\displaystyle L_o = \int_{\Omega}{f_r(\omega_i, \omega_o) L_i \omega_i \cdot n d\omega_i}$
 
 rendering equation에서 위치, 파장, 시간을 무시하자.
 
@@ -603,6 +649,8 @@ $f_{diff}(l,v)=\dfrac{\rho_d}{\pi}$
 참고:	http://graphicrants.blogspot.com/2013/08/specular-brdf-reference.html 
 
 ​			https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/PhysicallyBased/index.html 
+
+​			http://filmicworlds.com/blog/everything-is-shiny/ 
 
 ##### Cook-Torrance specular BRDF
 
@@ -756,33 +804,85 @@ macrosurface의 BRDF는 microsurface의 BDRF를 적분하여 얻을 수 있다
 
 Specular roughness보다 Diffuse roughness가 훨씬 덜 정교하고, 변화가 덜하다
 
+
+
 ### Image Based Lighting (IBL)
 
-https://learnopengl.com/PBR/IBL/Diffuse-irradiance 
+옛날 ambient를 보다 정확히 (환경맵을 이용해) 구현하는 방법!
 
 https://www.indiedb.com/features/using-image-based-lighting-ibl
 
 http://jacquesdiringer.blogspot.com/2017/08/ambient-lighting-for-pbr-materials.html
 
-옛날 ambient를 보다 정확히 (환경맵을 이용해) 구현하는 방법!
+http://graphics.stanford.edu/papers/envmap/ 
 
-#### environment map & irradiance map
-
-DirectX Texture Tool (64-Bit) (DirectX SDK)
+DirectX Texture Tool (64-Bit) (DirectX SDK) => cube map
 
 https://developer.nvidia.com/nvidia-texture-tools-adobe-photoshop
 
 https://github.com/Microsoft/DirectXTex/wiki/Texassemble 
 
-environment map이 원경의 radiance를 담고 있으니 **반구(hemisphere)** 위의 각 점에 대해, 모든 방향에서 오는 irradiance 정보를 샘플하면 해당 점의 irradiance를 알 수 있다! 하지만 모든 방향은 오래걸리니.. 샘플 횟수를 좀 줄여보자 (approximation)
-=> cubemap에서 irradiance_map을 만들자 (Integral 대신 Riemann sum을 활용) (convolute)
-   (integral이 아니므로 더한 후 평균을 구한다! 즉, 총 sample 수로 나눠야 한다!! == polar_count * azimuth count)
+ https://github.com/derkreature/IBLBaker 
+
+ https://www.trentreed.net/blog/physically-based-shading-and-image-based-lighting/ 
+
+
+
+illumination map (irradiance map) -> 한 점에 입사되는 모든 빛
+
+reflection map -> illumination map을 흐리게(blur) 
+
+
+
+#### environment map
+
+은 원경의 특정 방향에서 오는 빛을 담아두는 cube map 텍스처를 말한다. (즉, environment map에는 원경의 radiance 값이 저장되어 있다. 다시 말해, **아주 많은 수의 광원**이 저장되어 있다...!!!)
+
+#### irradiance map
+
+environment map이 원경의 radiance를 담고 있으니
+
+**반구(hemisphere)** 위의 각 점에 대해, 각 점이 모든 빛을 반사한다고 가정하면(r:1.0 g:1.0 b:1.0) 각 점에 대해 모든 방향에서 오는 radiance 정보를 샘플하여 적분하면 해당 점의 irradiance를 구할 수 있다! (accurate)
+
+  => $\displaystyle E = \int L \cos\theta d\omega$ 이므로
+
+하지만 모든 방향을 sample하는 것은 비용이 높고, 또 일정 sample 횟수를 넘어가면 quality 차이가 크지 않을 것이므로... 샘플 횟수를 좀 줄여보자 (approximation)
+=> **Riemann sum**을 활용 (특정 방향에서 빛이 더 들어올 이유가 없으므로 가중치가 필요하지 않다)
+
+혹은 spherical harmonics 활용??
+
+**CONVOLVE** cubemap에서 irradiance_map을 만들자
+integral이 아니므로 각 radiance 값을 모두 더한 후 평균을 구한다! 즉, 총 sample 수(polar_count * azimuth count)로 나눠야 한다!!
 => cube map 뷰어 + irradiance map 생성기 ★★★
- => irradiance map은 blur된 것처럼 detail이 줄어드니까... 해상도 낮춰서 저장하고 쓸 때는 linear filtering으로 샘플하면 되겠다!
+ => irradiance map은 blur된 것처럼 detail이 줄어드니까... 해상도 낮춰서 저장하고, 쓸 때는 linear filtering으로 샘플하면 되겠다!
 
 #### diffuse IBL
 
+https://learnopengl.com/PBR/IBL/Diffuse-irradiance 
+
+diffuse light는 모든 방향에서 입사되는 빛이 모든 방향으로 반사된다. 즉, 우리가 원하는 특정 점에서 반사되는 빛은? 모든 방향에서 입사되었다.
+
+diffuse light의 radiance는 $L=\dfrac{E}{\pi}$ 와 같이 구할 수 있으므로,
+
+따라서 irradiance map을 샘플하여 $\pi$ 로 나누고, albedo만 곱하면 된다(각 점이 실제로 r:1.0 g:1.0 b:1.0를 반사하는 게 아니므로)
+
+
+
 #### specular IBL
+
+ http://holger.dammertz.org/stuff/notes_HammersleyOnHemisphere.html 
+
+direct light의 specular는 해당 direct light 하나에 대해 계산하면 됐지만... indirect light의 specular는 계산해야 할 방향이 정말 많다! 그러니 샘플 횟수를 줄여보자
+
+주의할 점은 모든 방향에서 입사되는 빛이 모든 방향으로 반사되는 diffuse light와는 달리... specular light는 특정 방향에서 더 많은 빛이 입사된다! => **specular lobe**
+
+importance sampling
+
+ => 다 sample할 필요 없다.. 어차피 m 벡터에 가깝게만 반사되니까?
+
+ Monte Carlo integration 
+
+
 
 #### HDRi & equirectangular map
 
