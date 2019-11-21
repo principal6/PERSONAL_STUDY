@@ -255,7 +255,9 @@ $\displaystyle Q=\int_{t_0}^{t_1}{\Phi(t) \text{d} t}$  이다.
 
 #### ★단위 면적($1 \text{m}^2$) 당 표면이 받는 복사 출력 $\Phi$ 의 양
 
-( == 입사광이 단위 시간 동안 단위 면적으로 내뿜는 에너지!)
+  => 입사광이 단위 시간 동안 단위 면적으로 내뿜는 에너지!
+
+  => 입체각과 상관 없으므로 모든 각도에서 들어오는 빛의 양!!
 
 #### $E=\dfrac{\Phi}{A}=\dfrac{d\Phi}{dA}$ 
 
@@ -299,7 +301,7 @@ $E = \dfrac{\Phi}{A}=\dfrac{2.5\text{W}}{12\text{m}^2} = 0.2083 \text{W/m} ^2$ �
 
 #### 입체각에 수직인 표면에 대해, 단위 면적 및 단위 입체각 당 방사되는 복사 출력($\Phi$)의 양
 
-  => 표면에서 눈이 있는 방향으로 향하는 빛의 양
+  => 특정 입체각에 대해, 점에서 눈으로 향하는/빛에서 점으로 향하는 빛의 양
 
 #### $L = \dfrac{\Phi}{\omega A^\perp} = \dfrac{d^2 \Phi}{ d\omega dA_{\perp}}$  
 
@@ -372,6 +374,10 @@ $E = \pi \left[-\dfrac{1}{2} \cos(2\theta) \right]_0^{\frac{\pi}{2}} L d\theta$ 
 $\left[-\dfrac{1}{2} \cos(2\theta) \right]_0^{\frac{\pi}{2}} = -\dfrac{1}{2} \cos\pi -\left( -\dfrac{1}{2} \cos0 \right) = 0 - (-1) = 1$  이므로
 
 $E = \pi L$  이고, $L=\dfrac{E}{\pi}$ 이다.
+
+그러나 실제로 표면이 모든 빛을 반사(rgb 1, 1, 1)하는 것이 아니므로, $\rho$ (albedo) 값을 곱해
+
+$L_o = \dfrac{\rho E}{\pi}$ 이다.
 
 
 
@@ -469,6 +475,8 @@ https://learnopengl.com/Advanced-Lighting/HDR
 
 https://gamedev.stackexchange.com/questions/62836/does-hdr-rendering-have-any-benefits-if-bloom-wont-be-applied 
 
+https://github.com/nothings/stb => stb_image.h
+
 ### LDR (Low Dynamic Range)
 
 ### Tone mapping (HDR -> LDR)
@@ -507,6 +515,14 @@ https://gamedev.stackexchange.com/questions/62836/does-hdr-rendering-have-any-be
 
 ​			https://www.trentreed.net/blog/physically-based-shading-and-image-based-lighting/ (실제 이미지 예시 포함)
 
+​			https://blog.selfshadow.com/publications/ ★(SIGGRAPH)
+
+​			http://renderwonk.com/publications/s2010-shading-course/ (SIGGRAPH 2010)
+
+​			https://blog.selfshadow.com/publications/s2012-shading-course/ (SIGGRAPH 2012)
+
+​			https://blog.selfshadow.com/publications/s2013-shading-course/#course_content 
+
  https://placeholderart.wordpress.com/2015/07/28/implementation-notes-runtime-environment-map-filtering-for-image-based-lighting/ 
 
  https://chetanjags.wordpress.com/2015/08/26/image-based-lighting/ 
@@ -514,11 +530,15 @@ https://gamedev.stackexchange.com/questions/62836/does-hdr-rendering-have-any-be
  https://marmoset.co/posts/physically-based-rendering-and-you-can-too/
 https://marmoset.co/posts/pbr-texture-conversion/
 
+ http://gl.ict.usc.edu/Data/HighResProbes/ 
+
 ### 용어
 
 (texture) splatting 여러 레이어의 텍스쳐를 결합!
 
 LUT (Look-Up Texture)
+
+specular lobe: 혹
 
 #### albedo
 
@@ -758,7 +778,7 @@ shadowing-masking function이라고도 불린다
 
 물리적으로는 미세면의 법선이 halfway vector여도 가려지거나(masked) 그늘지면(shadowed) 빛이 눈까지 오지 못할 수도 있고, 올 수도 있다...!!
 
-###### 1) 비율이므로 $0 \le G(l, v, m) \le 1$ 을 만족시킨다.
+###### 1) 비율이므로 $0 \le G(l, v, m) \le 1$ 을 만족시킨다. ★
 
 ###### 2) (양방향에 대해) 대칭이기 때문에 $G(l, v, m) = G(v, l, m)$ 를 만족시킨다. 
 
@@ -836,7 +856,9 @@ reflection map -> illumination map을 흐리게(blur)
 
 #### environment map
 
-은 원경의 특정 방향에서 오는 빛을 담아두는 cube map 텍스처를 말한다. (즉, environment map에는 원경의 radiance 값이 저장되어 있다. 다시 말해, **아주 많은 수의 광원**이 저장되어 있다...!!!)
+ https://docs.unity3d.com/Manual/class-Cubemap.html 
+
+원경의 특정 방향에서 오는 빛을 담아두는 cube map 텍스처를 말한다. (즉, environment map에는 원경의 radiance 값이 저장되어 있다. 다시 말해, **아주 많은 수의 광원**이 저장되어 있다...!!!)
 
 #### irradiance map
 
