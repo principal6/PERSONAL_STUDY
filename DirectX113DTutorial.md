@@ -849,6 +849,128 @@ float4 GetBezier(float4 P1, float4 P2, float4 P3, float4 N1, float4 N2, float4 N
 }
 ```
 
+### Tessellation 설명 (quad)
+
+```cpp
+// quad tessellation을 이용하면 제어점 1개만으로도 (다수의)사각형을 그릴 수 있다!!
+DeviceContext->IASetPrimitiveTopology(
+	D3D11_PRIMITIVE_TOPOLOGY_1_CONTROL_POINT_PATCHLIST);
+DeviceContext->Draw(1, 0);
+```
+
+
+
+```c
+// Tessellator가 얼마나 분할해야하는지 알려줌. Domain Shader에도 넘겨지는 정보
+struct HS_CONSTANT_DATA_OUTPUT
+{
+	float EdgeTessFactor[4]	: SV_TessFactor;
+	float InsideTessFactor[2] : SV_InsideTessFactor;
+};
+
+// Hull Shader가 Domain Shader에 각 Patch 당 넘기는 정보
+struct HS_OUTPUT
+{
+	float HemisphereDirection : DIRECTION;
+};
+
+// VS_OUTPUT과 같은 역할! 테셀레이션이 된 정점이라고 생각하면 된다.
+struct DS_OUTPUT
+{
+	float4 Position  : SV_POSITION;
+};
+```
+
+
+
+```c
+#include "Quad.hlsli"
+
+// ## 패치 테셀레이션 인수를 계산하기 위한 함수. 
+// ## 인수에 그냥 상수를 대입하는 경우엔 쓸모없어 보일 수 있지만...
+// ## 카메라와의 거리에 따라 LOD를 조절하거나 필요없을 경우 Cull을 하는 등
+// ## 동적으로 테셀레이션 계수를 계산하려면 이 함수가 필요하다.
+// line일 경우 SV_TessFactor 2개 SV_InsideTessFactor 0개
+// tri일 경우 SV_TessFactor 3개 SV_InsideTessFactor 1개
+// quad일 경우 SV_TessFactor 4개 SV_InsideTessFactor 2개
+HS_CONSTANT_DATA_OUTPUT CalcHSPatchConstants(uint PatchID : SV_PrimitiveID)
+{
+	static const float KTessFactor = 16.0;
+	
+	HS_CONSTANT_DATA_OUTPUT Output;
+
+	Output.EdgeTessFactor[0] = Output.EdgeTessFactor[1] =
+    	Output.EdgeTessFactor[2] = Output.EdgeTessFactor[3] =
+    	Output.InsideTessFactor[0] = Output.InsideTessFactor[1] = KTessFactor;
+	
+	return Output;
+}
+
+// ## Domain Shader에 넘길 각 Patch의 정보는 이 함수에서 대입한다.
+// ## 설정이 많지만 뜯어보면 별 거 아니다..
+// [domain()] 영역. "tri": 삼각형 테셀레이션, "quad": 사각형 테셀레이션
+// [maxtessfactor()] 최대 테셀레이션 인수 제한. 하드웨어 최대는 64.0이다. 이건 생략 가능!
+// [outputcontrolpoints()]
+//		총 1~32개의 제어점을 출력할 수 있다
+//		이 main 함수가 총 실행될 횟수와도 동일하다!★
+// [outputtopology()] 사각형도 결국 삼각형의 조합이므로...
+//		"point": 점, "line": 선,
+//		"triangle_cw": 시계방향 삼각형, "triangle_ccw": 반시계 방향 삼각형
+// [partitioning()]
+//		"fractional_odd": 홀수 소수, "fractional even": 짝수 소수,
+//		"integer": 정수, "pow2": 2의 거듭제곱
+// [patchconstantfunc("CalcHSPatchConstants")] 패치 상수 함수의 이름
+[domain("quad")] 
+[maxtessfactor(64.0)]
+[outputcontrolpoints(1)]
+[outputtopology("triangle_cw")]
+[partitioning("integer")]
+[patchconstantfunc("CalcHSPatchConstants")]
+HS_OUTPUT main(uint ControlPointID : SV_OutputControlPointID, uint PatchID : SV_PrimitiveID)
+{
+	HS_OUTPUT Output;
+
+    // PatchID == 0 ? -1.0 : +1.0
+	Output.HemisphereDirection = ((float)PatchID) * 2.0 - 1.0;
+
+	return Output;
+}
+```
+
+
+
+```c
+#include "Quad.hlsli"
+
+cbuffer cbSpace : register(b0)
+{
+	float4x4 WVP;
+}
+
+// domain이 "tri"일 경우 SV_DomainLocation은 float3 (Barycentric coordinates: uvw)
+// domain이 "quad"일 경우 SV_DomainLocation은 float2
+// domain이 "isoline"일 경우도 SV_DomainLocation은 float2
+// OutputPatch는 HS에서 넘겨받은 것이므로 const다! 이 patch들을 이용해 DS_OUTPUT을 구성한다.
+[domain("quad")]
+DS_OUTPUT main(HS_CONSTANT_DATA_OUTPUT Input, float2 Domain : SV_DomainLocation, const OutputPatch<HS_OUTPUT, 1> ControlPoints)
+{
+	DS_OUTPUT Output;
+
+	float2 ClipSpaceDomain = Domain * 2.0 - 1.0;
+	float2 ClipSpaceDomainAbsolute = abs(ClipSpaceDomain);
+	float MaxLength = max(ClipSpaceDomainAbsolute.x, ClipSpaceDomainAbsolute.y);
+
+	float3 LocalSpacePosition = float3
+		(
+			ClipSpaceDomain.x * ControlPoints[0].HemisphereDirection, 
+			ClipSpaceDomain.y, 
+			(MaxLength - 1.0) * ControlPoints[0].HemisphereDirection
+		);
+	Output.Position = float4(normalize(LocalSpacePosition), 1);
+	Output.Position = mul(Output.Position, WVP);
+}
+```
+
 
 
 ## ##. Core structure modified
@@ -930,14 +1052,123 @@ Object3D list, Terrain, Sky, Light 저장하기
 
 Full-screen quad => Render to texture (RTT)
 
-```
+```c
 Draw(6, 0)
 VS => SV_VertexID
+// Excellent, but not ideal for GPU debugging
 ```
 
 Sobel kernel
 
+```c
+static float3x3 KSobelKernelX =
+{
+	-1,  0, +1,
+	-2,  0, +2,
+	-1,  0, +1
+};
 
+static float3x3 KSobelKernelY =
+{
+	+1, +2, +1,
+	 0,  0,  0,
+	-1, -2, -1
+};
+```
+
+## ##. Physically Based Rendering (PBR) with Image Based Lighting (IBL)
+
+## ##. Deferred shading ★
+
+Light representation => **SSB(Screen-space billboard)** + WSB(World-space billboard) + Gizmo selection
+
+SSB: 1 control point + tessellation, NDC를 기준으로 크기 지정 (CB로 이미지 크기 받아서 DS에서 투영행렬로 계산)
+
+
+
+-- GBuffers **for PBR** --
+
+R8G8B8A8_UNORM
+
+DS(GB0): Depth 24 Stencil 8 (Depth Stencil View를 만들 때 사용한 버퍼를 그대로 활용!)
+
+GB1: BaseColor 24 Roughness 8
+
+GB2: Normal 32 (11 11 10)
+
+GB3: Metalness 8 AmbientOcclusion 8
+
+
+
+1. Set GBuffers as render targets
+
+2. Draw all the (opaque) objects
+
+3. Set back buffer as render target and set GBuffers(== GBuffer textures) as shader resources
+
+4. Draw light volumes for each light source and perform screen-space shading by sampling GBuffer textures in the pixel shader
+
+   
+
+Stencil buffer를 사용해서 최적화?
+
+
+
+```c
+struct PSOutput
+{
+	float4 BC_Rough	: SV_Target0;
+    float4 Normal 	: SV_Target1;
+	float4 Metal_AO	: SV_Target2;
+};
+```
+
+```c
+struct ShadingData
+{
+	float LinearDepth;
+    float3 BaseColor;
+    float3 Normal;
+    float Roughness;
+    float Metalness;
+    float AmbientOcclusion;
+    // and we have additional 2 bytes reserved!
+};
+```
+
+Lighting models: ambient light through IBL, directional light(BRDF + IBL), point light, spot light, capsule light?
+
+```cpp
+// data for the directional light for deferred shading.
+// CDirectionalLight: direction, color
+class CDirectionalLight;
+
+// This class will contain all the data needed for a point light and will draw 2 control points to convert them into a sphere in Domain Shader in order to use it with GBuffer for deferred shading!
+// CPointLight: position, color, range
+class CPointLight; 
+
+// CSpotLight: position, color, orientation, range, theta, alpha
+class CSpotLight;
+
+// CCapsuleLight: position, color, orientation, length, radius
+class CCapsuleLight;
+
+// rectangle... circle...
+class CAreaLight;
+    
+CShader m_VSDeferredLight;
+CShader m_HSPointLight; // No need for directional light
+CShader m_DSPointLight; // No need for directional light
+CShader m_PSDeferredShading;
+```
+
+## ##. Screen-Space Ambient Occlusion
+
+## ##. shadow mapping
+
+## ##. light shaft = godray (using tessellation and shadow mapping, not ray marching)
+
+## ##. screen-space ambient occlusion
 
 ## ##. Instance animation
 
@@ -951,7 +1182,7 @@ Distance fog, height fog => Save into scene
 
 ## ##. View frustum culling on CPU!
 
-## Ambient occlusion, Bloom★
+## Bloom★
 
 ## Sun shaft
 
@@ -963,10 +1194,10 @@ Distance fog, height fog => Save into scene
 
 ## # Collision - Collision mesh★
 
-## # shadow mapping
+
 
 ## # (Tessellation) Patch edit system - for editor
 
-## # Scene animation edit system!!
+## # Scene animation edit system!! - e. g. camera animation
 
 Set key frames and interpolate between the key frames!!!

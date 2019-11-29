@@ -1,5 +1,73 @@
 # 수학
 
+ http://www.essentialmath.com/index.htm 
+
+ https://www.gdcvault.com/play/1017922/Math-for-Game ★
+
+ https://archive.org/details/GDC2014Melax Working with 3D Rotations
+
+## 방정식
+
+implicit equation			$y=x$				$x^2+y^2=1$
+
+parametric equation 	$p(t) = (t, t)$	 $p(t) = (\cos t, \sin t)$
+
+## spline
+
+### 베지에 곡선
+
+1차
+
+#### 2차 베지에 곡선 (quadratic Bezier curve) = 두 1차 베지에 곡선의 혼합(blending) = 선형 보간(lerp)
+
+$E(t) = sA + tB (s = 1-t)$
+
+$F(t) = sB + tC (s = 1-t)$
+
+$P(t) = sE + tF (s = 1-t)$ ★ $P(t)$ 의 이동 경로가 곡선이다!
+
+​		 $=s(sA + tB) + t(sB + tC)$
+
+​		 $=s^2A + stB + stB + t^2C$
+
+​		 $=s^2A + 2stB + t^2C$
+
+#### 3차 베지에 곡선 (cubir Bezier curve) = 두 2차 베지에 곡선의 혼합
+
+$E(t) = sA + tB (s = 1-t)$
+
+$F(t) = sB + tC (s = 1-t)$
+
+$G(t) = sC + tD (s = 1-t)$
+
+$P_0(t) = sE + tF (s = 1-t)$
+
+$P_1(t) = sF + tG (s = 1-t)$
+
+$P(t) = sP_0 + tP_1 (s = 1-t)$
+
+### Cubic Bezier splines
+
+control points
+
+### Cubic Hermit splines
+
+velocity instead of control points
+
+### Catmull-Rom splines
+
+velocity are calculated by distance of next point
+
+### Cardinal splines
+
+tension => velocity *= 1 - tension
+
+### Kochanek-Bartels splines
+
+bias, continuity
+
+### B-spline (Basis spline)
+
 ## 1. 벡터
 
 ### 1). 벡터 표기법, 길이
@@ -441,11 +509,29 @@ $R_x=\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & cos\theta & -sin\theta  & 0 \\ 0 & sin\
 
 ![](Asset\pitch_yaw_roll.png)
 
+##### Rodrigues Rotation Theorem ★
+
+$\bold{p_{rot}}=\bold{p}\cos\theta + (\bold{\hat{r}\times p}) \sin\theta + \bold{\hat{r}}(\bold{\hat{r} \cdot p})(1-\cos\theta)$
+
+  $\bold{\hat{r}} \text{ is rotation axis}$
+
+  $\theta\ \text{ is rotation angle}$
+
+##### Euler-Rodrigues Rotation Parameters ★★
+
+$a^2 + b^2 + c^2 + d^2 = 1$
+
+  $a = \cos(\dfrac{\theta}{2})$
+
+  $\bold{r} = (b, c, d) = \sin(\dfrac{\theta}{2}) \bold{\hat{r}}$
+
+$\bold{p_{rot}}=\bold{p} + 2a(\bold{\hat{r}} \times \bold{p}) + 2(\bold{\hat{r}} \times (\bold{\hat{r}} \times \bold{p}))$
+
 
 
 ### 3). 뷰 행렬
 
-뷰 행렬이 하는 일: 기존 $x, y, z$ 기저에 있던 벡터를 새로운 기저 $i, j, k$로 옮기는 것!
+뷰 행렬이 하는 일: 기존 $x, y, z$ 기저에 있던 벡터를 새로운 기저(카메라 공간의 기저) $i, j, k$로 옮기는 것!
 
 
 
@@ -493,7 +579,17 @@ $\vec{v_{ijkl}}=\vec{v_{xyzw}}\begin{bmatrix}i_x&j_x&k_x&0\\i_y&j_y&k_y&0\\i_z&j
 
 
 
-$\therefore M_{view}=\begin{bmatrix}i_x&j_x&k_x&0\\i_y&j_y&k_y&0\\i_z&j_z&k_z&0\\ -\vec{e}\bull\hat{i}&-\vec{e}\bull\hat{j}&-\vec{e}\bull\hat{k}&1\end{bmatrix}$
+$\therefore M_{view} = \begin{bmatrix}  i_x & j_x & k_x & 0  \\  i_y & j_y & k_y & 0  \\ i_z & j_z & k_z & 0  \\  -\vec{e}\bull\hat{i} & -\vec{e}\bull\hat{j} & -\vec{e}\bull\hat{k} & 1  \end{bmatrix}$
+
+
+
+#### 뷰 행렬의 역행렬
+
+뷰 행렬은 카메라 변환 행렬의 역행렬이므로
+
+뷰 행렬의 역행렬은 카메라 변환 행렬이다.
+
+
 
 
 
