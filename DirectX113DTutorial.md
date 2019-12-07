@@ -1080,33 +1080,45 @@ static float3x3 KSobelKernelY =
 
 ## ##. Deferred shading ★
 
-Light representation => **SSB(Screen-space billboard)** + WSB(World-space billboard) + Gizmo selection
+https://www.hiagodesena.com/blog/physically-based-deferred-renderer
 
-SSB: 1 control point + tessellation, NDC를 기준으로 크기 지정 (CB로 이미지 크기 받아서 DS에서 투영행렬로 계산)
+https://learnopengl.com/Advanced-Lighting/Deferred-Shading
+
+https://aras-p.info/texts/CompactNormalStorage.html
+
+**“A bit more Deferred” - CryEngine 3**
+
+Light representation => Screen-space/World-space billboard + Gizmo selection
+
+Billboard == 1 control point + tessellation + screen-space/world-space quad generation in DS
 
 
 
 -- GBuffers **for PBR** --
 
+```
 R8G8B8A8_UNORM
 
-DS(GB0): Depth 24 Stencil 8 (Depth Stencil View를 만들 때 사용한 버퍼를 그대로 활용!)
+GBuffer #0: Depth 24 Stencil 8 (Depth Stencil View를 만들 때 사용한 버퍼를 그대로 활용!)
 
-GB1: BaseColor 24 Roughness 8
+GBuffer #1: BaseColor 24 Roughness 8
 
-GB2: Normal 32 (11 11 10)
+GBuffer #2: Normal 32 (11 11 10)
 
-GB3: Metalness 8 AmbientOcclusion 8
+GBuffer #3: Metalness 8 AmbientOcclusion 8
+```
 
 
 
 1. Set GBuffers as render targets
 
-2. Draw all the (opaque) objects
+2. Draw all the [opaque] objects (with directional light + IBL★)
 
 3. Set back buffer as render target and set GBuffers(== GBuffer textures) as shader resources
 
-4. Draw light volumes for each light source and perform screen-space shading by sampling GBuffer textures in the pixel shader
+4. Draw light volumes for each light source and perform screen-space shading by sampling GBuffer textures in the pixel shader using point clamp sampler
+
+5. Draw [transparent] objects
 
    
 
@@ -1115,36 +1127,71 @@ Stencil buffer를 사용해서 최적화?
 
 
 ```c
-struct PSOutput
+struct GBufferOutput
 {
-	float4 BC_Rough	: SV_Target0;
-    float4 Normal 	: SV_Target1;
-	float4 Metal_AO	: SV_Target2;
+	float4 BaseColor_Rough	: SV_Target0;
+	float4 Normal 			: SV_Target1;
+	float4 MetalAO			: SV_Target2;
 };
 ```
 
 ```c
-struct ShadingData
+#include "Deferred.hlsli"
+#include "BRDF.hlsli"
+
+SamplerState PointClampSampler : register(s0);
+
+Texture2D GBuffer_DepthStencil : register(t0);
+Texture2D GBuffer_BaseColor_Rough : register(t1);
+Texture2D GBuffer_Normal : register(t2);
+Texture2D GBuffer_Metal_AO : register(t3);
+
+cbuffer cbGBufferUnpacking : register(b0)
 {
-	float LinearDepth;
-    float3 BaseColor;
-    float3 Normal;
-    float Roughness;
-    float Metalness;
-    float AmbientOcclusion;
-    // and we have additional 2 bytes reserved!
-};
+	float4 PerspectiveValues;
+	float4x4 InverseViewMatrix;
+}
+
+float4 main(VS_OUTPUT Input) : SV_TARGET
+{
+	float ProjectionSpaceDepth = GBuffer_DepthStencil.SampleLevel(PointClampSampler, Input.TexCoord.xy, 0).x;
+	float ViewSpaceDepth = PerspectiveValues.z / (ProjectionSpaceDepth + PerspectiveValues.w);
+	float4 WorldPosition = mul(float4(Input.TexCoord.xy * PerspectiveValues.xy * ViewSpaceDepth, ViewSpaceDepth, 1.0), InverseViewMatrix);
+
+	float4 BaseColor_Rough = GBuffer_BaseColor_Rough.SampleLevel(PointClampSampler, Input.TexCoord.xy, 0);
+	float3 WorldNormal = (GBuffer_Normal.SampleLevel(PointClampSampler, Input.TexCoord.xy, 0).xyz) * 2.0 - 1.0;
+	float4 Metal_AO = GBuffer_MetalAO.SampleLevel(PointClampSampler, Input.TexCoord.xy, 0);
+
+	float4 OutputColor = float4(BaseColor_Rough.xyz, 1);
+	return OutputColor;
+}
 ```
 
-Lighting models: ambient light through IBL, directional light(BRDF + IBL), point light, spot light, capsule light?
+### Normal encoding/decoding: R16G16_SNORM vs. R10G10B10A2_UNORM
+
+```c
+// For R16G16_SNORM format
+float3 UnpackNormal(float2 PackedNormal)
+{
+	float3 UnpackedNormal = float3(0, 0, 0);
+	UnpackedNormal.z = length(PackedNormal.xy) * 2.0 - 1.0;
+	UnpackedNormal.xy = normalize(PackedNormal.xy) * sqrt(1.0 - UnpackedNormal.z * UnpackedNormal.z);
+	return normalize(UnpackedNormal);
+}
+
+// For R16G16_SNORM format
+float2 PackNormal(float3 WorldNormal)
+{
+	return float2(normalize(WorldNormal.xy) * (WorldNormal.z * 0.5 + 0.5));
+}
+```
+
+Lighting models: directional light(BRDF + ambient IBL), point light, spot light, capsule light?
 
 ```cpp
-// data for the directional light for deferred shading.
-// CDirectionalLight: direction, color
-class CDirectionalLight;
-
-// This class will contain all the data needed for a point light and will draw 2 control points to convert them into a sphere in Domain Shader in order to use it with GBuffer for deferred shading!
+// This class will contain all the data needed for a point light and will draw 2 control points to convert them into a sphere in Domain Shader in order to use it with GBuffers for deferred shading!
 // CPointLight: position, color, range
+// DSPointLight
 class CPointLight; 
 
 // CSpotLight: position, color, orientation, range, theta, alpha
@@ -1156,19 +1203,25 @@ class CCapsuleLight;
 // rectangle... circle...
 class CAreaLight;
     
-CShader m_VSDeferredLight;
+CShader m_VSScreenQuad; // For Directional light & ambient IBL
+CShader m_VSLight;
 CShader m_HSPointLight; // No need for directional light
 CShader m_DSPointLight; // No need for directional light
-CShader m_PSDeferredShading;
+CShader m_PSDirectionalLight;
+CShader m_PSPointLight;
 ```
+
+
 
 ## ##. Screen-Space Ambient Occlusion
 
-## ##. shadow mapping
+## ##. Shadow mapping
+
+https://gamedev.stackexchange.com/questions/27284/deferred-rendering-shadow-maps
+
+## ##. Bloom★
 
 ## ##. light shaft = godray (using tessellation and shadow mapping, not ray marching)
-
-## ##. screen-space ambient occlusion
 
 ## ##. Instance animation
 
@@ -1182,13 +1235,25 @@ Distance fog, height fog => Save into scene
 
 ## ##. View frustum culling on CPU!
 
-## Bloom★
-
-## Sun shaft
-
 
 
 ## 
+
+## ##. Anti-aliasing
+
+ http://diaryofagraphicsprogrammer.blogspot.com/2008/03/light-pre-pass-renderer.html 
+
+ https://github.com/dtrebilco/lightindexed-deferredrender 
+
+ https://stackoverflow.com/questions/40275577/how-to-sample-a-srv-when-enable-msaa-x4directx11 ★
+
+ http://ozlael.egloos.com/3420127 
+
+ https://mynameismjp.wordpress.com/2010/08/16/deferred-msaa/ 
+
+ http://zzinga.egloos.com/3409362 
+
+### FXAA(Fast approXimate Anti-Aliasing)
 
 ## # Reflection (water, mirror)
 
