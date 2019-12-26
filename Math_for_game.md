@@ -601,7 +601,7 @@ $\therefore M_{view} = \begin{bmatrix}  i_x & j_x & k_x & 0  \\  i_y & j_y & k_y
 
 동차 원근 투영행렬 $M_{proj}$를 곱한 결과값을 $P_{proj4} = (x_{proj4}, y_{proj4},z_{proj4},w_{proj4})$라고 하자.
 
-이때 $P_{proj4}$를 3차원 좌표로 옮기면
+이때 $P_{proj4}$를 3차원 좌표계로 옮기면
 
 $P_{proj3}=(\dfrac{x_{proj4}}{w_{proj4}},\dfrac{y_{proj4}}{w_{proj4}},\dfrac{z_{proj4}}{w_{proj4}})$ 이다.
 

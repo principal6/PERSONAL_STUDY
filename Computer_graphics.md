@@ -760,7 +760,7 @@ $f(l,v) = lerp(k_d f_{diff},\ k_s f_{spec},\ k_m)$  이라고 할 수 있다?
 
 #### Helmholtz reciprocity 헬름홀츠 상반성: $f_r(\omega_i, \omega_o) = f_r(\omega_o, \omega_i)$
 
-#### ★ energy conservation 에너지 보존: $\displaystyle \int_{\Omega} f_r(\omega_i, \omega_o) \cos\theta_i d\omega_i \le 1$ 이어야 한다. (1보다 작으면 빛이 흡수된 것임)
+#### ★ energy conservation 에너지 보존: $\displaystyle \int_{\Omega} f_r(\omega_i, \omega_o) \cos\theta_i d\omega_i \le 1$ 이어야 한다. (1이면 모든 빛이 반사된 것이고, 1보다 작으면 빛이 일부 흡수되었음을 의미)
 
 
 
@@ -1120,6 +1120,14 @@ https://matheowis.github.io/HDRI-to-CubeMap/
 
 ## BSDF = BRDF & BRDF
 
+## Shadow
+
+https://docs.microsoft.com/en-us/windows/win32/dxtecharts/common-techniques-to-improve-shadow-depth-maps
+
+https://docs.microsoft.com/en-us/windows/win32/dxtecharts/cascaded-shadow-maps
+
+
+
 ## Volumetric light
 
  https://m.blog.naver.com/sorkelf/40152690614 
@@ -1163,4 +1171,32 @@ https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html
 ### Sub-pixel triangle culling?
 
 ### Light pre-pass
+
+### HLSL Optimization
+
+https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-optimize
+
+https://developer.download.nvidia.com/books/HTML/gpugems/gpugems_ch28.html
+
+locate the bottleneck
+
+dynamic branching
+
+pack variables
+
+### INTEL GPA
+
+https://software.intel.com/en-us/gpa?utm_source=ISTV&utm_medium=Video&utm_campaign=ISTV2019_ISTV1903
+
+https://software.intel.com/en-us/gpa-cookbook
+
+https://software.intel.com/en-us/gpa-cookbook-identify-basic-gpu-cpu-bound-scenarios
+
+https://software.intel.com/en-us/videos/how-to-fix-performance-woes ★
+
+https://software.intel.com/en-us/gpa/training
+
+https://software.intel.com/en-us/gpa_getting_started
+
+
 

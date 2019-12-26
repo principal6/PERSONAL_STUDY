@@ -982,7 +982,7 @@ void SetRenderTargetView() noexcept
 
 
 
-### 1-4. 뷰포트 생성 & 지정
+### 1-4. 뷰포트 지정
 
 ```cpp
 // ===
@@ -990,7 +990,7 @@ void SetRenderTargetView() noexcept
 D3D11_VIEWPORT m_DefaultViewPort{};
 // ===
 
-void CreateDefaultViewport() noexcept
+void InitializeViewports() noexcept
 {
     // 뷰포트 가로 위치
 	m_DefaultViewPort.TopLeftX = 0;
@@ -1004,18 +1004,12 @@ void CreateDefaultViewport() noexcept
     // 뷰포트 높이
 	m_DefaultViewPort.Height = static_cast<FLOAT>(WindowHeight);
     
-    // 가장 가까운 곳의 z값
+    // 가장 가까운 곳의 z값 [0, +1.0f] ★
 	m_DefaultViewPort.MinDepth = 0.0f;
     
-    // 가장 먼 곳의 z값
+    // 가장 먼 곳의 z값 [0, +1.0f] ★
 	m_DefaultViewPort.MaxDepth = 1.0f;
 
-    // 일단 기본 뷰포트를 지정한다.
-    SetDefaultViewport();
-}
-
-void SetDefaultViewport() noexcept
-{
     // 뷰포트 지정
 	m_DeviceContext11->RSSetViewports(1, &m_DefaultViewPort);
 }
@@ -1680,7 +1674,25 @@ VS_OUTPUT_MODEL main(VS_INPUT_MODEL input)
 
 VS에서 SV_InstanceID를 사용하면 셰이더에서 인스턴스의 ID를 제공해 준다.
 
-## 22. 절두체 컬링 (Frustum culling)
+## 테셀레이션 (Tessellation)
+
+### 감기 방향 (winding) 뒤집기
+
+x좌표가 고정이라면?? y좌표와 z좌표를 뒤바꾸면 된다!
+
+### quad 원
+
+x, y Domain을 normalize하면 된다! (길이가 1로 동일해지므로 원이 된다)
+
+### PN 삼각형
+
+9 control points Bezier triangle Position & Normal ...?
+
+
+
+
+
+## 절두체 컬링 (Frustum culling)
 
 Bounding sphere 활용!!!
 
@@ -1796,6 +1808,6 @@ final_color = final_color * (1-fog_factor) + flog color * fog_factor
 
 ## 디퍼드 셰이딩 - Pointlight, spotlight, ...
 
+## 텍스처 샘플링
 
-
-## 테셀레이션
+https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/gather4--sm4-1---asm-

@@ -67,7 +67,7 @@ Vertex buffer and index buffer (+ Shader, Depth-stencil buffer)
 ##PixelShader.hlsl(+★)
 ```
 
-
+clock-wise winding이 앞면! CullCounterClockwise가 기본값이겠군..
 
 ## #03. Cameras and inputs
 
@@ -1218,6 +1218,26 @@ CShader m_PSPointLight;
 ## ##. Shadow mapping
 
 https://gamedev.stackexchange.com/questions/27284/deferred-rendering-shadow-maps
+
+### Cascaded Shadow Mapping
+
+★★ 0. LOD 1부터는 매 프레임 업데이트 할 필요 없다!! ★★ (성능 개선)
+
+
+
+## ##. Instance (frustum) culling
+
+1) CPU: Instance batch 별로 batch bounding sphere 검사 -> test fail 시 no Draw call
+
+​    (instance를 추가하거나 옮길 때마다 batch bounding sphere 검사 필요..? 너무 비싸지 않나  아니면 직접 반지름을 지정하게 할까..?)
+
+​    (batch 내 instance 간 간격이 넓을수록 비효율적이다! 최대한 cluster로 뭉쳐...)
+
+2) GPU: Vertex Shader에서 Instance world position + instance bounding sphere 검사 -> test fail 시 Output.Position.w = 0; => 아니다 검사는 CPU에서 해야 ★instance당 한 번만 하지★ VS에서는 vertex마다 해야하니까...!! world matrix 값을 바꿔서 GPU에 업데이트하면 되잖아!!
+
+
+
+
 
 ## ##. Bloom★
 
