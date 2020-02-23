@@ -16,13 +16,21 @@ $\sin\theta = \cos(\dfrac{\pi}{2}-\theta)$
 
 #### 덧셈
 
-$\sin(x+h) = \sin x\cos h + \cos x \sin h$
+$\sin(a+b) = \sin{a}\cos{b} + \cos{a} \sin{b}$ ★
+
+##### =>  double angle formula ★
+
+$$
+\sin{(2x)} = \sin{x} \cos{x} + \cos{x} \sin{x} =2 \sin{x}\cos{x}
+$$
+
+
 
 #### 삼각함수의 기본 극한
 
 #### L'Hôpital's rule (로피탈의 정리)
 
-#### double angle formula ★
+#### 
 
 $\sin2\theta = 2\sin\theta\cos\theta$
 
@@ -285,11 +293,11 @@ $\displaystyle Q=\int_{t_0}^{t_1}{\Phi(t) \text{d} t}$  이다.
 
 
 
-### ★ irradiance (복사 조도, 표기: $E$)
+### ★★ irradiance (복사 조도, 표기: $E$)
 
 #### ★단위 면적($1 \text{m}^2$) 당 표면이 받는 복사 출력 $\Phi$ 의 양 <> 광원이 방출하는 빛의 양은 radiant exitance(M) 라고 표기한다.
 
-  => 입사광이 단위 시간 동안 단위 면적으로 내뿜는 에너지!
+  => 입사광이 단위 시간 동안 단위 면적으로 내뿜는 에너지! (**energy per unit time per unit area**)
 
   => 입체각과 상관 없으므로 모든 각도에서 들어오는 빛의 양!!
 
@@ -333,15 +341,15 @@ $E = \dfrac{\Phi}{A}=\dfrac{2.5\text{W}}{12\text{m}^2} = 0.2083 \text{W/m} ^2$ �
 
 
 
-### ★★ radiance (복사 휘도, 표기: $L$)
+### ★★★ radiance (복사 휘도, 표기: $L$)
 
-#### 입체각에 수직으로 투영된 표면에 대해, 단위 면적 및 단위 입체각 당 방사되는 복사 출력($\Phi$)의 양
+#### 입체각에 수직으로 투영된 표면에 대해, 단위 면적 및 단위 입체각 당 방사되는 복사 출력($\Phi$)의 양 (per unit projected area per unit solid angle)
 
   => 특정 입체각에 대해, 점에서 눈으로 향하는/빛에서 점으로 향하는 빛의 양
 
 #### $L = \dfrac{\Phi}{\omega A^\perp} = \dfrac{d^2 \Phi}{ d\omega dA_{\perp}}$  
 
-  => 이때 $A^\perp = A \cos\theta$ 이다.
+  => 이때 $A^\perp = A \cos\theta = A(n \bull l)$ 이다.
 
   => 거리가 멀어져도 radiance는 달라지지 않는다!★
 
@@ -874,9 +882,9 @@ $F_{Schlick}(F_0, \omega_i, \omega_m) = \begin{cases} F_0+(1-F_0)(1 - \omega_i \
 
 
 
-#### ★ $D(\omega_m)$, Normal distribution function (NDF)
+#### ★ $D(\omega_m)$, Normal distribution function (NDF) =
 
-##### **정규 분포가 아니라, 법선(normal)의 분포를 나타내는 함수이다! ★**
+##### **정규 분포가 아니라, 법선(normal)의 분포를 나타내는 함수이다! ★ (= facet distribution function)**
 
 ##### 총 미세면 중 얼만큼의 미세면이 하프벡터를 향하고 있는가에 대한 통계적인 수치이다.
 
@@ -1126,7 +1134,21 @@ https://docs.microsoft.com/en-us/windows/win32/dxtecharts/common-techniques-to-i
 
 https://docs.microsoft.com/en-us/windows/win32/dxtecharts/cascaded-shadow-maps
 
+## GI (Global Illumination) - Voxel Cone Tracing
 
+## tone mapping ... (gamma space, linear space)
+
+## post effect - depth of field, glare, god ray
+
+## Laplace's equation -> Spherical Harmonics...
+
+## scattering
+
+## Outdoor Light Scattering by Egor Yusov
+
+## hair rendering
+
+## vertex morphing
 
 ## Volumetric light
 

@@ -12,6 +12,14 @@ implicit equation			$y=x$				$x^2+y^2=1$
 
 parametric equation 	$p(t) = (t, t)$	 $p(t) = (\cos t, \sin t)$
 
+## 삼각함수
+
+$\sin(a+b)=\cos a \sin b+\sin a \cos b$
+
+$\cos(a+b)=\cos a \cos b - \sin a \sin b$
+
+
+
 ## spline
 
 ### 베지에 곡선
@@ -34,17 +42,21 @@ $P(t) = sE + tF (s = 1-t)$ ★ $P(t)$ 의 이동 경로가 곡선이다!
 
 #### 3차 베지에 곡선 (cubir Bezier curve) = 두 2차 베지에 곡선의 혼합
 
-$E(t) = sA + tB (s = 1-t)$
+$$
+E(t) = sA + tB (s = 1-t)
+\\
+F(t) = sB + tC (s = 1-t)
+\\
+G(t) = sC + tD (s = 1-t)
+\\
+P_0(t) = sE + tF (s = 1-t)
+\\
+P_1(t) = sF + tG (s = 1-t)
+\\
+P(t) = sP_0 + tP_1 (s = 1-t)
+$$
 
-$F(t) = sB + tC (s = 1-t)$
 
-$G(t) = sC + tD (s = 1-t)$
-
-$P_0(t) = sE + tF (s = 1-t)$
-
-$P_1(t) = sF + tG (s = 1-t)$
-
-$P(t) = sP_0 + tP_1 (s = 1-t)$
 
 ### Cubic Bezier splines
 
@@ -70,7 +82,7 @@ bias, continuity
 
 ## 1. 벡터
 
-### 1). 벡터 표기법, 길이
+### 1) 벡터 표기법, 길이
 
 #### (1). 벡터 표기법
 
@@ -92,7 +104,7 @@ bias, continuity
 
 벡터 $\vec{a}=(a_x,a_y,a_z)$를 정규화하면 $\hat{a}=\dfrac{\vec{a}}{\|\vec{a}\|}$
 
-### 2). Dot product 스칼라 곱
+### 2) Dot product 스칼라 곱
 
 #### (1). 내적 계산 #1 (원소의 곱)
 
@@ -134,15 +146,22 @@ $$
 
   ![](Asset\trigonometry.png)
 
-  $sin^2\theta=\dfrac{b^2}{c^2}$
-
-  $cos^2\theta=\dfrac{a^2}{c^2}$
-
-  $sin^2\theta+cos^2\theta=\dfrac{b^2}{c^2}+\dfrac{a^2}{c^2}=\dfrac{b^2+a^2}{c^2}$
+  $$
+  sin^2\theta=\dfrac{b^2}{c^2}
+  \\
+  cos^2\theta=\dfrac{a^2}{c^2}
+  \\
+  sin^2\theta+cos^2\theta=\dfrac{b^2}{c^2}+\dfrac{a^2}{c^2}=\dfrac{b^2+a^2}{c^2}
+  $$
+  
 
   이때 피타고라스의 정리 $a^2+b^2=c^2$에 의해 $\dfrac{b^2+a^2}{c^2}=1$이다.
 
-  $\therefore sin^2\theta+cos^2\theta=1$
+  
+  $$
+  \therefore sin^2\theta+cos^2\theta=1
+  $$
+  
 
 * 내적 증명
 
@@ -158,16 +177,18 @@ i) 피타고라스의 정리에 의해 $\|\bold{c}\|^2=h^2+i^2$이다.
 
 이때, $h=\|\bold{b}\|sin\theta$이고  $i=\|\bold{a}\|-\|\bold{b}\|cos\theta$이므로
 
-$\|\bold{c}\|^2=(\|\bold{b}\|sin\theta)^2 + (\|\bold{a}\|-\|\bold{b}\|cos\theta)^2$ 이다.
-
-$\|\bold{c}\|^2=\|\bold{b}\|^2sin^2\theta + \|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2cos^2\theta$
-
-$\|\bold{c}\|^2=\|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2(cos^2\theta+sin^2\theta)$
-
+$$
+\|\bold{c}\|^2=(\|\bold{b}\|sin\theta)^2 + (\|\bold{a}\|-\|\bold{b}\|cos\theta)^2
+\\
+\|\bold{c}\|^2=\|\bold{b}\|^2sin^2\theta + \|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2cos^2\theta
+\\
+\|\bold{c}\|^2=\|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2(cos^2\theta+sin^2\theta)
+$$
 이때, $cos^2\theta+sin^2\theta=1$이므로
 
-$\|\bold{c}\|^2=\|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2$
-
+$$
+\|\bold{c}\|^2=\|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2
+$$
 
 
 ii) 피타고라스 정리에 의해 $\|\bold{c}\|^2=(a_x-b_x)^2+(a_y-b_y)^2$이고,
@@ -178,18 +199,20 @@ ii) 피타고라스 정리에 의해 $\|\bold{c}\|^2=(a_x-b_x)^2+(a_y-b_y)^2$이
 
 iii) i)과 ii)을 조합하면
 
-$a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=\|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2$
-
+$$
+a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=\|\bold{a}\|^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+\|\bold{b}\|^2
+$$
 이때, $\|\bold{a}\|^2=a_x^2+a_y^2$이며, $\|\bold{b}\|^2=b_x^2+b_y^2$ 이므로
 
-$a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=a_x^2+a_y^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+b_x^2+b_y^2$
-
-$-2a_bb_x-2a_yb_y=-2\|\bold{a}\| \|\bold{b}\| cos\theta$
-
-$-2(a_bb_x+a_yb_y)=-2(\|\bold{a}\| \|\bold{b}\| cos\theta)$
-
-$a_xb_x+a_yb_y=\|\bold{a}\| \|\bold{b}\|cos\theta$
-
+$$
+a_x^2-2a_bb_x+b_x^2+a_y^2-2a_yb_y+b_y^2=a_x^2+a_y^2-2\|\bold{a}\| \|\bold{b}\| cos\theta+b_x^2+b_y^2
+\\
+-2a_bb_x-2a_yb_y=-2\|\bold{a}\| \|\bold{b}\| cos\theta
+\\
+-2(a_bb_x+a_yb_y)=-2(\|\bold{a}\| \|\bold{b}\| cos\theta)
+\\
+a_xb_x+a_yb_y=\|\bold{a}\| \|\bold{b}\|cos\theta
+$$
 
 
 #### (5). 알아두면 좋은 내적 연산
@@ -213,17 +236,25 @@ $a_xb_x+a_yb_y=\|\bold{a}\| \|\bold{b}\|cos\theta$
   * $\vec{a}\bull(\vec{a}+\vec{b})+\vec{b}\bull(\vec{a}+\vec{b})$
   * $(\vec{a}+\vec{b})\bull(\vec{a}+\vec{b})$
 
-### 3). Cross product 벡터 곱
-
-$\bold{v}\times\bold{w}=(v_yw_z-v_zw_y,\ v_zw_x-v_xw_z,\ v_xw_y-v_yw_x)$
-
-$\bold{v}\times\bold{v}=(v_yv_z-v_zv_y,\ v_zv_x-v_xv_z,\ v_xv_y-v_yv_x)=\bold{0}$
-
-$\bold{v}\times-\bold{v}=(-v_yv_z+v_zv_y,\ -v_zv_x+v_xv_z,\ -v_xv_y+v_yv_x)=\bold{0}$
 
 
+### 3) Cross product 벡터 곱
 
-### 4). Projection 투영(사영)
+$$
+\bold{v}\times\bold{w}=(v_yw_z-v_zw_y,\ v_zw_x-v_xw_z,\ v_xw_y-v_yw_x)
+$$
+
+$$
+\bold{v}\times\bold{v}=(v_yv_z-v_zv_y,\ v_zv_x-v_xv_z,\ v_xv_y-v_yv_x)=\bold{0}
+$$
+
+$$
+\bold{v}\times-\bold{v}=(-v_yv_z+v_zv_y,\ -v_zv_x+v_xv_z,\ -v_xv_y+v_yv_x)=\bold{0}
+$$
+
+
+
+### 4) Projection 투영(사영)
 
 ![](Asset\vector_projection.png)
 
@@ -249,7 +280,7 @@ $\vec{a_{proj}}=(\vec{a}\bull\hat{b})\hat{b}$ 이다.
 
 
 
-### 5). Frame change 기저 변환 ★
+### 5) Frame change 기저 변환 ★
 
 ![](Asset\frame_change.png)
 
@@ -301,6 +332,8 @@ $=(1\times0.8944+3\times0.4472,1\times(-0.4472)+3\times0.8944)$
 
 $=(0.8944+1.3416,-0.4472+2.6832)=(2.2236,2.2236)=(\sqrt{5},\sqrt{5})$
 
+
+
 ## 변환(transform)
 
 ### 선형 변환 (linear transform)
@@ -330,15 +363,22 @@ $k\mathrm{f(\bold{x})=f(}k\mathrm{\bold{x})}$
 
 이 때 $\vec{AP}=P-A$ 이므로 $(P-A)\bull{}\vec{h}=0$이다.
 
--> $(x-x_0,\ y-y_0,\ z-z_0)\bull (a,\ b,\ c)=0\\$
--> $a(x-x_0)+b(y-y_0)+c(z-z_0)=0\\$
--> $ax+by+cz+d=0\\$  (단, $d=-ax_0-by_0-cz_0$)
-
+$$
+(x-x_0,\ y-y_0,\ z-z_0)\bull (a,\ b,\ c)=0
+\\
+a(x-x_0)+b(y-y_0)+c(z-z_0)=0
+\\
+ax+by+cz+d=0
+\\
+(\text{단, } d=-ax_0-by_0-cz_0)
+$$
 평면의 법선 벡터 $\vec{\mathrm{n}}=(a, b, c)$
 
-평면 위의 점 $\vec{\mathrm{x}}=(x, y, z)$
+평면 위의 임의의 점 $\vec{\mathrm{a}}=(x_0, y_0, z_0)$
 
-평면 $\pi:\ \vec{\mathrm{n}} \cdot \vec{\mathrm{x}}+d=0$
+공간 상의 임의의 점 $\vec{\mathrm{x}}=(x, y, z)$
+
+평면 $\pi:\ \vec{\mathrm{n}} \cdot \vec{\mathrm{x}}+d=0$  ($d=-\vec{\mathrm{n}} \cdot \vec{\mathrm{a}}$)
 
 $\vec{\mathrm{n}} \cdot \vec{\mathrm{x}}+d>0$ 일 경우 **양의 절반 공간(positive half space)**
 $\vec{\mathrm{n}} \cdot \vec{\mathrm{x}}+d<0$ 일 경우 **음의 절반 공간(negative half space)**
@@ -351,21 +391,23 @@ $\vec{\mathrm{n}} \cdot \vec{\mathrm{x}}+d<0$ 일 경우 **음의 절반 공간(
 
 
 
-### 점과 평면의 거리
+### 점과 평면의 거리 ★
 
-평면 $ax+by+cz+d=0$의 법선 벡터 $\hat{n}=(a, b, c)$가 정규화된 벡터이고, 평면 위의 점 $V$를 알 때,
+평면 $ax+by+cz+d=0$의 법선 벡터 $\hat{n}=(a, b, c)$가 정규화된 벡터이고, 평면 위의 점 $A$를 알 때,
 
 공간 상 임의의 점 $P$에 대해
 
 점 $P$와 평면 사이의 거리는
 
-$(P-V)\bull\vec{n}=P\bull\vec{n}-V\bull\vec{n}$ 이다.
+$(P-A)\bull\vec{n}=P\bull\vec{n}-A\bull\vec{n}$ 이다.
 
-이때, 평면의 정의에 따라 $d=-V\bull\vec{n}$이므로
+이때, 평면의 정의에 따라 $d=-A\bull\vec{n}$이므로
 
 $P\bull\vec{n}+d$이다.
 
 (단, $P$가 평면의 앞쪽에 있을 때 거리는 양수이고, 평면의 뒤쪽에 있을 때 거리는 음수이다.)
+
+
 
 ## 반직선의 방정식
 
@@ -376,6 +418,8 @@ $P\bull\vec{n}+d$이다.
 반직선의 식은
 
 $H=O+tD$와 같다. (단, $t>0$)
+
+
 
 ## 직선과 점의 거리
 
@@ -415,49 +459,414 @@ $r$을 구의 반지름이라고 할 때,
 
 
 
-## 구 그리기 (Sphere coordinates)
+## 구 좌표계 (Sphere coordinates)
 
 각도로 $\theta$ (theta)와 $\phi$ (phi)를 사용
 
 
 
-## 2. 행렬 (왼손좌표계 기준)
+## 2. 행렬
 
-### 1). 행렬의 계산
+### 1) 연립방정식과 행렬
 
-#### (1). 행렬의 덧셈
-
-#### (2). 행렬과 벡터의 곱셈
-
-왼손 좌표계에서는 행 벡터와 행렬을 곱하며, 그 계산은 다음과 같다.
-
-![](Asset\matrix_mul.png)
-
-즉,
-
-$x\prime = xm_{00} + ym_{10} + zm_{20}$
-
-$y\prime = xm_{01} + ym_{11} + zm_{21}$
-
-$z\prime = xm_{02} + ym_{12} + zm_{22}$
-
-이다.
+$$
+\begin{align}
+2x-y &=0
+\\
+-x+2y &=3
+\\
+\\
+\begin{bmatrix} 2 & -1 \\ -1 & 2 \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} & = \begin{bmatrix} 0 \\ 3 \end{bmatrix}
+\\
+\\
+A\mathrm{x} & = \mathrm{b}
+\end{align}
+$$
 
 
 
-### 2). 월드 행렬
+### 소거 (elimination) & 후진 대입 (back substitution)
 
-#### (1). 이동 (Translation)
+$$
+\begin{align}
+x+2y+z & = 2
+\\
+3x+8y+z & = 12
+\\
+4y+z & = 2
+\\
+\\
+\begin{bmatrix}
+1 & 2 & 1 \\
+3 & 8 & 1 \\
+0 & 4 & 1
+\end{bmatrix}
+\\
+A \phantom{abcde}
+\end{align}
+$$
+
+#### Elimination
+
+[] = pivot. (pivot은 0이 될 수 없다!)
+$$
+\begin{align}
+&
+\begin{bmatrix}
+[1] & 2 & 1 \\
+3 & 8 & 1 \\
+0 & 4 & 1
+\end{bmatrix}
+&&
+\begin{bmatrix}
+2 \\
+12 \\
+2
+\end{bmatrix}
+\\
+&
+\phantom{abcdef} \mathrm{A}
+&&
+\phantom{ab} \mathrm{b}
+\\
+\\
+=>{(2,1)}=>
+&
+\begin{bmatrix}
+[1] & 2 & 1 \\
+0 & [2] & -2 \\
+0 & 4 & 1
+\end{bmatrix}
+&&
+\begin{bmatrix}
+2 \\
+6 \\
+2
+\end{bmatrix}
+\\
+\\
+=>{(3,2)}=>
+&
+\begin{bmatrix}
+[1] & 2 & 1 \\
+0 & [2] & -2 \\
+0 & 0 & [5]
+\end{bmatrix}
+&&
+\begin{bmatrix}
+2 \\
+6 \\
+-10
+\end{bmatrix}
+\\
+&
+\phantom{abcdef} \mathrm{U}
+&&
+\phantom{abc} \mathrm{c}
+\end{align}
+$$
+$U$ = Upper triangular
+
+
+
+#### Back substitution
+
+$$
+\begin{align}
+x + 2y + \phantom{1}z & = 2
+\\
+2y -2z & = 6
+\\
+5z & = -10
+\\
+\\
+\rm{i}) \ z&=-2
+\\
+\rm{ii})\ y&=1
+\\
+\rm{iii})\ x&=2
+\end{align}
+$$
+
+
+
+#### Elimination with matrix
+
+$$
+\begin{align}
+&
+\begin{bmatrix}
+1 & 2 & 1 \\
+3 & 8 & 1 \\
+0 & 4 & 1
+\end{bmatrix}
+\end{align}
+$$
+
+
+
+1) eliminate (2,1)
+
+​    subtract 3 * row1 from row2 = row2 - 3*row1
+$$
+\begin{align}
+\begin{bmatrix}
+1 & 0 & 0 \\
+-3 & 1 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+&
+\begin{bmatrix}
+1 & 2 & 1 \\
+3 & 8 & 1 \\
+0 & 4 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 2 & -2 \\
+0 & 4 & 1
+\end{bmatrix}
+\\
+E_{21} \phantom{abcd} &
+\end{align}
+$$
+2) eliminate (3,2)
+
+​    subtract 2 * row2 from row3 = row3 - 2*row2
+$$
+\begin{align}
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & -2 & 1
+\end{bmatrix}
+&
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 2 & -2 \\
+0 & 4 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 2 & -2 \\
+0 & 0 & 5
+\end{bmatrix}
+\\
+E_{32} \phantom{abcd} &
+\end{align}
+$$
+3) together
+$$
+\begin{align}
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & -2 & 1
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0 & 0 \\
+-3 & 1 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+1 & 2 & 1 \\
+3 & 8 & 1 \\
+0 & 4 & 1
+\end{bmatrix}
+& =
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 2 & -2 \\
+0 & 0 & 5
+\end{bmatrix}
+\\
+E_{32} \phantom{abcdefghij} E_{21} \phantom{abcdefghi} A \phantom{abcd} & \phantom{abcdefgh} \rm{U}
+\end{align}
+$$
+
+$$
+E_{32}E_{21}A=U
+$$
+
+
+
+#### cf) permutation matrix
+
+$$
+\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
+\begin{bmatrix} a & b \\ c & d \end{bmatrix}
+=
+\begin{bmatrix} c & d \\ a & b \end{bmatrix}
+\\
+P \phantom{abcdefghijklkmopq}
+$$
+
+
+$$
+\begin{bmatrix} a & b \\ c & d \end{bmatrix}
+\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
+=
+\begin{bmatrix} b & a \\ d & c \end{bmatrix}
+\\
+P \phantom{abc}
+$$
+
+
+### 2) 행렬과 벡터의 곱
+
+#### column
+
+$$
+\begin{align}
+& \begin{bmatrix} a & b \\ c & d \end{bmatrix} \begin{bmatrix} e \\ f \end{bmatrix}
+\\
+& = e\begin{bmatrix} a \\ c \end{bmatrix} + f\begin{bmatrix} b \\ d \end{bmatrix}
+\\
+& = \begin{bmatrix} ae+bf \\ ce + df \end{bmatrix}
+\end{align}
+$$
+
+#### row
+
+$$
+\begin{align}
+& \begin{bmatrix} e & f \end{bmatrix} \begin{bmatrix} a & b \\ c & d \end{bmatrix}
+\\
+& = e\begin{bmatrix} a & b \end{bmatrix} + f\begin{bmatrix} c & d \end{bmatrix}
+\\
+& = \begin{bmatrix} ae + be & cf + df \end{bmatrix}
+\end{align}
+$$
+
+#### dot product
+
+$$
+\begin{align}
+& \begin{bmatrix} a & b \\ c & d \end{bmatrix} \begin{bmatrix} e \\ f \end{bmatrix}
+\\
+& = \begin{bmatrix} ae+bf \\ ce + df \end{bmatrix}
+\end{align}
+$$
+
+#### column-row
+
+$$
+\begin{align}
+& \begin{bmatrix} a \\ b \\ c \end{bmatrix} \begin{bmatrix} d & e \end{bmatrix}
+\\
+& = \begin{bmatrix} ad & ae \\ bd & be \\ cd & ce \end{bmatrix}
+\end{align}
+$$
+
+### 3) 행렬과 행렬의 곱
+
+#### column
+
+$$
+\begin{align}
+& \begin{bmatrix} a & b \\ c & d \end{bmatrix} \begin{bmatrix} e & f \\ g & h \end{bmatrix}
+\\
+& = \begin{bmatrix} e \begin{bmatrix} a \\ c \end{bmatrix} + g \begin{bmatrix} b \\ d \end{bmatrix} & f \begin{bmatrix} a \\ c \end{bmatrix} + h \begin{bmatrix} b \\ d \end{bmatrix} \end{bmatrix}
+\\
+& = \begin{bmatrix} \begin{bmatrix} ae \\ ce \end{bmatrix} + \begin{bmatrix} bg \\ dg \end{bmatrix} & \begin{bmatrix} af \\ cf \end{bmatrix} + \begin{bmatrix} bh \\ dh \end{bmatrix} \end{bmatrix}
+\\
+& = \begin{bmatrix} \begin{bmatrix} ae + bg \\ ce + dg \end{bmatrix} & \begin{bmatrix} af + bh \\ cf + dh \end{bmatrix} \end{bmatrix}
+\\
+& = \begin{bmatrix} ae + bg & af + bh \\ ce + dg & cf + dh \end{bmatrix}
+\end{align}
+$$
+
+
+
+#### row
+
+$$
+\begin{bmatrix} a & b \\ c & d \end{bmatrix} \begin{bmatrix} e & f \\ g & h \end{bmatrix}
+\\
+= \begin{bmatrix} a \begin{bmatrix} e & f \end{bmatrix} + b \begin{bmatrix} g & h \end{bmatrix} \\ c \begin{bmatrix} e & f \end{bmatrix} + d \begin{bmatrix} g & h \end{bmatrix} \end{bmatrix}
+\\
+= \begin{bmatrix} \begin{bmatrix} ae & af \end{bmatrix} + \begin{bmatrix} bg & bh \end{bmatrix} \\ \begin{bmatrix} ce & cf \end{bmatrix} + \begin{bmatrix} dg & dh \end{bmatrix} \end{bmatrix}
+\\
+= \begin{bmatrix} \begin{bmatrix} ae + bg & af + bh \end{bmatrix} \\ \begin{bmatrix} ce + dg & cf + dh \end{bmatrix} \end{bmatrix}
+\\
+= \begin{bmatrix} ae + bg & af + bh \\ ce + dg & cf + dh \end{bmatrix}
+$$
+
+
+
+#### dot product
+
+
+
+
+
+#### column-row
+
+$$
+\begin{bmatrix} a & b \\ c & d \end{bmatrix} \begin{bmatrix} e & f \\ g & h \end{bmatrix}
+\\
+= \begin{bmatrix} a \\ c \end{bmatrix} \begin{bmatrix} e & f \end{bmatrix} + \begin{bmatrix} b \\ d \end{bmatrix} \begin{bmatrix} g & h \end{bmatrix}
+\\
+= \begin{bmatrix} ae & af \\ ce & cf \end{bmatrix} + \begin{bmatrix} bg & bh \\ dg & dh \end{bmatrix}
+\\
+= \begin{bmatrix} ae + bg & af + bh \\ ce + dg & cf + dh \end{bmatrix}
+$$
+
+
+
+#### notation for entry multiplication
+
+$$
+\begin{align}
+\begin{bmatrix} \\ \\ a_{31} & \cdots & & \\ \ \end{bmatrix}
+
+\begin{bmatrix} & & & b_{14} \\ & & & \vdots \\ \\ \ \end{bmatrix}
+= &
+\begin{bmatrix} \\ \\ & & c_{34} & \\ \ \end{bmatrix}
+\\
+A \phantom{abcdefghijkl} B \phantom{abcdefgh} & \phantom{abc} C=AB
+\end{align}
+$$
+
+
+$$
+\begin{align}
+c_{34} &=a_{31}b_{14}+a{32}b_{24}+\cdots \\
+ &=\sum_{k=1}^{n}{a_{3k}b_{k4}}
+\end{align}
+$$
+
+### Inverse matrix
+
+$$
+A^{-1}A=I=AA^{-1}
+$$
+
+
+
+e.g.
+$$
+\begin{align}\begin{bmatrix} 1 & 0 & 0 \\ 3 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}\begin{bmatrix} 1 & 0 & 0 \\ -3 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}= &\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}\\E^{-1} \phantom{abcdefghi} E \phantom{abcdefg} & \phantom{abcde} I\end{align}
+$$
+
+
+
+
+### ? 월드 행렬
+
+#### (1) 이동 (Translation)
 
 동차좌표계의 필요성 등장!!!
 
 $T=\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ t_x & t_y & t_z & 1\end{bmatrix}$
 
-#### (2). 크기 (Scaling)
+#### (2) 크기 (Scaling)
 
 $S=\begin{bmatrix}s_x & 0 & 0 & 0 \\ 0 & s_y & 0 & 0 \\ 0 & 0 & s_z & 0 \\ 0 & 0 & 0 & 1\end{bmatrix}$
 
-#### (3). 회전 (Rotation)
+#### (3) 회전 (Rotation)
 
 ##### i). 벡터 회전
 
@@ -497,11 +906,11 @@ $R=\begin{bmatrix} cos\theta & -sin\theta \\ sin\theta & cos\theta \end{bmatrix}
 
 
 
-
+따라서
 
 $R_x=\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & cos\theta & -sin\theta  & 0 \\ 0 & sin\theta  & cos\theta  & 0 \\ 0 & 0 & 0 & 1\end{bmatrix}$
 
-
+이다.
 
 
 
@@ -529,7 +938,7 @@ $\bold{p_{rot}}=\bold{p} + 2a(\bold{\hat{r}} \times \bold{p}) + 2(\bold{\hat{r}}
 
 
 
-### 3). 뷰 행렬
+### ? 뷰 행렬
 
 뷰 행렬이 하는 일: 기존 $x, y, z$ 기저에 있던 벡터를 새로운 기저(카메라 공간의 기저) $i, j, k$로 옮기는 것!
 
@@ -593,9 +1002,9 @@ $\therefore M_{view} = \begin{bmatrix}  i_x & j_x & k_x & 0  \\  i_y & j_y & k_y
 
 
 
-### 4). 투영 행렬
+### ? 투영 행렬
 
-#### (1). 원근 투영 행렬(Perspective projection matrix)
+#### (1) 원근 투영 행렬(Perspective projection matrix)
 
 어떤 동차 좌표 $P_4 = (x,y,z,1)$에 대해
 
@@ -697,7 +1106,7 @@ $M_{proj}=\begin{bmatrix}\dfrac{1}{r\times tan\dfrac{\theta}{2}}&0&0&0 \\ 0&\dfr
 
 
 
-#### (2). 직교 투영 행렬(Orthographic projection matrix)
+#### (2) 직교 투영 행렬(Orthographic projection matrix)
 
 ![](Asset\orthographic_projection_xz.png)
 

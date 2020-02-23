@@ -148,7 +148,7 @@ size(), capacity(), display() & push_front(), pop_front(), push_back(), pop_back
 
 #### 2) 이진 탐색 트리 (BST, Binary search tree) ★
 
-- 균형이 안 맞으면 탐색/삽입/삭제 시간이 O(n)이 된다...
+- **균형★**이 안 맞으면 탐색/삽입/삭제 시간이 O(n)이 된다...
 
 단어장, 사전
 
@@ -160,21 +160,37 @@ size(), capacity(), display() & push_front(), pop_front(), push_back(), pop_back
 
 #### 5) B트리 (B-Tree) ★★
 
+[그림: 5차 B-Tree]
+
+
+
+![5차](Asset\Order5BTree.png)
+
+
+
 - 데이터베이스, 파일 시스템에 주로 사용됨
-- 노드에 들어가는 값: key
-- 자식 개수 최대치: **order**
-- key가 4개가 최대면 Order-5 B-Tree (5차 B-Tree)
+
+##### 정의
+
+- 노드에 들어가는 값: **key (키)**
+- 자식 개수 최대치: **order (차수)** ★ (key 개수는 order - 1)
+  - key가 최대 4개면 Order-5 B-Tree (5차 B-Tree)
+  - (non-leaf 노드의) 자식 노드가 k 개면 키는 k-1개다
 - ★ 루트 노드는 (leaf 노드가 아닌 경우) 최소 두 개의 child 노드가 있어야 한다
-- ★ non-leaf 노드의 자식 노드가 k 개면 키는 k-1개다
 - ★ (루트 제외) non-leaf 노드는 최소 Order / 2개의 키를 가진다.
 - **★★ 모든 leaf는 같은 level에 존재해야 한다.**
+
+##### 삽입
+
+- 항상 leaf 노드에 삽입
+- 하향 탐색하여 위치 찾음? 해당 leaf 노드에 공간 없으면 분할! (분할하려면 키 하나를 부모 노드로 올린다!! 부모 노드가 꽉 찼으면? 부모노드도 분할!)
 
 #### 6) R-B트리 (Red-black tree) ★★
 
 - 모든 노드는 R/B
 - **★ root와 leaf는 항상 B**
-- **★ 노드가 R이면 자식은 무조건 B**
-- **★★root에서 leaf까지 모든 경로에서 B의 갯수는 같아야 한다** (가장 짧으면 B만 나오는 경로, 가장 길면 B-R-B-R-B처럼 번갈아 나오는 경우)
+- **★ 노드가 R이면 자식은 무조건 B** (즉, R와 B는 계층 상 **번갈아** 나타난다!!)
+- **★★ root에서 leaf까지 모든 경로에서 ★B의 갯수★는 같아야 한다** (가장 짧으면 B만 나오는 경로, 가장 길면 B-R-B-R-B처럼 번갈아 나오는 경우)
 
 
 
@@ -234,129 +250,131 @@ $T(n)=\Theta(f(n))$
 
 ### 1. 정렬
 
+```cpp
+std::vector<int> v{ 5, 3, 8, 4, 9, 1, 6, 2, 7 };
+std::vector<int> v{ 7, 3, 1, 5, 9 };
+```
+
 #### 1) 퀵 정렬 (Quick sort) ★
 
 분할정복법(Divide-And-Conquer)
 
 시간 복잡도: $\Theta(n\log{n})$ ~ $\mathcal{O}(n^2)$★
 
-```
-// P 기준 왼쪽은 작고, 오른쪽은 커야 한다 ★
-// => S는 작거나 같으면 무시 (크면 E랑 바꿔야 한다)
-// => E는 크거나 같으면 무시 (작으면 S랑 바꿔야 한다)
-// S, E가 뒤집히면 분할 완료!
-// 5, 9, 8, 7, 1, 2, 3 ★
-   P  S!             E!
-// 5, 3, 8, 7, 1, 2, 9
-   P     S!       E!
-// 5, 3, 2, 7, 1, 8, 9
-   P        S! E!
-// 5, 3, 2, 1, 7, 8, 9 ★ (S > E)
-   P        E  S
-// 1, 3, 2, 5, 7, 8, 9
-   [     ]  P  [     ]
-            
-// 1, 3, 2
-   P  S  E
-// 1, 3, 2 ★★ (같은 경우 무시!!)
-   P  S
-      E
-// 1, 3, 2 ★★ (S > E == 분할 완료!)
-   P  S
-   E
-```
+##### ★★★ 각 라운드가 끝나면 새 pivot 위치를 기준으로 왼쪽은 작고, 오른쪽은 커야 한다 ★★★
 
 ```cpp
 #include <vector>
-
-using std::vector;
-using std::swap;
-
-void QuickSort(vector<int>& V, int iLeft, int iRight)
+void quick_sort(std::vector<int>& v, const size_t begin, const size_t end)
 {
-	if (iLeft >= iRight) return;
-
-	int iPivot{ iLeft };
-	int iStart{ iLeft + 1 };
-	int iEnd{ iRight };
-
-	while (true)
+	if (begin >= end) return;
+	size_t pivot{ begin }, left{ begin + 1 }, right{ end };
+	while (left < right)
 	{
-		while (V[iStart] <= V[iPivot] && iStart < iRight) ++iStart;
-		while (V[iEnd] >= V[iPivot] && iEnd > iLeft) --iEnd;
-
-		if (iStart >= iEnd)
-		{
-			swap(V[iPivot], V[iEnd]);
-
-			QuickSort(V, iLeft, iEnd - 1);
-			QuickSort(V, iEnd + 1, iRight);
-
-			return;
-		}
-		else
-		{
-			swap(V[iStart], V[iEnd]);
-		}
+		if ((v[left] > v[pivot] || v[right] < v[pivot]) && v[left] > v[right])
+			std::swap(v[left], v[right]);
+		if (v[left] <= v[pivot]) ++left;
+		if (v[right] >= v[pivot]) --right;
 	}
+	if (v[pivot] > v[right]) std::swap(v[pivot], v[right]); // @주의: 조건문 필수
+	pivot = right;											// 새 pivot 위치
+	quick_sort(v, begin, pivot - 1);						// @주의: pivot - 1
+	quick_sort(v, pivot, end);
 }
 ```
 
-#### 2) 합병 정렬 (Merge sort) ★
+```cpp
+//[EXMAPLE #0]     [EXAMPLE #1]
+// =========        =========
+// 7 3 1 5 9        9 5 1 3 7
+// p l     r        p l     r
+// 7 3 1 5 9        9 5 1 3 7
+// p   l r          p   l   r
+// 7 3 1 5 9        9 5 1 3 7
+// p     r          p     l r
+//       l          9 5 1 3 7
+// =========        p       r
+// 5 3 1 7 9                l
+//       p          =========
+// ===== ===        7 5 1 3 9
+// 5 3 1 7 9                p
+// p l r            ======= =
+// 5 3 1            7 5 1 3
+// p   r            p l   r
+//     l            7 3 1 5
+// =====            p l   r
+// 1 3 5            7 3 1 5
+//     p            p   l r
+// === =            7 3 1 5
+// 1 3 5            p     r
+//                        l
+//                  =======
+//                  5 3 1 7
+//                        p
+//                  ===== =
+//                  5 3 1
+//                  p l r
+//                  5 1 3
+//                  p l r
+//                  5 1 3
+//                  p   r
+//                      l
+//                  =====
+//                  3 1 5
+//                      p
+//                  === =
+//                  3 1
+//                  ===
+//                  1 3
+```
+
+
+
+#### 2) 병합 정렬 (Merge sort) ★
 
 분할정복법(Divide-And-Conquer), stable sort -> Master theorum 참고
 
 합병 시 두 개의 목록의 원소에서 조건에 맞게 합병된 공간으로 옮긴다!
 
 ```cpp
-void Merge(vector<int>& V, int iLeft, int iMid, int iRight)
+#include <vector>
+void _merge(std::vector<int>& v, const size_t lbegin, const size_t rbegin, const size_t rend)
 {
-	vector<int> Sorted{};
-	int iLeftPartitionStart{ iLeft };
-	int iRightPartitionStart{ iMid + 1 };
-
-	while (iLeftPartitionStart <= iMid && iRightPartitionStart <= iRight)
+	const size_t lend{ rbegin - 1 };
+	std::vector<int> sorted{};
+	size_t lat{ lbegin };
+	size_t rat{ rbegin };
+	while (lat <= lend && rat <= rend)							// @주의: 삽입 방식
 	{
-		if (V[iLeftPartitionStart] < V[iRightPartitionStart])
-		{
-			Sorted.emplace_back(V[iLeftPartitionStart]);
-			++iLeftPartitionStart;
-		}
-		else
-		{
-			Sorted.emplace_back(V[iRightPartitionStart]);
-			++iRightPartitionStart;
-		}
+		bool is_left_smaller{ v[lat] < v[rat] };				// @주의: 인덱싱
+		sorted.emplace_back(is_left_smaller ? v[lat] : v[rat]);
+		is_left_smaller ? ++lat : ++rat;
 	}
-
-	while (iLeftPartitionStart <= iMid)
+	while (lat <= lend)
 	{
-		Sorted.emplace_back(V[iLeftPartitionStart]);
-		++iLeftPartitionStart;
+		sorted.emplace_back(v[lat]);
+		++lat;
 	}
-
-	while (iRightPartitionStart <= iRight)
+	while (rat <= rend)
 	{
-		Sorted.emplace_back(V[iRightPartitionStart]);
-		++iRightPartitionStart;
+		sorted.emplace_back(v[rat]);
+		++rat;
 	}
-
-	for (int i = iLeft; i <= iRight; ++i)
+	for (size_t i = 0; i < sorted.size(); ++i)
 	{
-		V[i] = Sorted[i - iLeft];
+		v[lbegin + i] = sorted[i];
 	}
 }
 
-void MergeSort(vector<int>& V, int iLeft, int iRight)
+void merge_sort(std::vector<int>& v, size_t begin, size_t end)
 {
-	if (iLeft == iRight) return;
+	if (begin >= end) return;
 
-	int iMid{ static_cast<int>((iLeft + iRight) / 2) };
+	size_t mid{ begin + (end - begin) / 2 };	// @주의: begin 더하는 것 까먹지 말기!
+	merge_sort(v, begin, mid);
+	merge_sort(v, mid + 1, end);
 
-	MergeSort(V, iLeft, iMid);
-	MergeSort(V, iMid + 1, iRight);
-
-	Merge(V, iLeft, iMid, iRight);
+	_merge(v, begin, mid + 1, end);
 }
 ```
 
@@ -366,40 +384,56 @@ void MergeSort(vector<int>& V, int iLeft, int iRight)
 
 #### 5) 삽입 정렬 (Insertion sort) ★
 
-왼쪽이 정렬된 부분, 정렬 안 된 맨 처음 항목을 앞의 정렬된 항목과 비교해서 교환(swap)★
+##### 왼쪽이 정렬된 부분, 정렬 안 된 마지막 항목부터 바로 앞의 항목과 비교해서 교환(swap)★
 
 ```cpp
 #include <vector>
-
-using std::vector;
-using std::swap;
-
-void InsertionSort(vector<int>& V)
+void insertion_sort(std::vector<int>& v)
 {
-	int SortedCount{};
-	while (SortedCount < (int)V.size())
+	for (size_t sorted_at = 0; sorted_at < v.size(); ++sorted_at)
 	{
-		for (int j = 0; j < SortedCount; ++j)
+		for (size_t i = v.size() - 1; i > sorted_at; --i)	// @주의: 오른쪽부터!!
 		{
-			if (V[SortedCount] < V[j]) swap(V[SortedCount], V[j]);
+			if (i > 0 && v[i] < v[i-1]) std::swap(v[i], v[i - 1]);
 		}
-		++SortedCount;
 	}
-}
-
-int main()
-{
-	vector<int> v{ 5, 3, 8, 4, 9, 1, 6, 2, 7 };
-
-	InsertionSort(v);
-
-	return 0;
 }
 ```
 
 #### 6) 선택 정렬 (Selection sort)
 
+왼쪽: 정렬된 항목들 / 오른쪽: 미정렬 항목들
+
+선형 탐색해서 **최소값★ 찾아서** 미정렬 맨 앞 항목과 교환!
+
+```cpp
+#include <vector>
+void selection_sort(std::vector<int>& v)
+{
+	for (size_t sorted_end = 0; sorted_end < v.size(); ++sorted_end)
+	{
+		int min{ (int)0x7FFFFFFF };
+		size_t min_at{};
+		for (size_t i = sorted_end; i < v.size(); ++i)
+		{
+			if (v[i] < min)
+			{
+				min_at = i;
+				min = v[i];
+			}
+		}
+		std::swap(v[sorted_end], v[min_at]);
+	}
+}
+```
+
+
+
 #### 7) 버블 정렬 (Bubble sort)
+
+첫 항목부터 그 다음 항목과 비교 시작.
+
+1라운드 끝나면 맨 마지막은 가장 큰 항목. (즉, 오른쪽이 곧 정렬된 목록)
 
 인접한 두 개를 비교해서 교환(swap)
 
@@ -901,6 +935,8 @@ for (int i = 0; i < (int)v.size() - 1; ++i) // 문제 해결!
 ##### 기저 사례(base case)★ -> return 을 잘 해야....
 
 ##### 문제(problem)와 부분문제(subproblem) -> 점화식!★★
+
+##### 반복을 피하고 싶으면 Offset을 활용!!★
 
 ##### 예) 팩토리얼 계산
 
