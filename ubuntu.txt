@@ -1,0 +1,78 @@
+### 용어
+prompt
+
+###
+pwd (print working directory)
+
+cd (change directory)
+ cd					home 디렉토리로?
+ cd /					(\아님!!!) root 디렉토리로 (리눅스는 윈도우처럼 디스크 분할 안 함!!!)
+ cd /abc				home의 /abc 디렉토리로
+ cd ..
+ cd ../..
+ cd ../../abc
+ cd ~					home 디렉토리로
+ cd ~/Desktop				home/USERNAME/Desktop
+
+mkdir
+ mkdir dir1 dir2 dir3 ...	
+
+rmdir
+
+ls				
+ ls > output.txt			redirection★
+ ls dir1
+
+cat
+ cat output.txt
+ cat t1.txt t2.txt t3.txt
+ cat t?.txt
+ cat t*.txt
+ cat t* > combined.txt			redirection★
+
+echo
+ echo "hello, there!" > combined.txt	
+
+less					more의 대체품이라서 이름이...
+ [Up][Down][Home][End][PgUp][PgDw][q]
+ less combined.txt			
+
+mv
+ mv combined.txt dir1
+ mv dir1/* .				dir 내 모든 파일을 working directory로
+ mv old_name.txt new_name.txt
+
+cp					copy
+
+rm
+ rm -r folder_6
+
+wc					word count
+ wc -l test.txt				line count
+ ls ~ | wc -l				pipe
+
+man					manual
+
+sudo					switch user and do this command
+
+tree
+
+su (switch user)
+ su: root사용자로 변경
+ su [유저명]
+whoami 현재 사용자 확인
+exit == logout 이전 계정으로 돌아가기
+
+
+apt-get(Advanced Packaging Tool)
+ sudo apt-get update
+ sudo apt-get upgrade
+ sudo apt-get install [패키지명]
+ sudo apt-get remove [패키지명]
+ sudo apt-cache search [패키지명]
+ sudo apt-cache show [패키지명]
+
+
+
+ls ?
+mv ?

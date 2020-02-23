@@ -1,0 +1,62 @@
+GetCaretBlinkTime() - ms 단위 => INFINITE 리턴되면 깜빡임 없음. 0 리턴되면 함수 실패
+재입력시간(Keyboard Delay) -> SPI_GETKEYBOARDDELAY
+반복속도(Keyboard speed) -> SPI_GETKEYBOARDSPEED
+
+SystemParametersInfo(SPI_GETKEYBOARDDELAY, 0, &m_KeyboardDelay, 0); // [0, 3] = [250ms, 1000ms]
+SystemParametersInfo(SPI_GETKEYBOARDSPEED, 0, &m_KeyboardSpeed, 0); // [0, 31] = [2.5 rep/s, 30 rep/s]
+
+#Input Method Manager
+ImmGetConversionStatus()
+ImmGetCandiateListW()
+case WM_IME_COMPOSITION:
+	if (lParam & GCS_RESULTSTR)
+	if (lParam & GCS_COMPSTR)
+ImmGetContext()
+ImmReleaseContext()
+//ImmGetOpenStatus()
+
+
+case WM_IME_COMPOSITION:
+	if (lParam & GCS_COMPSTR)
+	{
+		HIMC hIMC{ ImmGetContext(hWnd) };
+		LONG len{ ImmGetCompositionString(hIMC, GCS_COMPSTR, NULL, 0) };
+		TCHAR tstr[3]{};
+		ImmGetCompositionString(hIMC, GCS_COMPSTR, tstr, len);
+		wchar_t wChar{};
+		MultiByteToWideChar(CP_ACP, 0, tstr, (int)strlen(tstr), &wChar, 1);
+		ImmReleaseContext(hWnd, hIMC);
+		NewEvent.eEventType = EEventType::IMEComposition;
+		NewEvent.Extra = wChar;
+
+		m_bIsIMECompositing = true;
+	}
+	break;
+case WM_IME_CHAR:
+{
+	TCHAR tstr[3]{};
+	wchar_t wChar{};
+	NewEvent.eEventType = EEventType::KeyStroke;
+	tstr[0] = HIBYTE(LOWORD(wParam));
+	tstr[1] = LOBYTE(LOWORD(wParam));
+	MultiByteToWideChar(CP_ACP, 0, tstr, (int)strlen(tstr), &wChar, 1);
+	NewEvent.Extra = wChar;
+
+	m_bIsIMECompositing = false;
+	break;
+}
+
+
+
+#큰 자음
+
+#윗 자음
+
+#겹받침: 13가지 (쌍받침 ㄲ, ㅆ 포함)
+ㄲ, ㅆ, ㄳ, ㄵ, ㄶ, ㄺ, ㄻ, ㄼ, ㄽ, ㄾ, ㄿ, ㅀ, ㅄ
+
+
+0xAC00(가) ~ 0xD7A3(힣)
+초성 : ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ (19개)
+중성 : ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ (21개)
+종성 : 　ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ (28개, 맨 처음은 빈 문자)
