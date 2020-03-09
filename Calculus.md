@@ -246,6 +246,78 @@ $$
 
 
 
+### 삼각함수의 도함수 (derivatives of trigonometric functions)
+
+#### 삼각함수의 극한
+
+$$
+\lim_{x \rightarrow 0} \dfrac{\sin x}{x} = 1
+$$
+
+
+$$
+\lim_{x \rightarrow 0} \dfrac{\cos x - 1}{x} = 0
+$$
+
+
+#### sin
+
+$$
+\begin{align}
+& \dfrac{d}{dx}(\sin x) \\
+& = \lim_{h \rightarrow 0} \dfrac{\sin(x+h) - \sin x}{h} \\
+& = \lim_{h \rightarrow 0} \dfrac{\sin x \cos h + \cos x\sin h - \sin x}{h} \\
+& = \lim_{h \rightarrow 0} \dfrac{\sin x(\cos h - 1) + \cos x\sin h}{h} \\
+& = \lim_{h \rightarrow 0} \dfrac{\sin x(\cos h - 1)}{h} + \lim_{h \rightarrow 0} \dfrac{\cos x\sin h}{h} \\
+& = \sin x \cdot \lim_{h \rightarrow 0} \dfrac{\cos h - 1}{h} + \cos x \cdot \lim_{h \rightarrow 0} \dfrac{\sin h}{h} \\
+& = \sin x \cdot 0 + \cos x \cdot 1 \\
+& = \cos x \\
+\end{align}
+$$
+
+
+
+#### cos
+
+$$
+\begin{align}
+& \dfrac{d}{dx}(\cos x) \\
+& = \lim_{h \rightarrow 0} \dfrac{\cos(x+h) - \cos x}{h} \\
+& = \lim_{h \rightarrow 0} \dfrac{\cos x \cos h - \sin x\sin h - \cos x}{h} \\
+& = \lim_{h \rightarrow 0} \dfrac{\cos x(\cos h - 1) - \sin x\sin h}{h} \\
+& = \lim_{h \rightarrow 0} \dfrac{\cos x(\cos h - 1)}{h} - \lim_{h \rightarrow 0} \dfrac{\sin x\sin h}{h} \\
+& = \cos x \cdot \lim_{h \rightarrow 0} \dfrac{\cos h - 1}{h} - \sin x \cdot \lim_{h \rightarrow 0} \dfrac{\sin h}{h} \\
+& = \cos x \cdot 0 - \sin x \cdot 1 \\
+& = -\sin x \\
+\end{align}
+$$
+
+
+
+#### tan
+
+$$
+\begin{align}
+& \dfrac{d}{dx}(\tan x) \\
+& = \dfrac{d}{dx}(\dfrac{\sin x}{\cos x} \\
+& = \dfrac{\sin' x \cos x - \sin x \cos' x}{\cos^2 x} \\
+& = \dfrac{\cos x \cos x + \sin x \sin x}{\cos^2 x} \\
+& = \dfrac{\cos^2 + \sin^2 x}{\cos^2 x} \\
+& = \dfrac{1}{\cos^2 x} \\
+& = \sec^2 x
+\end{align}
+$$
+
+
+
+#### sec
+
+#### csc
+
+#### cot
+
+
+
 ### 음함수 미분 (implicit differentiation)
 
 y를 x에 대한 함수로 생각하고
@@ -382,7 +454,7 @@ $$
 
 
 
-#### 치환법 substitution rule ★
+#### 치환법 substitution rule (->미분 연쇄법칙)★
 
 $$
 \text{If } u = g(x) \text{ is a differentiable function whose range is} \\
@@ -401,6 +473,12 @@ u & = g(x) \\
 \therefore du & = g'(x)dx
 \end{align}
 $$
+
+
+
+##### 특징
+
+분수의 경우 분모를 u로 두는 경우가 많다! du가 dx와 다른 값의 곱(결론적으로 분자가 됨)으로 나타나기 때문!
 
 
 
@@ -429,9 +507,84 @@ $$
 
 
 
+##### 예시1★
+
+$$
+\int{\dfrac{x}{\sqrt{1-x^2}}dx}
+$$
+
+
+$$
+\begin{align}
+u &= 1-x^2 \\
+du &= -2xdx
+\end{align}
+$$
+로 두면
+$$
+\begin{align}
+& \int{\dfrac{x}{\sqrt{1-x^2}}dx} \\
+&= -\dfrac{1}{2}\int{\dfrac{du}{\sqrt{u}}} \\
+&= -\dfrac{1}{2}(2u^{1/2}) + C \\
+&= -u^{1/2} + C \\
+&= -\sqrt{1-x^2} + C \\
+\end{align}
+$$
+
+$$
+\therefore \int{\dfrac{x}{\sqrt{1-x^2}}dx} = -\sqrt{1-x^2} + C \\
+$$
+
+
+##### 예시2★
+
+$$
+\int \dfrac{dx}{(1+\sqrt{x})^4}
+$$
+
+이때
+$$
+\begin{align}
+u &= 1 + \sqrt{x} \\
+du &= \dfrac{dx}{2\sqrt{x}} \\
+&= \dfrac{dx}{2(u-1)} \\
+&= \dfrac{dx}{2u-2}
+\end{align}
+$$
+따라서
+$$
+\begin{align}
+&\int \dfrac{dx}{(1+\sqrt{x})^4} \\
+&= \int \dfrac{2u-2}{u^4}du \\
+&= 2\int \dfrac{u-1}{u^4}du \\
+&= 2\left(\int \dfrac{u}{u^4}du - \int \dfrac{1}{u^4}du\right) \\
+&= 2\left(\int u^{-3}du - \int u^{-4}du\right) \\
+&= 2\left(-\dfrac{1}{2}u^{-2} + \dfrac{1}{3}u^{-3} + C\right) \\
+&= -u^{-2} + \dfrac{2}{3}u^{-3} + C \\
+&= -\dfrac{1}{u^2} + \dfrac{2}{3u^3} + C \\
+&= -\dfrac{1}{(1 + \sqrt{x})^2}+\dfrac{2}{3(1 + \sqrt{x})^3}+C
+\end{align}
+$$
+
+$$
+\therefore \int \dfrac{dx}{(1+\sqrt{x})^4} = -\dfrac{1}{(1 + \sqrt{x})^2}+\dfrac{2}{3(1 + \sqrt{x})^3}+C
+$$
+
+
 ## 역함수 inverse functions
 
+$$
+y=f(x) \\
+f^{-1}(y)=x
+$$
 
+
+$$
+\dfrac{d}{dx}\left[f^{-1}(x)\right] = \dfrac{1}{f'(x)}
+$$
+
+
+![](Asset\inverse_function.png)
 
 
 
@@ -470,6 +623,23 @@ $$
 
 
 
+#### 예시★
+
+$$
+\int (e^x+e^{-x})^2dx
+$$
+
+제곱을 풀면
+$$
+\begin{align}
+&\int{(e^{2x} + 2 + e^{-2x})}dx \\
+&= \int{e^{2x}}dx + 2\int dx + \int{e^{-2x}}dx \\
+&= \dfrac{1}{2}e^{2x} + 2x - \dfrac{1}{2}e^{-2x} + C \\
+&= \dfrac{1}{2}(e^{2x} - e^{-2x}) + 2x + C \\
+\end{align}
+$$
+
+
 ### 로그함수 logarithmic functions
 
 #### 지수함수의 역함수
@@ -482,19 +652,435 @@ $$
 y = \ln x \\
 $$
 
+#### 성질(?)
+
+$$
+\ln e = 1 \\
+\ln 1 = 0
+$$
+
 
 
 #### 도함수
 
 $$
-\dfrac{d}{dx}\ln x = \dfrac{1}{x}
+\begin{align}
+y &=\ln x \\
+x &=e^y \\
+\end{align}
+$$
+
+음함수적으로 미분하면
+$$
+\begin{align}
+\dfrac{d}{dx}x &=\dfrac{d}{dx}e^y \\
+1 &= e^y \dfrac{dy}{dx} \\
+\dfrac{dy}{dx} &=\dfrac{1}{e^y} \\
+&= \dfrac{1}{x}
+\end{align}
+$$
+따라서
+$$
+\dfrac{d}{dx}(\ln x) = \dfrac{1}{x}
 $$
 
 
 
-#### (?)역도함수
+##### 1/x 의 역도함수
 
 $$
 \int \dfrac{1}{x}dx = \ln |x| + C
 $$
+
+
+
+
+
+##### 참고!!
+
+e는 x에 대한 함수가 아니라 상수이므로
+$$
+\dfrac{d}{dx}(\ln e) = 0
+$$
+
+$$
+\ln e^x = x
+$$
+
+
+
+#### tanx의 역도함수★
+
+$$
+\begin{align}
+&\int \tan x dx \\
+&= \int \dfrac{\sin x}{\cos x}dx
+\end{align}
+$$
+
+이때
+$$
+\begin{align}
+u &= \cos x \\
+du &= -\sin xdx
+\end{align}
+$$
+로 두면
+$$
+\begin{align}
+&\int \dfrac{\sin x}{\cos x}dx \\
+&= -\int\dfrac{1}{u}du \\
+& = -\ln|u| + C \\
+& = -\ln|\cos x| + C \\
+& = \ln|\cos x|^{-1} + C \\
+& = \ln|\cos^{-1} x| + C \\
+& = \ln|\sec x| + C \\
+\end{align}
+$$
+
+
+### 역삼각함수
+
+#### arcsin
+
+$$
+\text{domain } \ \left[-1, 1\right] \\
+\text{range } \ \left[-\dfrac{\pi}{2}, \dfrac{\pi}{2}\right]
+$$
+
+
+$$
+\begin{align}y &= \sin ^{-1}x \\x &= \sin y\end{align}
+$$
+음함수적으로 미분하면
+$$
+\begin{align}
+\dfrac{d}{dx}x &= \dfrac{d}{dx}(\sin y)\\
+1 &= \cos y \dfrac{dy}{dx} \\
+\dfrac{dy}{dx}& = \dfrac{1}{\cos y} \\
+\end{align}
+$$
+이때
+$$
+\begin{align}
+\cos ^2y + \sin ^2y &= 1 \\
+\cos ^2y &= 1 - \sin ^2y \\
+\cos ^2y& = 1 - x^2 \\
+\cos y& = \sqrt{1 - x^2}
+\end{align}
+$$
+따라서
+$$
+\dfrac{d}{dx}(\sin ^{-1}x) = \dfrac{1}{\sqrt{1-x^2}}
+$$
+
+
+#### arccos
+
+$$
+\text{domain } \ \left[-1, 1\right] \\
+\text{range } \ \left[0, \pi\right]
+$$
+
+
+$$
+\begin{align}
+y &= \cos ^{-1}x \\
+x &= \cos y
+\end{align}
+$$
+음함수적으로 미분하면
+$$
+\begin{align}
+\dfrac{d}{dx}x &= \dfrac{d}{dx}(\cos y)\\
+1 &= -\sin y \dfrac{dy}{dx} \\
+\dfrac{dy}{dx}& = -\dfrac{1}{\sin y} \\
+\end{align}
+$$
+이때
+$$
+\begin{align}
+\cos ^2y + \sin ^2y &= 1 \\
+\sin ^2y &= 1 - \cos ^2y \\
+\sin ^2y& = 1 - x^2 \\
+\sin y& = \sqrt{1 - x^2}
+\end{align}
+$$
+따라서
+$$
+\dfrac{d}{dx}(\cos ^{-1}x)=-\dfrac{1}{\sqrt{1-x^2}}
+$$
+
+
+#### arctan
+
+$$
+\text{domain } \ \R \\
+\text{range } \ \left[ -\dfrac{\pi}{2}, \dfrac{\pi}{2} \right]
+$$
+
+
+$$
+\begin{align}
+y &= \tan ^{-1}x \\
+x &= \tan y
+\end{align}
+$$
+음함수적으로 미분하면
+$$
+\begin{align}
+\dfrac{d}{dx}x &= \dfrac{d}{dx}(\tan y)\\
+1 &= \sec ^2 y \dfrac{dy}{dx} \\
+\dfrac{dy}{dx}& = \dfrac{1}{\sec ^2 y} \\
+\end{align}
+$$
+이때 ★
+$$
+\begin{align}
+1 + \tan ^2 y &= \dfrac{\cos ^2 y + \sin ^2 y}{\cos ^2 y} \\
+&= \dfrac{1}{\cos ^2 y} \\ \\
+1 + \tan ^2 y &= \sec^2y \\
+1+x^2 &= \sec^2 y
+\end{align}
+$$
+따라서
+$$
+\dfrac{d}{dx}(\tan ^{-1}x)=\dfrac{1}{1+x^2}
+$$
+
+
+#### arcsec
+
+$$
+\begin{align}
+y &= \sec^{-1} x \\
+x &= \sec y
+\end{align}
+$$
+
+음함수적으로 미분하면
+$$
+\begin{align}
+1 &= \dfrac{d}{dx}(\sec y) \\
+1 &= \sec y \tan y \dfrac{dy}{dx} \\
+\dfrac{dy}{dx} &= \dfrac{1}{\sec y \tan y} \\
+\end{align}
+$$
+이때
+$$
+\begin{align}
+1 + \tan^2 y &= \sec^2 y \\
+\tan^2 y &= \sec^2 y - 1 \\
+\tan y &= \sqrt{\sec^2 y - 1} \\
+\tan y &= \sqrt{x^2 - 1} \\
+\end{align}
+$$
+따라서
+$$
+\dfrac{d}{dx}\sec^{-1}x = \dfrac{1}{x\sqrt{x^2-1}}
+$$
+
+
+#### arccsc
+
+#### 
+
+$$
+\begin{align}
+y &= \csc^{-1} x \\
+x &= \csc y
+\end{align}
+$$
+
+음함수적으로 미분하면
+$$
+\begin{align}
+1 &= \dfrac{d}{dx}(\csc y) \\
+1 &= -\csc y \cot y \dfrac{dy}{dx} \\
+\dfrac{dy}{dx} &= -\dfrac{1}{\csc y \cot y} \\
+\end{align}
+$$
+이때 ★
+$$
+\begin{align}
+1 + \cot^2 y &= \dfrac{\sin^2 y + \cos^2 y}{\sin^2 y} \\
+1 + \cot^2 y &= \dfrac{1}{\sin^2 y} \\
+1 + \cot^2 y &= \csc^2y \\ \\
+\cot^2 y &= \csc^2 y - 1 \\
+\cot y &= \sqrt{\csc^2 y - 1} \\
+\cot y &= \sqrt{x^2 - 1} \\
+\end{align}
+$$
+따라서
+$$
+\dfrac{d}{dx}\csc^{-1}x = -\dfrac{1}{x\sqrt{x^2-1}}
+$$
+
+
+#### arccot
+
+$$
+\begin{align}
+y &= \cot^{-1} x \\
+x &= \cot y
+\end{align}
+$$
+
+음함수적으로 미분하면
+$$
+\begin{align}
+1 &= \dfrac{d}{dx}(\cot y) \\
+1 &= -\csc^2 y \dfrac{dy}{dx} \\
+\dfrac{dy}{dx} &= -\dfrac{1}{\csc^2 y} \\\end{align}
+$$
+이때 ★
+$$
+\begin{align}
+1 + \cot^2 y &= \csc^2y \\
+1 + x^2 &= \csc^2 y
+\end{align}
+$$
+따라서
+$$
+\dfrac{d}{dx}\cot^{-1}x = -\dfrac{1}{1+x^2}
+$$
+
+
+
+
+
+## 적분법+
+
+### 부분적분 (-> 곱의 미분 법칙)
+
+#### 방법
+
+$$
+u = f(x), \ v = g(x) \\
+uv = \int udv + \int vdu \\
+\int udv = uv - \int vdu
+$$
+
+
+
+#### lnx의 역도함수
+
+$$
+\int{\ln x dx}
+$$
+
+
+$$
+u = \ln x, \ du = \dfrac{dx}{x} \\
+v = x, \ dv = dx
+$$
+로 두면
+$$
+\begin{align}
+\int{\ln x dx} &= x \ln x - \int{dx} \\
+&= x \ln x - x + C
+\end{align}
+$$
+
+
+#### e^x sinx 의 역도함수
+
+$$
+\int{e^x \sin x dx}
+$$
+
+
+$$
+u = e^x, \ du = e^xdx \\v = \sin x, \ dv = \cos xdx
+$$
+로 두면
+$$
+\begin{align}\int{e^x \sin x dx} = e^x \sin x - \int{e^x \cos x dx}\end{align}
+$$
+이고,
+
+이때
+$$
+t = e^x, \ dt = e^x dx \\w = \cos x, \ dw = -\sin x dx
+$$
+로 두면 ★ (이 과정을 해야만 풀린다... uv를 그대로 두고 풀면 항등식이 나와 풀 수 없다! ★)
+$$
+\begin{align}\int{e^x \cos x dx} = e^x \cos x + \int{e^x \sin x dx}\end{align}
+$$
+이므로
+$$
+\begin{align}\int{e^x \sin x dx} &= e^x \sin x - \int{e^x \cos x dx} \\&= e^x \sin x - e^x \cos x - \int{e^x \sin x dx} \\2\int{e^x \sin x dx} &= e^x(\sin x - \cos x) \\\therefore \int{e^x \sin x dx} &= \dfrac{e^x(\sin x - \cos x)}{2}\end{align}
+$$
+
+
+#### sin(^2)x 의 역도함수
+
+$$
+\int \sin^2xdx
+$$
+
+먼저
+$$
+u=\sin x, \ du=\cos xdx \\
+v = -\cos x, \ dv = \sin xdx
+$$
+로 두면
+$$
+\begin{align}
+\int \sin^2xdx = \int udv &= uv - \int vdu \\
+&= -\sin x \cos x + \int \cos^2 x dx
+\end{align}
+$$
+로 또다른 삼각함수의 제곱에 대한 적분이 나오므로 무의미하다.
+
+따라서
+$$
+u = \sin^2 x, \ du = 2\cos x dx \\
+v = x, \ dv = dx
+$$
+로 다시 두면
+$$
+\begin{align}
+\int \sin^2xdx = \int udv &= uv - \int vdu \\
+&= x \sin^2 x - 2\int x\cos x dx
+\end{align}
+$$
+이때
+$$
+\begin{align}
+\int x\cos x dx
+\end{align}
+$$
+에 대해
+$$
+t = \sin x, \ dt = \cos x \\
+w = x, \ dw = dx
+$$
+로 두면
+$$
+\begin{align}
+\int x\cos x dx &= x\sin x - \int \sin x dx \\
+&= x\sin x + \cos x + C
+\end{align}
+$$
+따라서
+$$
+\begin{align}
+\int \sin^2xdx &= x \sin^2 x - 2\int x\cos x dx\\
+\therefore \int \sin^2xdx &= x \sin^2 x - 2x\sin x + 2\cos x + C
+\end{align}
+$$
+이다.
+
+
+
+### 삼각적분
+
+### 삼각치환
+
+### 부분분수
+
+### 이상적분
+
+### 근사적분
 
