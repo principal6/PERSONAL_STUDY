@@ -697,6 +697,39 @@ protected:
 class Base
 {
 public:
+	Base() { std::cout << "In base constructor\n"; }
+	virtual ~Base() { std::cout << "In base destructor\n"; }
+};
+
+class Derived : public Base
+{
+public:
+	Derived()  { std::cout << "In derived constructor\n"; }
+	~Derived() { std::cout << "In derived destructor\n"; }
+};
+
+int main()
+{
+	Base* b{ new Derived() };
+	delete b;
+
+	// In base constructor
+	// In derived constructor
+	// In derived destructor
+	// In base destructor
+
+	return 0;
+}
+```
+
+
+
+```cpp
+#include <iostream>
+
+class Base
+{
+public:
 	Base(char ID) : m_ID{ ID } { std::cout << m_ID << ": in base constructor\n"; }
 	virtual ~Base() { std::cout << m_ID << ": in base destructor\n"; }
 protected:
@@ -717,7 +750,47 @@ int main()
 	// Derived의 생성자가 호출★되면 거기서 Base의 생성자가 호출★되어서 먼저 Base의 생성자가 실행★되고, 그 후 Derived의 생성자로 돌아와서 B의 생성자가 실행★된다!
 	Base* b{ new Derived('b') };
 	delete b; // Derived의 소멸자가 먼저 실행되고, Base의 소멸자가 실행된다.
+    
+    // a: in base constructor
+	// b: in base constructor
+	// b: in derived constructor
+	// b: in derived destructor
+	// b: in base destructor
+	// a: in base destructor
 
+	return 0;
+}
+```
+
+### 오버라이딩
+
+```cpp
+#include <iostream>
+
+class Base
+{
+public:
+	Base() {}
+	virtual ~Base() {}
+	virtual void OverrideThis() { std::cout << "base function\n"; }
+};
+
+class Derived : public Base
+{
+public:
+	Derived() {}
+	~Derived() {}
+	void OverrideThis() override { std::cout << "override function\n"; }
+};
+
+int main()
+{
+	Base* a{ new Base() };
+	Base* b{ new Derived() };
+	a->OverrideThis(); // "base function"
+	b->OverrideThis(); // "override function"
+	delete b;
+	delete a;
 	return 0;
 }
 ```
