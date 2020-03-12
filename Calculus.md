@@ -260,6 +260,137 @@ $$
 $$
 
 
+
+#### 삼각함수의 항등식★★★
+
+##### 적분에서는 곱보다 합★이 더 쉽기 때문에 곱을 합으로 바꿔주는 항등식이 아주 유용하다!
+
+![](Asset\trig_angles.png)
+
+
+
+##### sin, cos 합차
+
+$$
+\begin{align}
+\sin(\alpha + \beta) &= \sin\alpha \cos\beta + \cos\alpha\sin\beta \\
+\sin(\alpha - \beta) &= \sin\alpha \cos\beta - \cos\alpha\sin\beta \\ \\
+\cos(\alpha + \beta) &= \cos\alpha \cos\beta - \sin\alpha\sin\beta \\
+\cos(\alpha - \beta) &= \cos\alpha \cos\beta + \sin\alpha\sin\beta
+\end{align}
+$$
+
+
+
+###### 응용1 (sincos)
+
+$$
+\begin{align}
+\sin(\alpha - \beta) + \sin(\alpha + \beta) &= 2\sin\alpha \cos\beta \\ \\
+\therefore \sin\alpha \cos\beta &= \dfrac{\sin(\alpha - \beta) + \sin(\alpha + \beta)}{2}
+\end{align}
+$$
+
+
+
+###### 응용2 (coscos)
+
+$$
+\begin{align}
+\cos(\alpha - \beta) + \cos(\alpha + \beta) &= 2\cos\alpha \cos\beta \\ \\
+\therefore \cos\alpha \cos\beta &= \dfrac{\cos(\alpha - \beta) + \cos(\alpha + \beta)}{2}
+\end{align}
+$$
+
+
+
+###### 응용3 (sinsin)
+
+$$
+\begin{align}
+\cos(\alpha - \beta) - \cos(\alpha + \beta) &= 2\sin\alpha \sin\beta \\ \\
+\therefore \sin\alpha \sin\beta &= \dfrac{\cos(\alpha - \beta) - \cos(\alpha + \beta)}{2}
+\end{align}
+$$
+
+
+
+###### 응용4 (sin2x)
+
+$$
+2 \sin x \cos x  = \sin(2x)
+$$
+
+
+
+###### 응용5 (cos2x) ★
+
+$$
+\begin{align}
+\cos(x + x) &= \cos x \cos x - \sin x \sin x \\ \\
+\therefore \cos^2x - \sin^2x &= \cos(2x)
+\end{align}
+$$
+
+
+
+
+
+##### 피타고라스의 정리
+
+$$
+\sin^2x + \cos^2x = 1
+$$
+
+
+
+###### 응용1 (cos^2 x)
+
+$$
+\array
+{
+  &\sin^2x + \cos^2x & = & 1 \\
++ &\cos^2x - \sin^2x & = & \cos(2x) \\
+\hline
+&2\cos^2x & = & 1 + \cos(2x)\\
+} \\
+$$
+
+$$
+\therefore \cos^2x = \dfrac{1 + \cos(2x)}{2}
+$$
+
+
+
+###### 응용2 (sin^2 x)
+
+$$
+\array
+{
+  &\sin^2x + \cos^2x & = & 1 \\
+- &\cos^2x - \sin^2x & = & \cos(2x) \\
+\hline
+&2\sin^2x & = & 1 - \cos(2x)\\
+} \\
+$$
+
+
+$$
+\therefore \sin^2x = \dfrac{1 - \cos(2x)}{2}
+$$
+
+
+##### tan, cot ★
+
+$$
+1 + \tan^2 x = \sec^2 x \\
+1 + \cot^2 x = \csc^2 x
+$$
+
+
+
+
+
 #### sin
 
 $$
@@ -299,7 +430,7 @@ $$
 $$
 \begin{align}
 & \dfrac{d}{dx}(\tan x) \\
-& = \dfrac{d}{dx}(\dfrac{\sin x}{\cos x} \\
+& = \dfrac{d}{dx}(\dfrac{\sin x}{\cos x}) \\
 & = \dfrac{\sin' x \cos x - \sin x \cos' x}{\cos^2 x} \\
 & = \dfrac{\cos x \cos x + \sin x \sin x}{\cos^2 x} \\
 & = \dfrac{\cos^2 + \sin^2 x}{\cos^2 x} \\
@@ -312,10 +443,137 @@ $$
 
 #### sec
 
+$$
+\begin{align}
+& \dfrac{d}{dx}(\sec x) \\
+& = \dfrac{d}{dx}(\dfrac{1}{\cos x}) \\
+& = \dfrac{0 \cdot \cos x + 1 \cdot \sin x}{\cos^2 x} \\
+& = \dfrac{\sin x}{\cos^2 x} \\
+& = \dfrac{1}{\cos x} \cdot \dfrac{\sin x}{\cos x} \\
+& = \sec x \tan x \\
+\end{align}
+$$
+
+
+
 #### csc
+
+$$
+\begin{align}
+& \dfrac{d}{dx}(\csc x) \\
+& = \dfrac{d}{dx}(\dfrac{1}{\sin x}) \\
+& = \dfrac{0 \cdot \sin x - 1 \cdot \cos x}{\sin^2 x} \\
+& = -\dfrac{\cos x}{\sin^2 x} \\
+& = -\dfrac{1}{\sin x} \cdot \dfrac{\cos x}{\sin x} \\
+& = -\csc x \cot x \\
+\end{align}
+$$
+
+
 
 #### cot
 
+$$
+\begin{align}
+& \dfrac{d}{dx}(\cot x) \\
+& = \dfrac{d}{dx}(\dfrac{\cos x}{\sin x}) \\
+& = \dfrac{-\sin x \cdot \sin x - \cos x \cdot \cos x}{\sin^2 x} \\
+& = \dfrac{-\sin^2 x - \cos^2 x}{\sin^2 x} \\
+& = -\dfrac{1}{\sin^2 x} \\
+& = -\csc^2 x \\
+\end{align}
+$$
+
+
+
+#### sin^2x의 도함수
+
+$$
+\dfrac{d}{dx}(\sin^2x)
+$$
+
+
+$$
+\begin{align}
+\dfrac{d}{dx}(\sin^2x) &= 2\sin x \dfrac{d}{dx}(\sin x) \\
+&= 2\sin x \cos x
+\end{align}
+$$
+
+
+#### cos^2x의 도함수
+
+$$
+\dfrac{d}{dx}(\cos^2x)
+$$
+
+
+$$
+\begin{align}
+\dfrac{d}{dx}(\cos^2x) &= 2 \cos x \dfrac{d}{dx}(\cos x) \\
+&= -2\sin x \cos x
+\end{align}
+$$
+
+
+#### tan^2x의 도함수
+
+$$
+\dfrac{d}{dx}(\tan^2x)
+$$
+
+
+$$
+\begin{align}
+\dfrac{d}{dx}(\tan^2x) &= 2 \tan x \dfrac{d}{dx}(\tan x) \\
+&= 2\sec^2 x\tan x
+\end{align}
+$$
+
+
+#### sec^2x의 도함수
+
+$$
+\dfrac{d}{dx}\sec^2 x
+$$
+
+
+$$
+\begin{align}
+\dfrac{d}{dx}(\sec^2x) &= 2 \sec x \dfrac{d}{dx}(\sec x) \\
+&= 2\sec^2 x\tan x
+\end{align}
+$$
+
+
+#### csc^2x의 도함수
+
+$$
+\dfrac{d}{dx}\csc^2 x
+$$
+
+
+$$
+\begin{align}
+\dfrac{d}{dx}(\csc^2x) &= 2 \csc x \dfrac{d}{dx}(\csc x) \\
+&= -2\csc^2 x\cot x
+\end{align}
+$$
+
+
+#### cot^2x의 도함수
+
+$$
+\dfrac{d}{dx}\cot^2 x
+$$
+
+
+$$
+\begin{align}
+\dfrac{d}{dx}(\cot^2x) &= 2 \cot x \dfrac{d}{dx}(\cot x) \\
+&= -2\csc^2 x\cot x
+\end{align}
+$$
 
 
 ### 음함수 미분 (implicit differentiation)
@@ -367,8 +625,6 @@ $$
 & \text{where } C \text{ is an arbitrary constant.}
 \end{align}
 $$
-
-
 
 
 
@@ -536,7 +792,7 @@ $$
 $$
 
 
-##### 예시2★
+##### 예시2★★
 
 $$
 \int \dfrac{dx}{(1+\sqrt{x})^4}
@@ -686,7 +942,7 @@ $$
 
 
 
-##### 1/x 의 역도함수
+##### 1/x 의 역도함수 ★★
 
 $$
 \int \dfrac{1}{x}dx = \ln |x| + C
@@ -713,17 +969,14 @@ $$
 
 $$
 \begin{align}
-&\int \tan x dx \\
-&= \int \dfrac{\sin x}{\cos x}dx
+&\int{\tan x dx}\\
+&= \int{\dfrac{\sin x}{\cos x}dx}
 \end{align}
 $$
 
 이때
 $$
-\begin{align}
-u &= \cos x \\
-du &= -\sin xdx
-\end{align}
+u = \cos x, \ du = -\sin xdx
 $$
 로 두면
 $$
@@ -731,12 +984,43 @@ $$
 &\int \dfrac{\sin x}{\cos x}dx \\
 &= -\int\dfrac{1}{u}du \\
 & = -\ln|u| + C \\
-& = -\ln|\cos x| + C \\
+& = -\ln|\cos x| + C \\ \\
+
+& -\ln|\cos x| + C \\
 & = \ln|\cos x|^{-1} + C \\
 & = \ln|\cos^{-1} x| + C \\
 & = \ln|\sec x| + C \\
 \end{align}
 $$
+이다.
+
+
+
+#### cotx의 역도함수
+
+$$
+\begin{align}
+&\int{\cot x dx}\\
+&= \int{\dfrac{\cos x}{\sin x}dx}
+\end{align}
+$$
+
+
+
+이때
+$$
+u = \sin x, \ du = \cos x dx
+$$
+로 두면
+$$
+\begin{align}
+\int{\dfrac{\cos x}{\sin x}dx} &= \int{\dfrac{du}{u}} \\
+&= \ln{|u|} + C \\
+&= \ln{|\sin x|} + C
+\end{align}
+$$
+이다.
+
 
 
 ### 역삼각함수
@@ -947,8 +1231,6 @@ $$
 
 
 
-
-
 ## 적분법+
 
 ### 부분적분 (-> 곱의 미분 법칙)
@@ -1013,72 +1295,345 @@ $$
 $$
 
 
-#### sin(^2)x 의 역도함수
+#### xsinx의 역도함수
 
 $$
-\int \sin^2xdx
+\int{x \sin x dx}
 $$
+
+
+$$
+u = -\cos x, \ du = \sin x dx \\
+v = x, \ dv = dx \\
+$$
+로 두면
+$$
+\begin{align}
+\int{x \sin x dx} &= -x \cos x - (-\int{\cos x dx}) \\
+&= -x \cos x + \int{\cos x dx} \\
+&= -x \cos x + \sin x + C
+\end{align}
+$$
+
+
+#### ln(x^(1/3))의 역도함수
+
+$$
+\int{\ln\root{3}\of{x}dx}
+$$
+
+
+$$
+\begin{align}
+u &= \ln\root{3}\of{x}dx \\
+du &= \dfrac{\dfrac{1}{3}x^{-\frac{2}{3}}}{x^{\frac{1}{3}}}dx \\
+&= \dfrac{1}{3} \cdot x^{-1}dx \\
+&= \dfrac{dx}{3x} \\ \\
+v &= x \\
+dv &= dx
+\end{align}
+$$
+
+$$
+\begin{align}
+\int{\ln\root{3}\of{x}dx} &= uv - \int{vdu} \\
+&= x\ln{\root{3}\of{x}} - \dfrac{1}{3}\int{dx} \\
+&= x\ln{\root{3}\of{x}} - \dfrac{1}{3}x + C
+\end{align}
+$$
+
+
+### 삼각함수의 적분
+
+#### sin(^2)x 의 역도함수 ★
+
+$$
+\int{\sin^2 x dx}
+$$
+
+
 
 먼저
 $$
-u=\sin x, \ du=\cos xdx \\
-v = -\cos x, \ dv = \sin xdx
+\begin{align}\cos^2 x + \sin^2 x &= 1 \\\cos^2 x - \sin^2 x &= \cos(2x)\end{align}
 $$
-로 두면
+이므로
 $$
-\begin{align}
-\int \sin^2xdx = \int udv &= uv - \int vdu \\
-&= -\sin x \cos x + \int \cos^2 x dx
-\end{align}
+\begin{align}2 \sin^2 x &= 1 - \cos(2x) \\\sin^2 x &= \dfrac{1}{2}\Big[1 - \cos(2x)\Big]\end{align}
 $$
-로 또다른 삼각함수의 제곱에 대한 적분이 나오므로 무의미하다.
+이다.
 
 따라서
 $$
-u = \sin^2 x, \ du = 2\cos x dx \\
-v = x, \ dv = dx
-$$
-로 다시 두면
-$$
-\begin{align}
-\int \sin^2xdx = \int udv &= uv - \int vdu \\
-&= x \sin^2 x - 2\int x\cos x dx
-\end{align}
-$$
-이때
-$$
-\begin{align}
-\int x\cos x dx
-\end{align}
-$$
-에 대해
-$$
-t = \sin x, \ dt = \cos x \\
-w = x, \ dw = dx
-$$
-로 두면
-$$
-\begin{align}
-\int x\cos x dx &= x\sin x - \int \sin x dx \\
-&= x\sin x + \cos x + C
-\end{align}
-$$
-따라서
-$$
-\begin{align}
-\int \sin^2xdx &= x \sin^2 x - 2\int x\cos x dx\\
-\therefore \int \sin^2xdx &= x \sin^2 x - 2x\sin x + 2\cos x + C
-\end{align}
+\begin{align}\int{\sin^2 x dx} &= \dfrac{1}{2}\int{\Big[1 - \cos(2x)\Big]dx} \\\int{\sin^2 x dx} &= \dfrac{1}{2}\Big( \int{dx} - \int{\cos(2x)dx} \Big) \\&= \dfrac{1}{2}\Big(x - \dfrac{1}{2}\sin(2x) + C \Big) \\&= \dfrac{1}{2}x - \dfrac{1}{4}\sin(2x) + C \\\end{align}
 $$
 이다.
 
 
 
-### 삼각적분
+#### cos(^2)x의 역도함수
+
+$$
+\int{\cos^2 x dx}
+$$
+
+먼저
+$$
+\begin{align}\cos^2 x + \sin^2 x &= 1 \\\cos^2 x - \sin^2 x &= \cos(2x)\end{align}
+$$
+이므로
+$$
+\begin{align}2 \cos^2 x &= 1 + \cos(2x) \\ \cos^2 x &= \dfrac{1}{2}\Big[1 + \cos(2x)\Big]\end{align}
+$$
+이다.
+
+따라서
+$$
+\begin{align}\int{\cos^2 x dx} &= \dfrac{1}{2}\int{\Big[1 + \cos(2x)\Big] dx} \\&= \dfrac{1}{2}\Big(\int{dx} + \int{\cos(2x) dx}\Big) \\&= \dfrac{1}{2}\Big(x + \dfrac{1}{2}\sin(2x) + C\Big) \\&= \dfrac{1}{2}x + \dfrac{1}{4}\sin(2x) + C \\\end{align}
+$$
+
+
+#### sec(^2)x의 역도함수
+
+$$
+\dfrac{d}{dx}\tan x = \sec^2 x
+$$
+
+이므로
+$$
+\int{\sec^2 x dx} = \tan x + C
+$$
+
+
+#### csc(^2)x의 역도함수
+
+$$
+\dfrac{d}{dx}\cot x = -\csc^2x
+$$
+
+이므로
+
+
+$$
+\int{\csc^2 x dx} = -\cot x + C
+$$
+
+
+#### tan(^2)x의 역도함수
+
+$$
+\int{\tan^2 x dx}
+$$
+
+
+$$
+\begin{align}
+1 + \tan^2 x &= \sec^2 x \\
+\tan^2x &= \sec^2x - 1
+\end{align}
+$$
+이므로
+$$
+\begin{align}\int{\tan^2 x dx} &= \int(\sec^2x - 1) dx \\&= \int{\sec^2 x dx} - \int{dx} \\&= \tan x - x + C\end{align}
+$$
+
+
+#### cot(^2)x의 역도함수
+
+$$
+\int{\cot^2 x dx}
+$$
+
+
+$$
+\begin{align}
+1 + \cot^2 x &= \csc^2 x \\
+\cot^2x &= \csc^2x - 1
+\end{align}
+$$
+이므로
+$$
+\begin{align}\int{\cot^2 x dx} &= \int(\csc^2x - 1) dx \\&= \int{\csc^2 x dx} - \int{dx} \\&= -\cot x - x + C\end{align}
+$$
+
+
+#### sin(^2)x * cos(^2)x 의 역도함수
+
+$$
+\int{\sin^2 x \cos^2 x dx}
+$$
+
+
+$$
+2 \sin x \cos x = \sin(2x)
+$$
+이므로
+$$
+4 \sin^2 x \cos^2 x = \sin^2(2x)
+$$
+이다. 따라서
+$$
+\begin{align}\int{\sin^2 x \cos^2 x dx} \\= \dfrac{1}{4}\int{\sin^2(2x)dx} \\\end{align}
+$$
+이다. 이때
+$$
+2\sin^2(2x) = 1 - \cos(4x)
+$$
+이므로
+$$
+\begin{align}&\dfrac{1}{4}\int{\sin^2(2x)dx} \\&= \dfrac{1}{8}\int{\Big(1-\cos(4x)\Big)dx} \\&= \dfrac{1}{8}\int{dx} - \dfrac{1}{8}\int{\cos(4x)dx} \\&= \dfrac{1}{8}x - \dfrac{1}{32}\sin(4x) + C \\\end{align}
+$$
+이다.
+
+
+
+#### secx의 역도함수★
+
+$$
+\int{\sec x dx}
+$$
+
+
+$$
+\begin{align}\int{\sec x dx} &= \int{\sec x \cdot \dfrac{\sec x + \tan x}{\sec x + \tan x}dx} \\&= \int{\dfrac{\sec^2 x + \sec x \tan x}{\sec x + \tan x} dx}\end{align}
+$$
+이때
+$$
+u = \sec x + \tan x \\du = \sec x \tan x + \sec^2 x
+$$
+로 두면
+$$
+\begin{align}\int{\dfrac{\sec^2 x + \sec x \tan x}{\sec x + \tan x} dx} &= \int{\dfrac{du}{u}} \\&= \ln{|u|} + C \\&= \ln{|\sec x + \tan x|} + C\end{align}
+$$
+
+
+#### cscx의 역도함수
+
+$$
+\int{\csc x dx}
+$$
+
+
+$$
+\begin{align}
+\int{\csc x dx} &= \int{\csc x \cdot \dfrac{\csc x - \cot x}{\csc x - \cot x} dx} \\
+&= \int{\dfrac{\csc^2 x - \csc x\cot x}{\csc x - \cot x} dx} \\
+\end{align}
+$$
+이때
+$$
+u = \csc x - \cot x \\
+du = (-\csc x \cot x + \csc^2x)dx
+$$
+로 두면
+$$
+\begin{align}
+\int{\dfrac{\csc^2 x - \csc x\cot x}{\csc x - \cot x} dx} &= \int{\dfrac{1}{u} du} \\
+&= \ln{|u|} + C \\
+&= \ln{|\csc x - \cot x|} + C
+\end{align}
+$$
+
 
 ### 삼각치환
 
+#### 원이나 타원 형식의 근호를 없애는 데 활용
+
+
+
+#### sqrt(a^2 - x^2)
+
+$$
+1-\sin^2x = \cos^2x
+$$
+
+를 활용
+$$
+\int{\sqrt{a^2 - x^2} dx} \ => \ x = a\sin\theta , \ -\dfrac{\pi}{2} \le \theta \le \dfrac{\pi}{2}
+$$
+
+
+##### 예시
+
+$$
+\int_0^a{\sqrt{a^2 - x^2} dx}
+$$
+
+$$
+\begin{align}
+x &= a \sin \theta , \ 0 \le \theta \le \dfrac{\pi}{2} \\
+x^2 &= a^2 \sin^2 \theta \\
+dx &= a \cos \theta d\theta
+\end{align}
+$$
+
+로 두면
+$$
+\begin{align}
+\int{\sqrt{a^2 - x^2} dx} &= a\int{\sqrt{a^2 - a^2\sin^2 \theta} \cos\theta d\theta} \\
+&= a\int{\sqrt{a^2(1 - \sin^2 \theta)}\cos\theta d\theta} \\
+&= a\int{\sqrt{a^2}\sqrt{\cos^2\theta} \cos\theta d\theta} \\
+&= a\int{a\cos\theta \cos\theta d\theta} \\
+&= a^2\int{\cos^2\theta d\theta} \\
+\end{align}
+$$
+이때
+$$
+2\cos^2\theta = 1 + \cos(2\theta)
+$$
+이므로
+$$
+\begin{align}
+a^2\int{\cos^2\theta d\theta} &= \dfrac{1}{2}a^2 \Big(\int{d\theta} + \int{\cos(2\theta) d\theta} \Big) \\
+&= \dfrac{1}{2}a^2 \Big(\theta + \dfrac{1}{2}\sin(2\theta) \Big) \\
+&= \dfrac{1}{2}a^2\theta + \dfrac{1}{4}a^2\sin(2\theta) \\
+\end{align}
+$$
+따라서
+$$
+\begin{align}
+\int_0^a{\sqrt{a^2 - x^2} dx} &= \Big[ \dfrac{1}{2}a^2\theta + \dfrac{1}{4}a^2\sin(2\theta) \Big]^{\pi/2}_0 \\
+&= \dfrac{1}{2}a^2 \cdot \dfrac{\pi}{2} \\
+&= \dfrac{\pi a^2}{4}
+\end{align}
+$$
+
+
+#### sqrt(a^2 + x^2)
+
+$$
+1 + \tan^2x = \sec^2x
+$$
+
+를 활용
+$$
+\int{\sqrt{a^2 + x^2} dx} \ => \ x = a\tan\theta , \ -\dfrac{\pi}{2} < \theta < \dfrac{\pi}{2}
+$$
+
+
+
+
+#### sqrt(x^2 - a^2)
+
+$$
+\sec^2x - 1 = \tan^2x
+$$
+
+를 활용
+$$
+\int{\sqrt{x^2 - a^2} dx} \ => \ x = a\sec\theta , \ 0 \le \theta < \dfrac{\pi}{2}
+$$
+
+
+
+
 ### 부분분수
+
+
+
+
+
+
 
 ### 이상적분
 
