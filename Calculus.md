@@ -29,7 +29,7 @@ $$
 ##### 1계 도함수
 
 $$
-f'(x)  = \dfrac{df}{dx} = \dfrac{d}{dx}f = \dfrac{d}{dx}f(x) = y' = \dfrac{dy}{dx} = \dfrac{d}{dx}y
+f'(x)  = \dfrac{df}{dx} = \dfrac{d}{dx}f = \dfrac{d}{dx}f(x) = y' = \dfrac{dy}{dx}
 $$
 
 ##### 2계 도함수
@@ -52,7 +52,7 @@ $$
 
 
 
-#### 예제1
+#### 예시1
 
 $$
 f(x)=x^2
@@ -85,7 +85,7 @@ $$
 
 
 
-#### 예제2
+#### 예시2
 
 $$
 f(x)=\dfrac{1}{x}
@@ -116,7 +116,7 @@ $$
 & = \dfrac{-1}{x^2}
 \\
 \\
-\therefore f'(x) & = \dfrac{-1}{x^2}
+\therefore f'(x) & = -\dfrac{1}{x^2}
 \end{align}
 $$
 
@@ -225,6 +225,7 @@ $$
 & = \dfrac{dy}{du}\dfrac{du}{dx}
 \end{align}
 $$
+
 
 
 #### 예시 
@@ -380,14 +381,13 @@ $$
 $$
 
 
+
 ##### tan, cot ★
 
 $$
 1 + \tan^2 x = \sec^2 x \\
 1 + \cot^2 x = \csc^2 x
 $$
-
-
 
 
 
@@ -501,6 +501,7 @@ $$
 $$
 
 
+
 #### cos^2x의 도함수
 
 $$
@@ -514,6 +515,7 @@ $$
 &= -2\sin x \cos x
 \end{align}
 $$
+
 
 
 #### tan^2x의 도함수
@@ -531,6 +533,7 @@ $$
 $$
 
 
+
 #### sec^2x의 도함수
 
 $$
@@ -544,6 +547,7 @@ $$
 &= 2\sec^2 x\tan x
 \end{align}
 $$
+
 
 
 #### csc^2x의 도함수
@@ -561,6 +565,7 @@ $$
 $$
 
 
+
 #### cot^2x의 도함수
 
 $$
@@ -576,6 +581,7 @@ $$
 $$
 
 
+
 ### 음함수 미분 (implicit differentiation)
 
 y를 x에 대한 함수로 생각하고
@@ -585,18 +591,34 @@ $$
 라는 사실을 이용해 식 전체를 x에 대해 미분한다.
 
 
+
+#### 예시1
+
 $$
-\begin{align}
-x^2 - y & = 2 \\
-\dfrac{d}{dx}x^2 - \dfrac{d}{dx}y & = \dfrac{d}{dx}2 \\
-2x - \dfrac{dy}{dx} & = 0 \\
-\dfrac{dy}{dx} & = 2x \\
-\end{align}
+x^2 - y  = 2
 $$
+
+
 
 $$
 \begin{align}
-x^2+y^2 & = 4 \\
+\dfrac{d}{dx}x^2 - \dfrac{d}{dx}y & = \dfrac{d}{dx}2 \\
+2x - \dfrac{dy}{dx} & = 0 \\
+\therefore \dfrac{dy}{dx} & = 2x \\
+\end{align}
+$$
+
+
+
+#### 예시2
+
+$$
+x^2+y^2 = 4
+$$
+
+
+$$
+\begin{align}
 \dfrac{d}{dx}x^2 + \dfrac{d}{dx}y^2 & = \dfrac{d}{dx}4 \\
 2x + 2y \cdot \dfrac{dy}{dx} & = 0 \\
 2y\dfrac{dy}{dx} & = -2x \\
@@ -645,7 +667,7 @@ $$
 
 상한 upper limit
 
-피적분함수 integrand
+**피적분함수 integrand**
 
 적분법 integration
 
@@ -710,7 +732,7 @@ $$
 
 
 
-#### 치환법 substitution rule (->미분 연쇄법칙)★
+#### ★치환법 substitution rule (->미분 연쇄법칙)★
 
 $$
 \text{If } u = g(x) \text{ is a differentiable function whose range is} \\
@@ -770,6 +792,7 @@ $$
 $$
 
 
+
 $$
 \begin{align}
 u &= 1-x^2 \\
@@ -798,7 +821,7 @@ $$
 \int \dfrac{dx}{(1+\sqrt{x})^4}
 $$
 
-이때
+
 $$
 \begin{align}
 u &= 1 + \sqrt{x} \\
@@ -825,6 +848,32 @@ $$
 $$
 \therefore \int \dfrac{dx}{(1+\sqrt{x})^4} = -\dfrac{1}{(1 + \sqrt{x})^2}+\dfrac{2}{3(1 + \sqrt{x})^3}+C
 $$
+
+
+
+##### 예시3★★ (삼각치환과 비교)
+
+$$
+\int{x \sqrt{1-x^2} dx}
+$$
+
+
+$$
+\begin{align}
+u &= x^2 \\
+du &= 2x dx
+\end{align}
+$$
+로 두면
+$$
+\begin{align}
+\int{x \sqrt{1-x^2} dx} &= \dfrac{1}{2}\int{\sqrt{1-u^2} du} \\
+&= \dfrac{1}{2} \cdot \dfrac{2}{3} \cdot (1-u^2)^{3/2}+C \\
+&= \dfrac{1}{3}(1-x^4)^{3/2}+C
+\end{align}
+$$
+
+
 
 
 ## 역함수 inverse functions
@@ -894,6 +943,7 @@ $$
 &= \dfrac{1}{2}(e^{2x} - e^{-2x}) + 2x + C \\
 \end{align}
 $$
+
 
 
 ### 로그함수 logarithmic functions
@@ -1059,6 +1109,7 @@ $$
 $$
 
 
+
 #### arccos
 
 $$
@@ -1094,6 +1145,7 @@ $$
 $$
 \dfrac{d}{dx}(\cos ^{-1}x)=-\dfrac{1}{\sqrt{1-x^2}}
 $$
+
 
 
 #### arctan
@@ -1133,6 +1185,7 @@ $$
 $$
 
 
+
 #### arcsec
 
 $$
@@ -1165,9 +1218,8 @@ $$
 $$
 
 
-#### arccsc
 
-#### 
+#### arccsc
 
 $$
 \begin{align}
@@ -1199,6 +1251,7 @@ $$
 $$
 \dfrac{d}{dx}\csc^{-1}x = -\dfrac{1}{x\sqrt{x^2-1}}
 $$
+
 
 
 #### arccot
@@ -1233,7 +1286,7 @@ $$
 
 ## 적분법+
 
-### 부분적분 (-> 곱의 미분 법칙)
+### 부분적분 (<= 곱의 미분 법칙)
 
 #### 방법
 
@@ -1253,8 +1306,10 @@ $$
 
 
 $$
-u = \ln x, \ du = \dfrac{dx}{x} \\
-v = x, \ dv = dx
+\begin{align}
+&u = \ln x & du &= \dfrac{dx}{x} \\
+&v = x & dv &= dx
+\end{align}
 $$
 로 두면
 $$
@@ -1265,6 +1320,7 @@ $$
 $$
 
 
+
 #### e^x sinx 의 역도함수
 
 $$
@@ -1273,7 +1329,10 @@ $$
 
 
 $$
-u = e^x, \ du = e^xdx \\v = \sin x, \ dv = \cos xdx
+\begin{align}
+&u = e^x & du &= e^xdx \\
+&v = \sin x & dv &= \cos xdx
+\end{align}
 $$
 로 두면
 $$
@@ -1283,7 +1342,10 @@ $$
 
 이때
 $$
-t = e^x, \ dt = e^x dx \\w = \cos x, \ dw = -\sin x dx
+\begin{align}
+&t = e^x & dt &= e^x dx \\
+&w = \cos x & dw &= -\sin x dx
+\end{align}
 $$
 로 두면 ★ (이 과정을 해야만 풀린다... uv를 그대로 두고 풀면 항등식이 나와 풀 수 없다! ★)
 $$
@@ -1295,6 +1357,7 @@ $$
 $$
 
 
+
 #### xsinx의 역도함수
 
 $$
@@ -1303,8 +1366,10 @@ $$
 
 
 $$
-u = -\cos x, \ du = \sin x dx \\
-v = x, \ dv = dx \\
+\begin{align}
+&u = -\cos x &\ du &= \sin x dx \\
+&v = x &\ dv &= dx \\
+\end{align}
 $$
 로 두면
 $$
@@ -1316,6 +1381,7 @@ $$
 $$
 
 
+
 #### ln(x^(1/3))의 역도함수
 
 $$
@@ -1325,15 +1391,14 @@ $$
 
 $$
 \begin{align}
-u &= \ln\root{3}\of{x}dx \\
-du &= \dfrac{\dfrac{1}{3}x^{-\frac{2}{3}}}{x^{\frac{1}{3}}}dx \\
-&= \dfrac{1}{3} \cdot x^{-1}dx \\
-&= \dfrac{dx}{3x} \\ \\
-v &= x \\
-dv &= dx
+&u = \ln\root{3}\of{x}dx & du &= \dfrac{\dfrac{1}{3}x^{-\frac{2}{3}}}{x^{\frac{1}{3}}}dx \\
+&&  &= \dfrac{1}{3} \cdot x^{-1}dx \\
+&&\therefore du &= \dfrac{dx}{3x} \\ \\
+&v = x & dv &= dx
 \end{align}
 $$
 
+로 두면
 $$
 \begin{align}
 \int{\ln\root{3}\of{x}dx} &= uv - \int{vdu} \\
@@ -1341,6 +1406,7 @@ $$
 &= x\ln{\root{3}\of{x}} - \dfrac{1}{3}x + C
 \end{align}
 $$
+
 
 
 ### 삼각함수의 적분
@@ -1393,6 +1459,7 @@ $$
 $$
 
 
+
 #### sec(^2)x의 역도함수
 
 $$
@@ -1403,6 +1470,7 @@ $$
 $$
 \int{\sec^2 x dx} = \tan x + C
 $$
+
 
 
 #### csc(^2)x의 역도함수
@@ -1457,35 +1525,6 @@ $$
 $$
 
 
-#### sin(^2)x * cos(^2)x 의 역도함수
-
-$$
-\int{\sin^2 x \cos^2 x dx}
-$$
-
-
-$$
-2 \sin x \cos x = \sin(2x)
-$$
-이므로
-$$
-4 \sin^2 x \cos^2 x = \sin^2(2x)
-$$
-이다. 따라서
-$$
-\begin{align}\int{\sin^2 x \cos^2 x dx} \\= \dfrac{1}{4}\int{\sin^2(2x)dx} \\\end{align}
-$$
-이다. 이때
-$$
-2\sin^2(2x) = 1 - \cos(4x)
-$$
-이므로
-$$
-\begin{align}&\dfrac{1}{4}\int{\sin^2(2x)dx} \\&= \dfrac{1}{8}\int{\Big(1-\cos(4x)\Big)dx} \\&= \dfrac{1}{8}\int{dx} - \dfrac{1}{8}\int{\cos(4x)dx} \\&= \dfrac{1}{8}x - \dfrac{1}{32}\sin(4x) + C \\\end{align}
-$$
-이다.
-
-
 
 #### secx의 역도함수★
 
@@ -1505,6 +1544,7 @@ $$
 $$
 \begin{align}\int{\dfrac{\sec^2 x + \sec x \tan x}{\sec x + \tan x} dx} &= \int{\dfrac{du}{u}} \\&= \ln{|u|} + C \\&= \ln{|\sec x + \tan x|} + C\end{align}
 $$
+
 
 
 #### cscx의 역도함수
@@ -1531,6 +1571,72 @@ $$
 \int{\dfrac{\csc^2 x - \csc x\cot x}{\csc x - \cot x} dx} &= \int{\dfrac{1}{u} du} \\
 &= \ln{|u|} + C \\
 &= \ln{|\csc x - \cot x|} + C
+\end{align}
+$$
+
+
+
+#### 예시) sin(^2)x * cos(^2)x 의 역도함수
+
+$$
+\int{\sin^2 x \cos^2 x dx}
+$$
+
+
+$$
+2 \sin x \cos x = \sin(2x)
+$$
+
+이므로
+$$
+4 \sin^2 x \cos^2 x = \sin^2(2x)
+$$
+이다. 따라서
+$$
+\begin{align}\int{\sin^2 x \cos^2 x dx} \\= \dfrac{1}{4}\int{\sin^2(2x)dx} \\\end{align}
+$$
+이다. 이때
+$$
+2\sin^2(2x) = 1 - \cos(4x)
+$$
+이므로
+$$
+\begin{align}&\dfrac{1}{4}\int{\sin^2(2x)dx} \\&= \dfrac{1}{8}\int{\Big(1-\cos(4x)\Big)dx} \\&= \dfrac{1}{8}\int{dx} - \dfrac{1}{8}\int{\cos(4x)dx} \\&= \dfrac{1}{8}x - \dfrac{1}{32}\sin(4x) + C \\\end{align}
+$$
+이다.
+
+
+
+#### 예시) sec(^3)x의 역도함수 ★
+
+$$
+\int{\sec^3 x dx}
+$$
+
+
+$$
+\begin{align}
+&u = \sec x & du &= \sec x \tan x \\
+&v = \tan x & dv &= \sec^2 x
+\end{align}
+$$
+로 두면
+$$
+\begin{align}
+\int{\sec^3 x dx} &= \sec x \tan x - \int{\sec x \tan^2 x dx}
+\end{align}
+$$
+이때
+$$
+\tan^2x = \sec^2x - 1
+$$
+이므로
+$$
+\begin{align}
+\int{\sec^3 x dx} &= \sec x \tan x - \int{\sec{x} (\sec^2{x} - 1) dx} \\
+&= \sec x \tan x - \int{\sec^3{x} dx} + \int{\sec{x} dx} \\
+2\int{\sec^3 x dx} &= \sec x \tan x + \ln{|\sec{x}+\tan{x}|} \\
+\therefore \int{\sec^3 x dx} &= \dfrac{1}{2}(\sec x \tan x + \ln{|\sec{x}+\tan{x}|})
 \end{align}
 $$
 
@@ -1628,12 +1734,6 @@ $$
 
 
 ### 부분분수
-
-
-
-
-
-
 
 ### 이상적분
 
