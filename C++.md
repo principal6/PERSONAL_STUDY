@@ -710,7 +710,7 @@ public:
 
 int main()
 {
-	Base* b{ new Derived() };
+	Base* a{ new Derived() };
 	delete b;
 
 	// In base constructor
@@ -762,6 +762,65 @@ int main()
 }
 ```
 
+
+
+```cpp
+#include <iostream>
+
+class Base
+{
+public:
+	Base(char ID) : m_ID{ ID } { std::cout << "in base constructor\n"; }
+	virtual ~Base() { std::cout << "in base destructor\n"; }
+};
+
+class Derived : public Base
+{
+public:
+	Derived() { std::cout << "in derived constructor\n"; }
+	virtual ~Derived() { std::cout <<"in derived destructor\n"; }
+};
+
+int main()
+{
+	Derived a{};
+	Base b{ a };
+	return 0;
+}
+```
+
+
+
+```cpp
+#include <iostream>
+
+class Base
+{
+public:
+	Base() {}
+	virtual ~Base() {}
+};
+
+class Derived : public Base
+{
+public:
+	Derived(int _value) : value{ _value } {}
+	~Derived() {}
+	int value{};
+};
+
+int main()
+{
+	Derived a{ 7 };
+	Base b{ a };
+	std::cout << a.value << std::endl;
+	std::cout << ((Derived*)&b)->value << std::endl;
+	return 0;
+}
+```
+
+
+
 ### 오버라이딩
 
 ```cpp
@@ -787,8 +846,10 @@ int main()
 {
 	Base* a{ new Base() };
 	Base* b{ new Derived() };
+    Base c{ *b };
 	a->OverrideThis(); // "base function"
 	b->OverrideThis(); // "override function"
+    c.OverrideThis(); // "base function"
 	delete b;
 	delete a;
 	return 0;

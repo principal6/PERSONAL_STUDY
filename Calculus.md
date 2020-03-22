@@ -1,6 +1,42 @@
 # Calculus
 
+## 미적분의 필요성
+
+이동 거리 - 속도  - 가속도
+
+
+
+## 함수
+
+### 함수의 정의
+
+정의역, 치역
+
+
+
+### 우함수, 기함수
+
+even function = y축에 대해 대칭
+
+odd function = 원점에 대해 대칭
+
+x축에 대해 대칭이면? 함수가 아니다! => 음함수
+
+
+
+### 직선의 기울기
+
+$$
+m=\dfrac{\Delta y}{\Delta x}
+$$
+
+
+
 ## 미분법 differentiation
+
+### 할선의 기울기와 접선의 기울기
+
+
 
 ### 도함수 (derivative)
 
@@ -122,10 +158,62 @@ $$
 
 
 
+### 거듭제곱함수의 미분
+
+$$
+f(x)=x^n \\
+f'(x) = nx^{n-1}
+$$
+
+
+
+### 상수함수의 미분
+
+$$
+f(x) = c
+$$
+
+$$
+\begin{align}
+& \dfrac{\Delta f}{\Delta x}
+\\
+& = \dfrac{c - c}{\Delta x}
+\\
+& = \dfrac{0}{\Delta x}
+\\
+& = 0
+\\
+\\
+\dfrac{d}{dx}f(x) & = \lim_{\Delta x \rightarrow 0} \dfrac{\Delta f}{\Delta x} 
+\\
+& = \lim_{\Delta x \rightarrow 0} 0
+\\
+& = 0
+\\
+\\
+\therefore f'(x) & = 0
+\end{align}
+$$
+
+
+
 ### 다항식으로 확장
 
 $$
 \dfrac{d}{dx}(4x^3+5x^2) = \dfrac{d}{dx}4x^3 + \dfrac{d}{dx}5x^2
+$$
+
+
+$$
+\dfrac{d}{dx}(x^2-7x+8) = 2x-7
+$$
+
+$$
+\dfrac{d}{dx}(x^2-7x+99) = 2x-7
+$$
+
+$$
+\dfrac{d}{dx}(x^2-7x+C) = 2x-7
 $$
 
 
@@ -270,7 +358,7 @@ $$
 
 
 
-##### sin, cos 합차
+##### sin, cos 합차★
 
 $$
 \begin{align}
@@ -334,6 +422,19 @@ $$
 $$
 
 
+
+###### 응용6 (tan a+b)
+
+$$
+\begin{align}
+\tan(\alpha + \beta) 
+&= \dfrac{\sin(\alpha + \beta)}{\cos(\alpha - \beta)} \\
+&= \dfrac{\sin\alpha \cos\beta + \cos\alpha\sin\beta}{\cos\alpha \cos\beta + \sin\alpha\sin\beta} \\
+&= \dfrac{\dfrac{\sin\alpha}{\cos\alpha} \cos\beta + \sin\beta}{\cos\beta + \dfrac{\sin\alpha}{\cos\alpha}\sin\beta} \\
+&= \dfrac{\dfrac{\sin\alpha}{\cos\alpha} + \dfrac{\sin\beta}{\cos\beta}}{1 + \dfrac{\sin\alpha}{\cos\alpha}\dfrac{\sin\beta}{\cos\beta}} \\
+&= \dfrac{\tan\alpha + \tan\beta}{1 + \tan\alpha\tan\beta} \\
+\end{align}
+$$
 
 
 
@@ -629,7 +730,7 @@ $$
 
 
 
-### 역도함수 (antiderivative)
+### 역도함수 (antiderivative) ★
 
 $$
 \text{A function } F \text{ is called an } \bold{antiderivative} \text{ of } f \text{ on an interval } I \\
@@ -650,13 +751,28 @@ $$
 
 
 
+#### 예시1
+
+$$
+f(x) = \cos x
+$$
+
+일 때, 역도함수 F(x)는
+$$
+F(x) = \sin x + C
+$$
+이다.
+
+
+
 
 ## 적분법 integration
 
 ### 정적분 definite integral
 
+![](Asset\definite_integral.png)
 $$
-\int_{a}^{b}f(x)dx=\lim_{n \rightarrow \infin}\sum_{i=1}^{n}f(x_i^*)\Delta x
+\int_{a}^{b}{f(x)dx} = \lim_{n \rightarrow \infin}{\sum_{i=1}^{n}{f(x_i^*)\Delta x}}
 $$
 
 적분 기호 integral sign
@@ -675,6 +791,44 @@ $$
 
 
 
+#### 예시1
+
+$$
+f(x) = x
+$$
+
+이때
+$$
+\int_{a}^{b}{f(x)dx} = \lim_{n \rightarrow \infin}{\sum_{i=1}^{n}{f(x_i^*)\Delta x}} \\
+$$
+이고,
+$$
+\begin{align}
+\sum_{i=1}^{n}{f(x_i^*)\Delta x} &= \sum_{i=1}^{n}{\Big[f(a + \dfrac{b-a}{n} \cdot i)\Big(\dfrac{b-a}{n}\Big)\Big]} \\
+&= \dfrac{b-a}{n} \cdot \sum_{i=1}^{n}{f(a + \dfrac{b-a}{n} \cdot i)} \\
+&= \dfrac{b-a}{n} \cdot \sum_{i=1}^{n}{(a + \dfrac{b-a}{n} \cdot i)} \\
+&= \dfrac{b-a}{n} \Big[ \sum_{i=1}^{n}{a} + \dfrac{b-a}{n}\sum_{i=1}^{n}{i} \Big] \\
+&= \dfrac{b-a}{n} \Big[ an + \dfrac{b-a}{n} \cdot \dfrac{n(n+1)}{2} \Big] \\
+&= \dfrac{b-a}{n} \Big[ an + \dfrac{(b-a)(n+1)}{2} \Big] \\
+&= ab - a^2 + \dfrac{(b-a)^2(n+1)}{2n} \\
+&= \dfrac{2abn - 2a^2n +(b-a)^2(n+1)}{2n} \\
+&= \dfrac{2abn - 2a^2n +(b^2-2ab+a^2)(n+1)}{2n} \\
+&= \dfrac{2abn - 2a^2n + b^2n -2abn + a^2n + b^2 -2ab + a^2}{2n} \\
+&= \dfrac{b^2n - a^2n + b^2 -2ab + a^2}{2n} \\
+&= \dfrac{b^2 - a^2 + \dfrac{b^2 -2ab + a^2}{n}}{2} \\
+\end{align}
+$$
+이므로
+$$
+\begin{align}
+\lim_{n \rightarrow \infin}{\sum_{i=1}^{n}{f(x_i^*)\Delta x}} &= \lim_{n \rightarrow \infin}{\dfrac{b^2 - a^2 + \dfrac{b^2 -2ab + a^2}{n}}{2}} \\
+\therefore \int_{a}^{b}{xdx} &= \dfrac{b^2 - a^2}{2} \\
+\end{align}
+$$
+이다.
+
+
+
 ### 미적분학의 기본 정리 (Fundamental Theorem of Calculus, FTC)
 
 #### FTC 1
@@ -688,13 +842,51 @@ g(x) = \int_{a}^{x}f(t)dt, \qquad a \le x \le b \\
 g'(x)  = f(x)
 $$
 
+##### 증명 (정적분이 먼저 정의되어야 FTC1이 정의된다)
+
+먼저
+$$
+g(x) = \int_{a}^{x}{f(t)dt}
+$$
+로 두면
+$$
+\begin{align}
+\dfrac{d}{dx}g(x) &= \lim_{h \rightarrow 0}{\dfrac{g(x+h) - g(x)}{h}} \\
+&= \lim_{h \rightarrow 0}{\dfrac{\int_{a}^{x+h}{f(t) dt} - \int_{a}^{x}{f(t) dt}}{h}} \\
+&= \lim_{h \rightarrow 0}{\dfrac{\int_{x}^{x+h}{f(t) dt}}{h}} \\
+\end{align}
+$$
+이때 구간 $[x, x+h]$에서 $f(t)$의 최솟값을 $m$, 최댓값을 $M$이라고 두면
+$$
+f(u) = m \\
+f(v) = M
+$$
+![](Asset\FTC1.png)
+$$
+f(u)h \le \int_{x}^{x+h}{f(t) dt} \le f(v)h \\
+$$
+이므로
+$$
+\lim_{h \rightarrow 0}{\dfrac{f(u)h}{h}} \le \lim_{h \rightarrow 0}{\dfrac{\int_{x}^{x+h}{f(t) dt}}{h}} \le \lim_{h \rightarrow 0}{\dfrac{f(v)h}{h}} \\
+\lim_{h \rightarrow 0}{f(u)} \le \lim_{h \rightarrow 0}{\dfrac{\int_{x}^{x+h}{f(t) dt}}{h}} \le \lim_{h \rightarrow 0}{f(v)} \\
+f(x) \le \lim_{h \rightarrow 0}{\dfrac{\int_{x}^{x+h}{f(t) dt}}{h}} \le f(x) \\
+\therefore \lim_{h \rightarrow 0}{\dfrac{\int_{x}^{x+h}{f(t) dt}}{h}}= f(x)
+$$
+이고, 따라서
+$$
+\begin{align}
+\dfrac{d}{dx}g(x) &= f(x)
+\end{align}
+$$
+이다.
+
 
 
 #### FTC 2
 
 $$
 \text{If } f \text{ is continuous on [a, b], then } \\
-\int_{a}^{b}f(x)dx = F(b) - F(a) = F(x)\\
+\int_{a}^{b}{f(x)dx} = F(b) - F(a) = F(x)\\
 \text{where } F \text{ is any antiderivative of } f \ (F' = f)
 $$
 
@@ -708,6 +900,37 @@ F(b) - F(a) & = F(x) \vert ^b_a \\
 & = F(x) \big\rbrack ^b_a \\
 & = \big[F(x)\big]^b_a
 \end{align}
+$$
+
+
+
+##### 증명
+
+함수 $f(x)$의 역도함수족을 $F(x)$라고 하자
+$$
+\dfrac{d}{dx}F(x) = f(x)
+$$
+이때 **FTC1**에 의해
+$$
+g(x) = \int_{a}^{x}{f(t)dt} \\
+\dfrac{d}{dx}g(x) = f(x)
+$$
+이므로
+$$
+F(x) = g(x) + C
+$$
+이다. 이때
+$$
+\begin{align}
+F(b) - F(a) &= g(b) + C - g(a) - C \\
+&= g(b) - g(a) \\
+&= \int_{a}^{b}{f(t)dt} - \int_{a}^{a}{f(t)dt} \\
+&= \int_{a}^{b}{f(t)dt} \\
+\end{align}
+$$
+
+$$
+\therefore \int_{a}^{b}{f(t)dt} = F(b) - F(a)
 $$
 
 
@@ -1705,6 +1928,7 @@ $$
 $$
 
 
+
 #### sqrt(a^2 + x^2)
 
 $$
@@ -1738,4 +1962,262 @@ $$
 ### 이상적분
 
 ### 근사적분
+
+
+
+### 근호에 대해...
+
+#### 삼각치환 (원/타원)
+
+$$
+\int{\sqrt{1-x^2} dx}
+$$
+
+
+
+#### 치환
+
+$$
+\int{x \sqrt{1-x^2} dx}
+$$
+
+
+
+#### 부분적분
+
+$$
+\int{x \sqrt{1-x} dx}
+$$
+
+
+$$
+\begin{align}
+u &= -\dfrac{2}{3}(1-x)^{3/2} & du &= (1-x)^{1/2}dx \\
+v &= x & dv &= dx
+\end{align}
+$$
+로 두면
+$$
+\begin{align}
+\int{x \sqrt{1-x} dx} &= -\dfrac{2}{3}x(1-x)^{3/2} + \dfrac{2}{3}\int{(1-x)^{3/2} dx} \\
+&= -\dfrac{2}{3}x(1-x)^{3/2} - \dfrac{2}{3} \cdot \dfrac{2}{5}(1-x)^{5/2} + C \\
+\therefore \int{x \sqrt{1-x} dx} &= -\dfrac{2}{3}x(1-x)^{3/2} - \dfrac{4}{15}(1-x)^{5/2} + C \\
+\end{align}
+$$
+
+
+
+## 적분 응용
+
+### 호의 길이
+
+![](Asset\arc_length.png)
+
+위 그래프에서 살펴본 바와 같이 **호의 길이의 미분**은 다음과 같다.
+$$
+\begin{align}
+ds 
+&= \sqrt{(dx)^2+(dy)^2} \\
+&= \sqrt{1 + \Big(\dfrac{dy}{dx}\Big)^2}\sqrt{(dx)^2} &&= \sqrt{\Big(\dfrac{dx}{dy}\Big)^2 + 1}\sqrt{(dy)^2} \\
+&= \sqrt{1 + \Big(\dfrac{dy}{dx}\Big)^2}dx &&= \sqrt{1+\Big(\dfrac{dx}{dy}\Big)^2}dy \\
+\end{align}
+$$
+
+
+따라서 **호의 길이**는 다음과 같다.
+$$
+s = \int_a^b{\sqrt{1 + \Big(\dfrac{dy}{dx}\Big)^2}dx} = \int_c^d{\sqrt{1+\Big(\dfrac{dx}{dy}\Big)^2}dy}
+$$
+
+
+
+### 회전체의 부피
+
+#### x축에 대한 회전체
+
+$$
+\int_{a}^{b}{\pi [f(x)]^2 dx}
+$$
+
+
+
+#### y축에 대한 회전체
+
+$$
+\int_{c}^{d}{\pi [f^{-1}(y)]^2 dy}
+$$
+
+
+
+#### 예시1 - 원뿔의 부피
+
+$$
+f(x) = \dfrac{r}{h}x \qquad [0, h]
+$$
+
+를 $x$축에 대해 회전하면 밑면의 반지름이 $r$이고 높이가 $h$인 원뿔이 나온다.
+$$
+\begin{align}
+\int_{0}^{h}{\pi [f(x)]^2 dx} &= \pi\int_{0}^{h}{\dfrac{r^2}{h^2}x^2 dx}\\
+&= \dfrac{\pi r^2}{h^2} \int_{0}^{h}{x^2 dx} \\
+&= \dfrac{\pi r^2}{h^2} \cdot \dfrac{1}{3}\Big[x^3\Big]_{0}^{h} \\
+&= \dfrac{\pi r^2}{3h^2} \cdot h^3 \\
+&= \dfrac{\pi r^2 h}{3}
+\end{align}
+$$
+
+
+### 회전체가 아닌 입체의 부피
+
+$$
+\int_{a}^{b}{A(x) dx}
+$$
+
+
+
+### 원통껍질 방법으로 회전체의 부피 구하기
+
+#### y축에 대한 회전체
+
+$$
+\int_{a}^{b}{2 \pi x f(x) dx}
+$$
+
+
+
+### 회전체의 겉넓이
+
+x축에 대해 회전 시
+$$
+S=\int{2\pi y ds}
+$$
+y축에 대해 회전 시
+$$
+S=\int{2\pi x ds}
+$$
+이때
+$$
+ds = \sqrt{1+\Big(\dfrac{dy}{dx}\Big)^2}dx = \sqrt{1+\Big(\dfrac{dx}{dy}\Big)^2}dy
+$$
+
+이다.
+
+
+
+#### 예제 - 구의 겉넓이
+
+$$
+x^2 + y^2 = r^2
+$$
+
+의 그래프를 x축 중심으로 회전하면 구가 된다.
+$$
+\begin{align}
+2x + 2y\dfrac{dy}{dx} &= 0 \\
+2y\dfrac{dy}{dx} &= -2x \\
+y\dfrac{dy}{dx} &= -x \\
+\dfrac{dy}{dx} &= -\dfrac{x}{y} \\
+\therefore \Big(\dfrac{dy}{dx}\Big)^2 &= \dfrac{x^2}{y^2}
+\end{align}
+$$
+이때 회전체의 겉넓이는 다음과 같다.
+$$
+\begin{align}
+S &= \int_{-r}^{r}{2 \pi y \sqrt{1 + \Big(\dfrac{dy}{dx}\Big)^2}dx} \\
+&= 2\int_{0}^{r}{2 \pi y \sqrt{1 + \Big(\dfrac{dy}{dx}\Big)^2}dx} \\
+&= 4\pi\int_{0}^{r}{y \sqrt{1 + \dfrac{x^2}{y^2}}dx} \\
+&= 4\pi\int_{0}^{r}{y \sqrt{\dfrac{y^2}{y^2} + \dfrac{x^2}{y^2}}dx} \\
+&= 4\pi\int_{0}^{r}{y \sqrt{\dfrac{x^2 + y^2}{y^2}}dx} \\
+&= 4\pi\int_{0}^{r}{y \dfrac{\sqrt{x^2 + y^2}}{\sqrt{y^2}}dx} \\
+&= 4\pi\int_{0}^{r}{y \dfrac{\sqrt{x^2 + y^2}}{y}dx} \\
+&= 4\pi\int_{0}^{r}{\sqrt{x^2 + y^2}dx} \\
+&= 4\pi\int_{0}^{r}{\sqrt{r^2}dx} \\
+&= 4\pi\int_{0}^{r}{rdx} \\
+&= 4 \pi r \int_{0}^{r}{dx} \\
+&= 4 \pi r \Big[x\Big]^r_0 \\
+&= 4 \pi r (r - 0) \\ \\
+\therefore S &= 4 \pi r^2 \\
+\end{align}
+$$
+
+
+## 매개변수 방정식
+
+### 미분: 연쇄법칙
+
+#### 1계 도함수
+
+$$
+\dfrac{dy}{dx}=\dfrac{dy}{dt} \cdot \dfrac{dt}{dx}
+$$
+
+
+
+#### 2계 도함수
+
+$$
+\dfrac{d^2y}{dx^2}=\dfrac{d}{dx}\left(\dfrac{dy}{dx}\right)=\dfrac{d}{dt}\left(\dfrac{dy}{dx}\right) \cdot \dfrac{dt}{dx}
+$$
+
+
+
+### 적분: 치환법
+
+$$
+y = g(t) \\ x = f(t)
+$$
+
+로 두면
+$$
+\dfrac{dx}{dt} = f'(t)
+$$
+이므로
+$$
+dx = f'(t)dt
+$$
+이다. 따라서
+$$
+\int_{a}^{b}{y dx} = \int_{\alpha}^{\beta}{g(t)f'(t)dt}
+$$
+이다.
+
+이때 적분한계는
+$$
+f(\alpha) = a, \ f(\beta) = b
+$$
+와 같이 구할 수 있다.
+
+
+
+#### 적분 응용 - 호의 길이
+
+$$
+\begin{align}
+ds &= \sqrt{(dx)^2 + (dy)^2} \\
+&= \sqrt{\Big(\dfrac{dx}{dt}\Big)^2 + \Big(\dfrac{dy}{dt}\Big)^2}\sqrt{(dt)^2} \\
+&= \sqrt{\Big(\dfrac{dx}{dt}\Big)^2 + \Big(\dfrac{dy}{dt}\Big)^2}dt
+\end{align}
+$$
+
+이므로
+$$
+s = \int_{\alpha}^{\beta}{\sqrt{\Big(\dfrac{dx}{dt}\Big)^2 + \Big(\dfrac{dy}{dt}\Big)^2}dt}
+$$
+
+
+#### 적분 응용 - 회전체의 겉넓이
+
+##### x축 중심 회전
+
+$$
+S = \int{2\pi y ds} = \int{2 \pi y \sqrt{\Big(\dfrac{dx}{dt}\Big)^2 + \Big(\dfrac{dy}{dt}\Big)^2}dt}
+$$
+
+
+
+##### y축 중심 회전
+
+$$
+S = \int{2\pi x ds} = \int{2 \pi x \sqrt{\Big(\dfrac{dx}{dt}\Big)^2 + \Big(\dfrac{dy}{dt}\Big)^2}dt}
+$$
 
