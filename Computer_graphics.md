@@ -34,8 +34,16 @@ $$
 
 #### 입체각과 구면 좌표 ★
 
-![solid_angle_into_spherical](Asset\solid_angle_into_spherical.png)
+![](Asset\solid_angle_into_spherical.png)
 
+구 전체를 대상으로 하면
+$$
+d\omega = \sin{\theta} d\theta d\phi, \quad (\theta \in [0, \pi],\ \phi \in [0, 2\pi])
+$$
+이고, 반구일 경우 다음과 같다.
+$$
+d\omega = \sin{\theta} d\theta d\phi, \quad (\theta \in [0, \dfrac{\pi}{2}],\ \phi \in [0, 2\pi])
+$$
 
 
 ### probability density function (확률 밀도 함수)
@@ -216,6 +224,8 @@ $\dfrac{c}{v}=n$ 이 성립한다.
 빛이 흡수되면 물질 내에서 사방팔방으로 움직인다 (빛의 산란)
 
 눈에 보이는 물체는 대부분 조명의 일부를 난반사한다. -> 우리가 어디서 보든 그 물체는 보인다
+
+
 
 ### 정반사(=거울반사) specular reflection
 
@@ -418,7 +428,7 @@ $L = \dfrac{d^2 \Phi}{ d\omega dA_{\perp}}$  는 공간 상의 점에 대해 특
 
 
 
-### 복사 조도와 복사 휘도★
+### 복사 조도와 복사 휘도★★
 
 $$
 \displaystyle E = \int L_i \cos\theta d\omega
@@ -428,9 +438,11 @@ $$
 $$
 L_i = \dfrac{d^2\Phi}{d\omega dA \cos{\theta}}
 $$
-​		로 정의된다.
-
-​        이때 복사 휘도 $L_i$ 을 $\omega$ 에 대해 적분하면
+​		로 정의된다. 이때
+$$
+L_i = \dfrac{d}{d\omega} \left( \dfrac{d\Phi}{dA \cos{\theta}} \right)
+$$
+​        이고, 복사 휘도 $L_i$ 을 $\omega$ 에 대해 적분하면
 
 $$
 \displaystyle \int L_i d\omega = \dfrac{d\Phi}{dA \cos{\theta}}
@@ -622,6 +634,8 @@ specular lobe: 혹
 
 ![microfacet_theory](Asset\microfacet_theory.png)
 
+
+
 ### 렌더링 방정식 rendering equation ★
 
 $L$ radiance
@@ -643,7 +657,7 @@ $$
 
 ​    $t$ : 시간
 
-   $\Omega$ : 단위 반구(unit hemisphere)
+   $\Omega$ : 중심이 $\bold{x}$에 위치한 단위 반구(unit hemisphere)
 
    $\omega_i$ : 입사되는 빛의 방향
 
@@ -652,10 +666,10 @@ $$
    $f_r(\bold{x}, \omega_i, \omega_o, \lambda, t)$ : **BRDF**
 
 => 파장과 시간을 무시하면
-
 $$
 L_o(\bold{x},\ \omega_o) = L_e(\bold{x},\ \omega_o) + \int_{\Omega}{f_r(\bold{x}, \omega_i, \omega_o) L_i(\bold{x}, \omega_i) (\omega_i \cdot n) d\omega_i}
 $$
+
 
 
 #### 반사도 방정식 reflectance equation ★★
@@ -694,34 +708,38 @@ http://graphicrants.blogspot.com/2013/08/specular-brdf-reference.html
 
 
 
-### 특정 지점에 입사되는 모든 빛 $E$ 중에서 반사되는 빛 $L_o$ 의 비율
+### 특정 지점에 입사되는 모든 빛 $E$ 중에서 반사되는 빛의 비율
 
 $$
-f_r(\omega_i, \omega_o) = \dfrac{L_o}{E}
+f_r(\omega_i, \omega_o) = \dfrac{L_{o} - L_{e}}{E}
 $$
+
+### 점검
 
 
 $$
 \begin{align}
-L_o &= f_r(\omega_i, \omega_o) E \\
-&= \int{f_r(\omega_i, \omega_o) L_i \cos\theta_i d\omega_i}
+L_{o} - L_{e} &= f_r(\omega_i, \omega_o) E \\
+&= \int{f_r(\omega_i, \omega_o) L_i \cos\theta_i d\omega_i} \\
+L_{o} &= L_{e} + \int{f_r(\omega_i, \omega_o) L_i \cos\theta_i d\omega_i}
 \end{align}
 $$
 
 
+
 ### 용어
 
-$\omega_n$ : macrosurface의 법선 ($n$)
+$n$: macrosurface의 법선
 
-$\omega_m$ : microsurface의 법선 ($m$)
+$m$ : microsurface의 각 법선
 
 $\omega_i$ : macrosurface 위의 한 점에서 빛의 방향으로 향하는 단위 벡터 ($l$)
 
 $\omega_o$ : macrosurface 위의 한 점에서 눈의 방향으로 향하는 단위 벡터 ($v$)
 
-$\omega_h$ : $\omega_i$ 과 $\omega_o$ 의 중간을 향하는 단위 벡터 ($h$)
+$h$: $\omega_i$ 과 $\omega_o$ 의 중간을 향하는 단위 벡터
 
-(참고: 미세면의 법선은 $\omega_m$ 이지만, 이 중에 빛이 눈에 도달하는 경우는 $\omega_m = \omega_h$ 일 때 뿐이다! ★★)
+(참고: 미세면의 법선은 $m$ 이지만, 이 중에 빛이 눈에 도달하는 경우는 $m = h$ 일 때 뿐이다! ★★)
 
 
 
@@ -741,11 +759,15 @@ $f(l,v) = lerp(k_d f_{diff},\ k_s f_{spec},\ k_m)$  이라고 할 수 있다?
 
 #### 양수: $f_r(\omega_i, \omega_o) > 0$
 
-#### Helmholtz reciprocity 헬름홀츠 상반성: $f_r(\omega_i, \omega_o) = f_r(\omega_o, \omega_i)$
+- 비율이기 때문에 음수일 수 없다!
 
-#### 에너지 보존 energy conservation ★: $\displaystyle \int_{\Omega} f_r(\omega_i, \omega_o) \cos\theta_i d\omega_i \le 1$ 이어야 한다. (1이면 모든 빛이 반사된 것이고, 1보다 작으면 빛이 일부 흡수되었음을 의미)
+#### 헬름홀츠 상반성 Helmholtz reciprocity: $f_r(\omega_i, \omega_o) = f_r(\omega_o, \omega_i)$
 
+- 각도에만 의존하기 때문에, 입사각과 반사각이 뒤집혀도 반사되는 정도는 같다
 
+#### 에너지 보존 energy conservation ★: $\displaystyle \int_{\Omega} f_r(\omega_i, \omega_o) \cos\theta_i d\omega_i \le 1$
+
+- 1이면 모든 빛이 반사된 것을 의미하고, 1보다 작으면 빛이 일부 흡수되었음을 의미한다.
 
 
 
@@ -765,22 +787,57 @@ $$
 f_{diff}(\omega_i, \omega_o)=\dfrac{\rho_d}{\pi}
 $$
  => 빛이 반사되는 방향에 상관 없이 상수..! (diffuse 자체의 정의)
-
+$$
+f_r = k_{diff}
+$$
  => $\rho_d$ 는 diffuse albedo (r, g, b) 
 
- => 에너지 보존법칙을 지키기 위해 $\pi$ 로 나눠야 한다. (어느 한 방향에 대한 값이 아니고, 반구 내 모든 방향에 대한 값이기 때문에 $\pi$로 나눈다 <= 적분으로 증명)
+ => 에너지 보존법칙을 지키기 위해 $\pi$ 로 나눠야 한다.
 
 
 
-즉, Lambertian diffuse reflectance equation은
+##### $\pi$ 증명
 
-$\displaystyle L_o = \int_{\Omega}{\dfrac{\rho}{\pi} L_i \omega_i \cdot n d\omega_i}$ 인데, 여기서 $\dfrac{\rho}{\pi}$ 는 상수이므로
+난반사의 정의에 의해 $f_{r}$이 입사각/반사각에 상관 없이 상수이므로
+$$
+L_{o} = \int_{\Omega}{f_{r} L_i d\omega_i}
+$$
+이때
+$$
+d\omega = \sin{\theta} d\theta d\phi, \quad (\theta \in [0, \dfrac{\pi}{2}],\ \phi \in [0, 2\pi])
+$$
+이므로
+$$
+L_{o} = \int_{0}^{2\pi}{\int_{0}^{\frac{\pi}{2}}{f_{r}L_i \cos{\theta} \sin{\theta} d\theta}d\phi} \\
+L_{o} = {\int_{0}^{\frac{\pi}{2}}\int_{0}^{2\pi}{f_{r}L_i \cos{\theta} \sin{\theta} d\phi}d\theta}
+$$
+이다. 이때 $\phi$ 에 대해 피적분함수는 상수이므로
+$$
+L_{o} = \int_{0}^{2\pi}{d\phi} \int_{0}^{\frac{\pi}{2}}{f_{r}L_i \cos{\theta} \sin{\theta} d\theta} \\
+L_{o} = 2 \pi \int_{0}^{\frac{\pi}{2}}{f_{r}L_i \cos{\theta} \sin{\theta} d\theta}
+$$
+이다. 그리고 이때
+$$
+2\cos{\theta}\sin{\theta} = \sin{2\theta} \\
+\cos{\theta}\sin{\theta} = \dfrac{1}{2}\sin{2\theta}
+$$
+이므로
+$$
+\begin{align}
+L_{o} &= \pi \int_{0}^{\frac{\pi}{2}}{f_{r}L_i \sin{(2 \theta)} d\theta} \\
+&= \pi f_{r} L_i \left[-\dfrac{1}{2}\cos{(2 \theta)}\right]_{0}^{\frac{\pi}{2}} \\
+&= \pi f_{r} L_i \left(-\dfrac{1}{2}\cos{\pi} +\dfrac{1}{2}\cos{0} \right) \\
+&= \pi f_{r} L_i \left(\dfrac{1}{2} +\dfrac{1}{2}\right) \\
+\therefore L_{o} &= \pi f_{r} L_i
+\end{align}
+$$
+이다.
 
-$\displaystyle L_o = {\dfrac{\rho}{\pi} \int_{\Omega} L_i \omega_i \cdot n d\omega_i}$ 이고,
 
-Irradiance와 Radiance의 관계식에 따라
 
-$L_o = \dfrac{\rho}{\pi}E$ 이다.
+#### Oren-Nayar diffuse BRDF
+
+ => 조금 더 정확한 diffuse BRDF
 
 
 
@@ -887,6 +944,8 @@ $$
 ##### **정규 분포가 아니라, 법선(normal)의 분포를 나타내는 함수이다! ★ (= facet distribution function)**
 
 ##### 총 미세면 중 얼만큼의 미세면이 하프벡터를 향하고 있는가에 대한 통계적인 수치이다.
+
+=> 조금 더 정확히 말하면, 전체 미세면 중 주어진 법선과 동일한 법선을 지니는(같은 방향을 향하는) 미세면의 비율을 말해주는 함수!
 
 roughness가 높으면? 적은 수의 미세면만이 하프벡터를 향하므로 $D(\omega_m)$은 작아진다.
 

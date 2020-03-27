@@ -1185,12 +1185,13 @@ $$
 
 $$
 \ln e = 1 \\
-\ln 1 = 0
+\ln 1 = 0 \\
+\ln{e^x} = x
 $$
 
 
 
-#### 도함수
+#### 도함수★
 
 $$
 \begin{align}
@@ -1199,7 +1200,7 @@ x &=e^y \\
 \end{align}
 $$
 
-음함수적으로 미분하면
+**음함수적으로 미분**하면
 $$
 \begin{align}
 \dfrac{d}{dx}x &=\dfrac{d}{dx}e^y \\
@@ -1210,7 +1211,7 @@ $$
 $$
 따라서
 $$
-\dfrac{d}{dx}(\ln x) = \dfrac{1}{x}
+\therefore \dfrac{d}{dx}(\ln x) = \dfrac{1}{x}
 $$
 
 
@@ -1223,17 +1224,34 @@ $$
 
 
 
+#### 역도함수
+
+$$
+\int{\ln{x}dx}
+$$
+
+이때
+$$
+\begin{align}
+&u = \ln x, && du = \dfrac{dx}{x} \\
+&v = x, && dv = dx
+\end{align}
+$$
+로 두면
+$$
+\begin{align}
+\int{\ln{x}dx} &= x \ln x - \int{dx}  \\
+&= x \ln x - x + C \\ \\
+\therefore \int{\ln{x}dx} &= x \ln x - x + C
+\end{align}
+$$
 
 
-##### 참고!!
+#### 예시1
 
-e는 x에 대한 함수가 아니라 상수이므로
+(e는 x에 대한 함수가 아니라 상수이므로)
 $$
 \dfrac{d}{dx}(\ln e) = 0
-$$
-
-$$
-\ln e^x = x
 $$
 
 
@@ -1254,15 +1272,14 @@ $$
 로 두면
 $$
 \begin{align}
-&\int \dfrac{\sin x}{\cos x}dx \\
-&= -\int\dfrac{1}{u}du \\
-& = -\ln|u| + C \\
-& = -\ln|\cos x| + C \\ \\
-
-& -\ln|\cos x| + C \\
-& = \ln|\cos x|^{-1} + C \\
-& = \ln|\cos^{-1} x| + C \\
-& = \ln|\sec x| + C \\
+&\int{\dfrac{\sin x}{\cos x}dx} \\
+&= -\int{\dfrac{1}{u}du} \\
+& = -\ln{|u|} + C \\
+& = -\ln{|\cos x|} + C \\ \\
+& = \ln{|\cos x|^{-1}} + C \\
+& = \ln{\left|\dfrac{1}{\cos x}\right|} + C \\
+& = \ln{|\sec x|} + C \\ \\
+\int{\tan x dx} &= -\ln{|\cos x|} + C = \ln{|\sec x|} + C
 \end{align}
 $$
 이다.
