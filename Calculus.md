@@ -36,6 +36,8 @@ $$
 
 ### 할선의 기울기와 접선의 기울기
 
+접선의 기울기는 할선의 기울기의 극한
+
 
 
 ### 도함수 (derivative)
@@ -2158,7 +2160,7 @@ S &= \int_{-r}^{r}{2 \pi y \sqrt{1 + \Big(\dfrac{dy}{dx}\Big)^2}dx} \\
 $$
 
 
-## 매개변수 방정식
+## 매개변수 방정식 paramteric equation
 
 ### 미분: 연쇄법칙
 
@@ -2237,4 +2239,22 @@ $$
 $$
 S = \int{2\pi x ds} = \int{2 \pi x \sqrt{\Big(\dfrac{dx}{dt}\Big)^2 + \Big(\dfrac{dy}{dt}\Big)^2}dt}
 $$
+
+
+
+## 극좌표 polar coordinate
+
+
+
+### 원뿔 곡선 conic section
+
+#### 타원 ellipse
+
+#### 포물선 parabola
+
+#### 쌍곡선 hyperbola
+
+#### 이심률 eccentricity
+
+
 

@@ -88,7 +88,7 @@ non-contiguous memory blocks
 
 용어: top(peek), overflow, underflow
 
-size(), capacity(), display() & push(), pop(), **top()**, **empty()==is_empty()**
+size(), capacity(), display() & push(), pop(), **top()**, **empty()**
 
 top() -> 참조형!(non-const, const)★★
 
@@ -126,21 +126,105 @@ size(), capacity(), display() & push_front(), pop_front(), push_back(), pop_back
 
 **노드(Node)**
 
-근노드(Root)
+**근노드(Root)**
 
 부모 노드(Parent)
 
-자식 노드(Child) => 자식의 수 == **차수(Degree)**
+자식 노드(Child) => 자식의 수 == **★차수(Degree)★**
 
-단말 노드(Leaf) = 자식이 없는 말단 노드
+**단말 노드(Leaf)** = 자식이 없는 말단 노드
 
 크기(Size) = 총 노드의 개수
 
-**레벨(Level)** - **근노드에서 특정 노드까지 경로의 길이**
+**레벨(Level)**★ - **근노드에서 특정 노드까지 경로의 길이**
 
-깊이(Depth) = 트리의 최대 레벨
+**깊이(Depth)** = 트리의 최대 레벨
+
+
 
 #### Traverse방식
+
+##### preorder
+
+##### inorder
+
+##### postorder
+
+
+
+##### 예시
+
+```cpp
+#include <iostream>
+
+struct TreeNode
+{
+	TreeNode() {}
+	TreeNode(int _value) : value{ _value } {}
+	int value{};
+	TreeNode* left{};
+	TreeNode* right{};
+};
+
+void binary_tree_preorder(const TreeNode* node)
+{
+	if (!node) return;
+	printf("%d ", node->value);
+	binary_tree_preorder(node->left);
+	binary_tree_preorder(node->right);
+}
+
+void binary_tree_inorder(const TreeNode* node)
+{
+	if (!node) return;
+	binary_tree_inorder(node->left);
+	printf("%d ", node->value);
+	binary_tree_inorder(node->right);
+}
+
+void binary_tree_postorder(const TreeNode* node)
+{
+	if (!node) return;
+	binary_tree_postorder(node->left);
+	binary_tree_postorder(node->right);
+	printf("%d ", node->value);
+}
+
+void destroy_binary_tree(TreeNode*& node)
+{
+	if (!node) return;
+	destroy_binary_tree(node->left);
+	destroy_binary_tree(node->right);
+	delete node;
+	node = nullptr;
+}
+
+int main()
+{
+	//       1
+	//   2       3
+	// 4   5   6   7
+	TreeNode* root{ new TreeNode(1) };
+	root->left = new TreeNode(2);
+	root->right = new TreeNode(3);
+	root->left->left = new TreeNode(4);
+	root->left->right = new TreeNode(5);
+	root->right->left = new TreeNode(6);
+	root->right->right = new TreeNode(7);
+
+	printf("[preorder ] ");
+	binary_tree_preorder(root); // 1 2 4 5 3 6 7
+	printf("\n[inorder  ] ");
+	binary_tree_inorder(root); // 4 2 5 6 3 7 1
+	printf("\n[postorder] ");
+	binary_tree_postorder(root); // 4 5 2 6 7 3 1
+
+	destroy_binary_tree(root);
+	return 0;
+}
+```
+
+
 
 #### 1) 이진 트리 (Binary tree)
 
@@ -156,9 +240,7 @@ size(), capacity(), display() & push_front(), pop_front(), push_back(), pop_back
 
 ##### * 우선순위 큐
 
-#### 4) AVL 트리 (AVL tree) 
-
-#### 5) B트리 (B-Tree) ★★
+#### 4) B트리 (B-Tree) ★★
 
 [그림: 5차 B-Tree]
 
@@ -185,12 +267,14 @@ size(), capacity(), display() & push_front(), pop_front(), push_back(), pop_back
 - 항상 leaf 노드에 삽입
 - 하향 탐색하여 위치 찾음? 해당 leaf 노드에 공간 없으면 분할! (분할하려면 키 하나를 부모 노드로 올린다!! 부모 노드가 꽉 찼으면? 부모노드도 분할!)
 
-#### 6) R-B트리 (Red-black tree) ★★
+#### 5) R-B트리 (Red-black tree) ★★
 
 - 모든 노드는 R/B
 - **★ root와 leaf는 항상 B** (**B로 시작해서 B로 끝난다**)
 - **★ 노드가 R이면 자식은 무조건 B** (즉, R와 B는 계층 상 **번갈아** 나타난다!!)
 - **★★ root에서 leaf까지 모든 경로에서 ★B의 갯수★는 같아야 한다** (가장 짧으면 B만 나오는 경로, 가장 길면 B-R-B-R-B처럼 번갈아 나오는 경우)
+
+#### 6) AVL 트리 (AVL tree)
 
 
 
