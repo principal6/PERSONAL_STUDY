@@ -2,6 +2,14 @@
 
 ## 기본
 
+### endianness
+
+![](Asset\endianness.png)
+
+
+
+### c++ 코드
+
 UNIX 계열은
 
 `#include <sys/socket.h>`
@@ -52,9 +60,13 @@ htons()
 
 ### octet (== 8 bits)
 
+
+
 ## Maximum Transmission Unit (MTU)
 
 Datagram은 IPv4에서 최대 576 octets 까지, IPv6에서 최대 1280 octets 까지 전송 가능 ?
+
+
 
 ## getaddrinfo()
 
@@ -74,8 +86,8 @@ AF_INET6 // Internet 6 == IPv6
 #### socket type (SOCK_)
 
 ```
-SOCK_STREAM // TCP
-SOCK_DGRAM // UDP
+SOCK_STREAM // for TCP (Transmission Control Protocol)
+SOCK_DGRAM // for UDP (User Datagram Protocol)
 ```
 
 #### ip protocol (IPPROTO_)
@@ -85,7 +97,7 @@ IPPROTO_TCP
 IPPROTO_UDP
 ```
 
-#### flags (AI_)
+#### flags
 
 ```
 AI_PASSIVE // 소켓 주소가 bind() 호출에서 사용됨
