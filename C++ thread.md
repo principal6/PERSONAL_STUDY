@@ -252,6 +252,44 @@ void subtract()
 
 
 
+## thread local
+
+예전엔
+
+```cpp
+__declspec(thread) int g_i = 11;
+```
+
+처럼 사용했다.
+
+지금은
+
+```cpp
+thread_local int g_i = 11;
+```
+
+처럼 사용한다.
+
+thread가 생성될 때마다 생성될 변수!
+
+
+
+## 스레드 동기화, condition_variable
+
+windows에서는 Event라는 이름으로 존재?
+
+mutex랑 같이 쓴다. (atomic이 있더라도!)
+
+wait(), wait_for(), wait_until()
+
+notify_one(), notify_all() 는 mutex lock의 바깥에서 하자
+
+
+
+=> 스레드 두 개 번갈아가며 홀수/짝수 출력하기 동기화!!
+
+
+
 ## lock-free
 
 lock()을 하지 않고 멀티 스레딩 하기!
