@@ -1,5 +1,11 @@
 # C#
 
+## 개요
+
+GC (Garbage Collector)가 있는 언어!
+
+
+
 ## 객체 초기화
 
 ```c#

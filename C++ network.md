@@ -2,15 +2,25 @@
 
 https://www.winsocketdotnetworkprogramming.com/winsock2programming/
 
+http://www.codersblock.org/blog/multiplayer-fps-part-1
+
+https://gafferongames.com/post/deterministic_lockstep/
+
 
 
 ## 기본
 
 ### octet (== 8 bits)
 
+예전에는 1 byte == 8 bits 가 아닐 수 있었다. 네트워크에서는 한 단위를 고정적으로 정할 필요가 있었고, 8 bits를 묶어 1 octet이라 칭한다.
+
+
+
 ### endianness
 
 ![](Asset\endianness.png)
+
+host와 network의 endianness가 다를 수 있음에 주의하자!
 
 
 
@@ -34,7 +44,33 @@ IPv6는 128-bit (= 16 바이트) 주소 공간을 사용한다. 즉 이론적으
 
 
 
-### c++ 코드
+## 클라이언트 신뢰
+
+서버가 모든 걸 통제하는 편이 낫다... 그래야 cheating 예방이 쉽다.
+
+
+
+## 서버-클라이언트 동기화(synchronization)
+
+### snapshot interpolation★
+
+### state synchronization
+
+### deterministic lockstep
+
+input이 같다면 simulation 결과가 같다는 전제가 필요함... (floating point determinism 때문에 힘듦!) -> 모든 클라이언트의 input을 기다려야 함 -> 사람 수가 적은 RTS/LAN에 적합
+
+
+
+## TCP vs. UDP
+
+인원이 많은 실시간 게임이라면 UDP를 써야... TCP는 패킷 올 때까지 기다리고 순서도 지켜야 하니까 게임이 멈추기 십상
+
+UDP는 패킷이 도착하거나/안 하거나!
+
+
+
+## 코드
 
 UNIX 계열은
 
@@ -80,18 +116,13 @@ Winsock API를 다 사용한 후에는 WSACleanup()을 호출하여 Winsock 내�
 
 ```cpp
 WSADATA wsaData{};
-if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
+// MAKEWORD(2, 2) == 0x202
+int ErrorCode{ WSAStartup(MAKEWORD(2, 2), &wsaData) };
+if (ErrorCode != 0)
 {
-    std::cerr << "Failed to initialize Windows Socket Application.\n";
+    printf( "Failed - WSAStartup(): %d", ErrorCode);
     return false;
 }
-```
-
-```cpp
-htons()
-// host to network (short)
-// Windows(host)는 Little Endian
-// Network는 ★★Big Endian★★ 사용!
 ```
 
 
@@ -120,9 +151,30 @@ socket();
 WSASocket();
 ```
 
+##### UDP 소켓 예시
+
+```cpp
+SOCKET Socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+if (Socket == INVALID_SOCKET)
+{
+	printf("Failed - socket(): %d", WSAGetLastError());
+	return;
+}
+```
 
 
-#### SOCKADDR_IN (sin_)
+
+#### bind()
+
+패킷은 특정 포트를 통해 (IP주소로 식별되는) 특정 기기로 보내진다.
+
+따라서 **서버의 경우** 소켓을 만들고 나면 소켓을 특정 주소와 포트에 묶어야 한다. 포트번호의 경우 1024 밑은 전부 예약되었으므로 그보다 큰 숫자를 고르자.
+
+클라이언트는 bind()할 필요가 없다.
+
+
+
+##### SOCKADDR_IN (sin_)
 
 SOCKADDR_IN은 AF_INET IPv4 용
 
@@ -134,10 +186,33 @@ SOCKADDR_IN6은 <WS2tcpip.h>에 정의되어 있음!
 struct sockaddr_in
 {
     short           sin_family; // AF_INET
-    u_short         sin_port; // Port 번호
+    u_short         sin_port; // Port 번호 (endianness에 주의!)
     struct in_addr  sin_addr; // IPv4 주소
     char            sin_zero[8]; // padding
 };
+```
+
+##### 예시
+
+```cpp
+SOCKADDR_IN local_address{};
+local_address.sin_family = AF_INET;
+local_address.sin_port = htons(9999);
+local_address.sin_addr.s_addr = INADDR_ANY;
+if (bind(Socket, (SOCKADDR*)&local_address, sizeof(local_address)) == SOCKET_ERROR)
+{
+    printf( "Failed - bind(): %d", WSAGetLastError());
+    return;
+}
+```
+
+
+
+#### endianness 관련 함수
+
+```cpp
+htons() // host to network (short)
+ntohs() // network to host (short)
 ```
 
 Inet_ntop() 문자열 -> 숫자 바이트
@@ -178,19 +253,19 @@ Family // AF_INET or AF_INET6
 bool GetHostIP()
 {
     SOCKET Socket{ socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP) };
-    if (Socket == SOCKET_ERROR)
+    if (Socket == INVALID_SOCKET)
     {
-        printf("%s socket(): %d", KFailureHead, WSAGetLastError());
+        printf("Failed - socket(): %d", WSAGetLastError());
         return false;
     }
 
     SOCKADDR_IN loopback{};
     loopback.sin_family = AF_INET;
-    loopback.sin_addr.S_un.S_addr = INADDR_LOOPBACK;
     loopback.sin_port = htons(9);
+    loopback.sin_addr.S_un.S_addr = INADDR_LOOPBACK;
     if (connect(Socket, (sockaddr*)&loopback, sizeof(loopback)))
     {
-        printf("%s connect(): %d", KFailureHead, WSAGetLastError());
+        printf("Failed - connect(): %d", WSAGetLastError());
         return false;
     }
 
@@ -198,7 +273,7 @@ bool GetHostIP()
     int host_length{ (int)sizeof(host) };
     if (getsockname(Socket, (sockaddr*)&host, &host_length))
     {
-        printf("%s getsockname(): %d", KFailureHead, WSAGetLastError());
+        printf("Failed - getsockname(): %d", WSAGetLastError());
         return false;
     }
     else
@@ -209,7 +284,7 @@ bool GetHostIP()
 
     if (closesocket(Socket))
     {
-        printf("%s closesocket(): %d", KFailureHead, WSAGetLastError());
+        printf("Failed - closesocket(): %d", WSAGetLastError());
     }
 
     return true;
@@ -236,17 +311,6 @@ bool GetHostIP()
    printf("Server: Sending IP used: %s\n", inet_ntoa(SenderAddr.sin_addr));
 
    printf("Server: Sending port used: %d\n", htons(SenderAddr.sin_port));
-```
-
-
-
-#### bind()
-
-만들어진 socket을 특정 주소에 묶는다.
-
-```
-SOCKADDR_IN addr;
-bind(socket, (SOCKADDR*)&addr, sizeof(addr));
 ```
 
 
@@ -380,7 +444,4 @@ IPPROTO_UDP
 AI_PASSIVE // 소켓 주소가 bind() 호출에서 사용됨
 ```
 
-
-
-recvfrom, sendto ??
 
