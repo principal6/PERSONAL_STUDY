@@ -241,13 +241,40 @@ Family // AF_INET or AF_INET6
 
 ##### socket() -> bind() -> listen() -> accept() -> closesocket()
 
+
+
 #### UDP/IP
 
 ##### socket() -> bind() -> recvfrom() -> closesocket()
 
 
 
-#### 내 IP 얻어오기
+#### 내 IP 얻어오기 #1
+
+```cpp
+char HostName[256]{};
+if (gethostname(HostName, 255))
+{
+    std::cerr << "Failed - gethostname(): " << WSAGetLastError() << std::endl;
+    return false;
+}
+
+ADDRINFOA AddrInfoHint{};
+AddrInfoHint.ai_family = AF_INET;
+AddrInfoHint.ai_socktype = SOCK_STREAM;
+AddrInfoHint.ai_protocol = IPPROTO_TCP;
+ADDRINFOA* AddrInfo{};
+int Error{ getaddrinfo(HostName, nullptr, &AddrInfoHint, &AddrInfo) };
+if (Error)
+{
+    std::cerr << "Failed - getaddrinfo(): " << Error << std::endl;
+    return false;
+}
+```
+
+
+
+#### 내 IP 얻어오기 #2
 
 ```cpp
 bool GetHostIP()
@@ -317,24 +344,32 @@ bool GetHostIP()
 
 #### listen()
 
-묶인 socket을 통해 듣자!
+묶인 socket을 '듣기' 상태로 둔다.
 
 ```cpp
 int listen(SOCKET s, int backlog);
 // backlog는 총 몇 개의 연결이 동시에 가능한지 정함. 만약 이 숫자를 2로 지정하면 세 명이 동시에 접속 시 앞의 2명만 처리되고 3번째 사람은 연결 거부됨... => SOMAXCONN 가 최댓값!
+// 최대 클라이언트 수가 제한적이라면 backlog도 작게 배당하자.
+// Bluetooth 환경에선 backlog를 작은 숫자(2~4)로 하자 => https://docs.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-listen
 ```
 
 
 
 #### accept()
 
-듣는 중인 socket에 대해, 연결 시도!
+듣는 중인 socket을 통해 클라이언트가 연결 시도를 하면 받아들인다!
 
 ```
 accept(); // 리턴되면 addr에 해당 클라이언트의 IP주소가 저장되고, 리턴값은 연결된 새로운 소켓!! 기존 듣던 소켓은 앞으로도 계속 듣기만 하면 된다!
 WSAAccept();
 AcceptEx();
 ```
+
+
+
+#### shutdown() => Graceful Close
+
+이미 shutdown한 socket은 다시 connect할 수 없다!
 
 
 
@@ -362,6 +397,8 @@ AcceptEx();
 
 ##### recv() / WSARecv()
 
+연결이 gracefully closed된 상태면 recv()는 0을 리턴한다!
+
 
 
 #### UDP
@@ -382,7 +419,7 @@ int recvfromTimeOutUDP(SOCKET socket, long sec, long usec)
     timeout.tv_sec = sec; // 초
     timeout.tv_usec = usec; // 밀리초
 
-    // fs_set
+    // fd_set (file descriptor set)
     fd_set fds;
     FD_ZERO(&fds);
     FD_SET(socket, &fds);
@@ -407,7 +444,7 @@ WSAEnumProtocols() // Datagram 최대 크기
 
 
 
-## getaddrinfo()
+## getaddrinfo() / freeaddrinfo()
 
 
 
@@ -444,4 +481,9 @@ IPPROTO_UDP
 AI_PASSIVE // 소켓 주소가 bind() 호출에서 사용됨
 ```
 
+
+
+## inet_pton()
+
+#include <WS2tcpip.h>
 
