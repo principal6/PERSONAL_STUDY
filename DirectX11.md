@@ -918,6 +918,15 @@ void CreateDeviceAndSwapChain(HWND hWnd) noexcept
 ### 1-2. 셰이더 코드 컴파일 및 생성
 
 ```cpp
+// 아래 플래그들을 설정해야 디버깅이 조금 더 편하다...
+D3DCOMPILE_PREFER_FLOW_CONTROL
+D3DCOMPILE_DEBUG
+D3DCOMPILE_SKIP_OPTIMIZATION
+```
+
+
+
+```cpp
 // 필요한 변수
 ID3D10Blob*			m_VSBaseBuffer{};
 ID3D11VertexShader*	m_VSBase{};

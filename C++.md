@@ -385,6 +385,29 @@ int main()
 
 
 
+## 전처리기
+
+### include
+
+헤더 파일: `.h` / `.hpp` (hpp는 명시적으로 C++의 헤더파일임을 알려줌)
+
+#### forward declaration (전방 선언)
+
+### macro
+
+#### Source-code Annotation Language (SAL)
+
+`<sal.h>`에 정의됨
+
+```cpp
+void foo(_In_ int a, _Inout_ int* b, _Out_ int* c, _Outptr_ int** d, _In_opt_ int e)
+{
+    // ...
+}
+```
+
+
+
 ## 포인터
 
 ### 바이트 크기
@@ -642,6 +665,21 @@ int main()
 
 
 
+### union + struct
+
+```cpp
+union UnionTest
+{
+	struct
+	{
+		float x, y, z, w;
+	};
+	float v[4]{};
+};
+```
+
+
+
 ## class
 
 ### 바이트 크기
@@ -822,6 +860,12 @@ int main()
 	return 0;
 }
 ```
+
+
+
+### 멤버 초기화
+
+in-class 말고 생성자에서 초기화, 소멸자에서 해제하면 좋겠다! (forward declaration이 많을 수록 더더욱..?)
 
 
 
@@ -1108,6 +1152,19 @@ std::tuple<float&, float&> foo(float& a, float& b)
 ## 메모리 누수
 
 ### CRT DEBUG ###
+
+```cpp
+#include <crtdbg.h>
+
+int main()
+{
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    return 0;
+}
+```
+
+
+
 ```cpp
 // 메인 cpp 꼭대기에서
 #ifdef _DEBUG
@@ -1320,3 +1377,7 @@ x.load(std::memory_order_acquire); // 이 instruction 다음에 실행되는 '�
 x.store(3, std::memory_order_seq_cst); // default, and the strongest barrier
 ```
 
+# SIMD (Single Instruction Multiple Data)
+_ss = Scalar Single precision floating point
+_ps = Packed Single-Precision Floating Point
+SSE => __m128

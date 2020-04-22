@@ -80,13 +80,33 @@ void display(HANDLE hConsoleOutput)
 
 
 
-### critical section, race condition
+### Most common issues
+
+#### critical section
 
 다수의 스레드가 접근하는 공유된 메모리(여기선 전역변수)를 임계 구역(critical section)이라고 한다.
 
+
+
+#### race condition
+
 다수의 스레드가 공유된 메모리에 접근하여 문제가 발생하는 경우를 경쟁 상태(race condition)이라고 한다.
 
-공유된 메모리에서 read만 할 경우 전혀 문제가 되지 않지만, write를 할 경우 문제가 발생할 수 있다!!
+공유된 메모리에서 read만 할 경우 전혀 문제가 되지 않지만, 단 한 번이라도 write를 할 경우 문제가 발생할 수 있다!!
+
+##### Data race
+
+Data race == 한 스레드가 특정 메모리 위치에 write하는 동안 다른 스레드가 동일한 메모리 위치에 접근하는 경우!
+
+##### API race
+
+동시에 일어나면 안 되는 일이 일어남..?
+
+예) A.foo()와 A.bar() 는?
+
+A.foo(C)와 B.bar(C) 는?
+
+
 
 
 
@@ -130,9 +150,35 @@ void subtract()
 
 
 
+#### deadlock
+
+두 쓰레드가 서로가 점유하고 있는 자원을 획득하길 기다리면 둘 다 계속 실패할 수 밖에 없다. 즉, 무한히 대기 상태에 빠지게 된다!
+
+
+
+## thread synchronization 쓰레드 동기화
+
+### 서론
+
+동기화를 안 할 수있다면 안 하는 방법을 고려하자!!
+
+지역변수만 잘 써도 해결되는 경우도 있다!
+
+보통 하드웨어 자체에 atomic 연산이 있다
+
+
+
+### cache coherency 캐시 일관성
+
+코어가 여러개면 서로 다른 L1, L2 캐시를 가지므로 같은 변수에 대해 다른 값을 보고있을 수 있다!!!
+
+
+
 ### mutex
 
 상호 배제(**mut**ual **ex**clusion)
+
+서로 배제할 쓰레드들은 동일한 mutex를 공유해야 한다!!
 
 
 
@@ -182,6 +228,10 @@ void subtract()
 
 
 
+### lock
+
+생성자에서 할당할 것??
+
 #### std::lock_guard
 
 ```cpp
@@ -197,6 +247,12 @@ std::lock_guard<std::mutex>
 atomic으로 선언된 변수의 연산은 실제 1번만에 이루어지는 것으로 여길 수 있다!
 
 여기서 연산은 atomic read와 atomic write를 말함!
+
+
+
+#### lock-free
+
+즉, atomic 변수와 atomic 연산을 이용하면 lock 없이 race condition을 방지할 수 있다!
 
 
 
@@ -252,7 +308,27 @@ void subtract()
 
 
 
-## thread local
+### condition_variable
+
+windows에서는 Event라는 이름으로 존재?
+
+mutex랑 같이 쓴다. (atomic이 있더라도!)
+
+wait(), wait_for(), wait_until()
+
+notify_one(), notify_all() 는 mutex lock의 바깥에서 하자
+
+
+
+=> 스레드 두 개 번갈아가며 홀수/짝수 출력하기 동기화!!
+
+
+
+### semaphore
+
+
+
+## thread_local
 
 예전엔
 
@@ -270,56 +346,24 @@ thread_local int g_i = 11;
 
 처럼 사용한다.
 
-thread가 생성될 때마다 생성될 변수!
+모든 thread에 공통으로 생성될 지역변수!
 
 
 
-## 스레드 동기화, condition_variable
+## thread pool (thread + template)
 
-windows에서는 Event라는 이름으로 존재?
+여러 개의 쓰레드...
 
-mutex랑 같이 쓴다. (atomic이 있더라도!)
+condition_variable 생성자에서 쓰레드 시작시켜놓고 일이 생길 때까지 wait() => 일이 끝나도 다시 wait()
 
-wait(), wait_for(), wait_until()
+소멸자에서 모든 쓰레드 join()
 
-notify_one(), notify_all() 는 mutex lock의 바깥에서 하자
+임의의 함수를 받는 법? 가변인자 템플릿!! <typename F, typename... Args> 식으로
 
+리턴값은 future를 통해!
 
+```
+template<class F, class... Args>
+future<typename result_of<F(Args...)> addJob(F f, Args... args)
+```
 
-=> 스레드 두 개 번갈아가며 홀수/짝수 출력하기 동기화!!
-
-
-
-## lock-free
-
-lock()을 하지 않고 멀티 스레딩 하기!
-
-
-
-## deadlock
-
-
-
-## Data race
-
-Data race == 한 스레드가 특정 메모리 위치에 write하는 동안 다른 스레드가 동일한 메모리 위치에 접근하는 경우!
-
-
-
-## API race
-
-동시에 일어나면 안 되는 일이 일어남..?
-
-예) A.foo()와 A.bar() 는?
-
-A.foo(C)와 B.bar(C) 는?
-
-
-
-## semaphore ??
-
-
-
-
-
-## mutable이면..?

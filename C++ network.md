@@ -44,6 +44,26 @@ IPv6는 128-bit (= 16 바이트) 주소 공간을 사용한다. 즉 이론적으
 
 
 
+### IP 주소
+
+000.000.000.??? == 호스트 부분
+ 호스트 부분의 경우 모든 비트가 0이거나 모든 비트가 1이면 유효하지 않은 주소다!
+ (0이면 서브넷 마스크랑 같고)
+ (255는 브로드캐스트에 사용된다) 참고: 브로드캐스트 주소에 데이터를 보내면 호스트 부분이 1-254에 해당하는 모든 주소에 데이터가 간다!!!
+
+예) 192.168.1.0 == 네트워크 주소 (network number)
+    192.168.1.1 == 기본 게이트웨이 (보통은 라우터의 주소!!)
+
+#### 클래스
+
+0b00000001 =      1 클래스 A
+0b10000000 = 128 클래스 B
+0b11000000 = 192 클래스 C
+0b11100000 = 224 클래스 D
+0b11110000 = 240 클래스 E
+
+
+
 ## 클라이언트 신뢰
 
 서버가 모든 걸 통제하는 편이 낫다... 그래야 cheating 예방이 쉽다.
@@ -166,11 +186,11 @@ if (Socket == INVALID_SOCKET)
 
 #### bind()
 
-패킷은 특정 포트를 통해 (IP주소로 식별되는) 특정 기기로 보내진다.
+패킷은 특정 **포트**를 통해 (IP주소로 식별되는) 특정 기기로 보내진다.
 
-따라서 **서버의 경우** 소켓을 만들고 나면 소켓을 특정 주소와 포트에 묶어야 한다. 포트번호의 경우 1024 밑은 전부 예약되었으므로 그보다 큰 숫자를 고르자.
+따라서 **서버의 경우** 소켓을 만들고 나면 소켓을 특정 주소와 **포트**에 묶어야 한다. 포트번호의 경우 1024 밑은 전부 예약되었으므로 그보다 큰 숫자를 고르자.
 
-클라이언트는 bind()할 필요가 없다.
+클라이언트는 bind()할 필요가 없다. (물론 필요할 때도 있다.. broadcast처럼)
 
 
 
@@ -198,7 +218,7 @@ struct sockaddr_in
 SOCKADDR_IN local_address{};
 local_address.sin_family = AF_INET;
 local_address.sin_port = htons(9999);
-local_address.sin_addr.s_addr = INADDR_ANY;
+local_address.sin_addr.S_un.S_addr = INADDR_ANY; // INADDR_ANY를 하면 어떤 IP주소든 연결 가능!
 if (bind(Socket, (SOCKADDR*)&local_address, sizeof(local_address)) == SOCKET_ERROR)
 {
     printf( "Failed - bind(): %d", WSAGetLastError());
@@ -253,18 +273,16 @@ Family // AF_INET or AF_INET6
 
 ```cpp
 char HostName[256]{};
-if (gethostname(HostName, 255))
+if (gethostname(HostName, 256) == SOCKET_ERROR)
 {
     std::cerr << "Failed - gethostname(): " << WSAGetLastError() << std::endl;
     return false;
 }
 
-ADDRINFOA AddrInfoHint{};
-AddrInfoHint.ai_family = AF_INET;
-AddrInfoHint.ai_socktype = SOCK_STREAM;
-AddrInfoHint.ai_protocol = IPPROTO_TCP;
+ADDRINFOA Hint{};
+Hint.ai_family = PF_INET;
 ADDRINFOA* AddrInfo{};
-int Error{ getaddrinfo(HostName, nullptr, &AddrInfoHint, &AddrInfo) };
+int Error{ getaddrinfo(HostName, nullptr, &Hint, &AddrInfo) };
 if (Error)
 {
     std::cerr << "Failed - getaddrinfo(): " << Error << std::endl;
@@ -316,28 +334,6 @@ bool GetHostIP()
 
     return true;
 }
-```
-
-
-
-```
-// Some info on the receiver side...
-
-   getsockname(ReceivingSocket, (SOCKADDR *)&ReceiverAddr, (int *)sizeof(ReceiverAddr));
-
- 
-
-   printf("Server: Receiving IP(s) used: %s\n", inet_ntoa(ReceiverAddr.sin_addr));
-
-   printf("Server: Receiving port used: %d\n", htons(ReceiverAddr.sin_port));
-   
-   // Some info on the sender side
-
-   getpeername(ReceivingSocket, (SOCKADDR *)&SenderAddr, &SenderAddrSize);
-
-   printf("Server: Sending IP used: %s\n", inet_ntoa(SenderAddr.sin_addr));
-
-   printf("Server: Sending port used: %d\n", htons(SenderAddr.sin_port));
 ```
 
 
@@ -434,6 +430,62 @@ int recvfromTimeOutUDP(SOCKET socket, long sec, long usec)
 
 
 
+#### Multicast (UDP)
+
+https://docs.microsoft.com/ko-kr/windows/win32/winsock/socket-options
+
+http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml
+
+https://tack.ch/multicast/
+
+multicast용 IP 주소는 클래스 D!
+
+TTL (Time To Live): 데이터가 총 몇 개의 라우터까지 거쳐갈 수 있는지! 설정 안 하면 기본값이 1??
+
+
+
+##### setsockopt
+
+```cpp
+IPPROTO_IP
+IP_ADD_MEMBERSHIP
+IP_ADD_SOURCE_MEMBERSHIP // 소스 IP가 지정된 멀티캐스트 가입
+IP_DROP_MEMBERSHIP
+IP_DROP_SOURCE_MEMBERSHIP // 소스 IP가 지정된 멀티캐스트 해제
+IP_MULTICAST_IF // 인터페이스 지정
+```
+
+
+
+##### sender
+
+sender는 그대로 unicast다..?
+
+multicast용 주소(sockaddr_in)에 보내기(sendto)만 하면 됨??
+
+```cpp
+// Set multicast packet TTL to 3; default TTL is 1
+unsigned char TTL{ 3 };
+setsockopt(sock, IPPROTO_IP, IP_MULTICAST_TTL, &TTL, sizeof(TTL));
+```
+
+
+
+##### receiver
+
+ip_mreq / ip_mreq_source
+
+```cpp
+bind(hRecvSock, (SOCKADDR*)&addr, sizeof(addr));
+
+ip_mreq JoinAddr{};
+JoinAddr.imr_multiaddr.s_addr = inet_addr("226.0.0.1"); // multicast group (주소)
+JoinAddr.imr_interface.s_addr = htonl(INADDR_ANY);
+setsockopt(hRecvSock, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&JoinAddr, sizeof(JoinAddr));
+```
+
+
+
 ## Maximum Transmission Unit (MTU)
 
 Datagram은 IPv4에서 최대 576 octets 까지, IPv6에서 최대 1280 octets 까지 전송 가능 ?
@@ -483,7 +535,7 @@ AI_PASSIVE // 소켓 주소가 bind() 호출에서 사용됨
 
 
 
-## inet_pton()
+## inet_pton(), inet_ntop()
 
 #include <WS2tcpip.h>
 

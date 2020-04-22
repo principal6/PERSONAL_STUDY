@@ -12,10 +12,23 @@
 
 ### 2-1. Namespace
 
+Don't need to prefix all the things, thanks to namespace!
+
 ```cpp
-namespace JWEngine
+namespace JW
 {
-	// ~~
+	class ClassA
+    {
+        //...
+    };
+};
+
+namespace JW
+{
+	class ClassB
+    {
+        //...
+    };
 };
 ```
 
@@ -25,48 +38,52 @@ namespace JWEngine
 
 Method names are verbs that describe the method's effect, or describe the return value of a method that has no effect.
 
-Use **camel case** (or **lower case with underscore)** for function names.
+Use `camelCase` (over `PascalCase` or `snake_case`) for function names.
+
+Even for abbreviations, use camelCase e.g.) `getIpAddress()`
+
+declaration / definition
+
+
 
 [Verb]
 
-- `Clear()`
-- `Create()` 
-- `Update()`
-- `Draw()`
-- `Destroy()`
-- `Get()`
+- `clear()`
+- `create()` 
+- `update()`
+- `draw()`
+- `destroy()`
+- `get()`
 
 [Verb + noun]
 
-- `CalculateDistance(const Vector& v1, const Vector& v2)`
-- `ClearAll()`
-- `CreateBuffer()`
-- `SetName(const char* Name)`
-- `GetName()`
-- `Get*Ptr()` / `Get*Ref()` ★★
+- `calculateDistance(const Vector& v1, const Vector& v2)`
+- `clearAll()`
+- `createBuffer()`
+- `setName(const char* Name)`
+- `getName()`
+- `get*Ptr()` / `get*Ref()`
 
-**On-** `OnMouseDown()` `OnKeyUp()`
+**On-** `onMouseDown()`  `onKeyUp()`
 
 
 
 All functions that return a **bool** should ask a true/false question, such as
 
-**Is-**  `IsDone()` `IsVisible()`
+**Is-**  `isDone()` `isVisible()`
 
-**Has-** `HasFocus()` `HasSelection()` 
+**Has-** `hasFocus()` `hasSelection()` 
 
-**Does-** `DoesFileExist()`
+**VERB-** `existFile()`
 
-**Should-** `ShouldClearBuffer()`
-
-**Will-** `WillUseMultiline(bool Value)`
+**Should-** `shouldClearBuffer()`
 
 ```cpp
 // what does true mean?
-bool CheckTea(FTea Tea);
+bool checkTea(FTea Tea);
 
 // name makes it clear true means tea is fresh
-bool IsTeaFresh(FTea Tea);
+bool isTeaFresh(FTea Tea);
 ```
 
 
@@ -75,10 +92,14 @@ bool IsTeaFresh(FTea Tea);
 
 All variables should be declared one at a time, so that a comment on the meaning of the variable can be provided.
 
-Avoid using prepositions `int NumberOfUsers` => `int UserCount`
+Use `camelCase` for variable names.
+
+Use `PascalCase` for class/struct/union/enum names
+
+Avoid using prepositions `int numberOfUsers` => `int userCount`
 
 - bool variable names -> `b-`
-- Enum class -> `E-`
+- Enum class def -> `E-` / decl -> `e-`
 
 ```cpp
 // enum class's default size = int (4 bytes)
@@ -160,15 +181,29 @@ int main()
 - Interface -> `I-`
 
 ```cpp
-float TeaWeight;
-int32 TeaCount;
+float teaWeight;
+int32 teaCount;
 bool bDoesTeaStink;
-FName TeaName;
-FString TeaFriendlyName;
-UClass* TeaClass;
-USoundCue* TeaSound;
-UTexture* TeaTexture;
+FName teaName;
+FString teaFriendlyName;
+UClass* teaClass;
+USoundCue* teaSound;
+UTexture* teaTexture;
 ```
+
+
+
+#### member variable (_prefix)
+
+```cpp
+class ClassA
+{
+    // ...
+    int32 _someNumber;
+};
+```
+
+
 
 ### 2-4. Macro
 
@@ -259,4 +294,7 @@ Avoid calling the same function in a loop. Get it out of the loop.
 
 ## 5. File name
 
-Avoid using prefix in file names?
+Avoid using prefix in file names!
+
+Use only `/` for path (not `\\`)
+
