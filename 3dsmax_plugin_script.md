@@ -116,5 +116,355 @@ UtilityObj::SelectionSetChanged()
 UtilityObj::DeleteThis()
 UtilityObj::SetStartupParam()
 
-## script tutorial
+## Max Script
+### tutorial
 https://www.youtube.com/watch?v=H030WBIfzF8
+
+### SDK Documentation
+http://help.autodesk.com/view/3DSMAX/2018/ENU/?guid=__files_GUID_F039181A_C072_4469_A329_AE60FF7535E7_htm
+http://help.autodesk.com/view/3DSMAX/2018/ENU/?guid=__files_GUID_46ECBAD7_35E9_43BD_8A8C_849772924805_htm
+http://help.autodesk.com/view/3DSMAX/2018/ENU/?guid=__files_GUID_B83B4297_B521_4553_A22D_B812AFA766C4_htm
+
+### script
+#### 예제
+```ms
+fileIn "FSEngineMain.ms"
+
+global mainFloater
+macroscript FSEngine
+	category:"FSEngine" --Customize-Toolbars-Category 항목
+	tooltip:"FSEngine Toolbar" --Cutomize 내 Item 이름이자, 마우스 올리면 나오는 설명
+	buttontext:"FSEngine" --툴바 내 버튼 이름
+(
+	closeRolloutFloater mainFloater
+	mainFloater = newRolloutFloater "Main" 300 200
+
+	addRollout fsMainRollout mainFloater
+)
+```
+#### loop
+```ms
+for i = 1 to myCount do
+(
+
+)
+```
+
+#### items
+##### 속성
+```ms
+button btnA "A" width:120 pos:[8, 24] enabled:false border:false visible:true
+button btnB "B" width:120 align:#left
+button btnC "C" width:120 align:#center -- 기본이 중앙
+button btnC "C" width:120 offset:[4, 0]
+```
+
+##### 종류
+```ms
+angle theAngle "Angle" width:80 across:2 degrees:45 align:#left
+slider theSlider "Slider:" orient:#vertical
+spinner theSpinner "Spinner:"
+group "Group" (
+button theButton "Button" across:2 width:80 align:#left
+checkbutton theCheckbutton "Checkbutton" width:80 align:#right
+mapbutton theMapButton "Map Button" width:80 across:2 align:#left
+materialbutton theMatButton "Material Button" width:80 align:#right
+pickbutton thePickbutton "Pickbutton:" width:80)
+checkbox theCheckbox "Checkbox" across:2 offset:[0,2]
+colorpicker theColorpicker "Colorpicker:"
+listbox theListbox "Listbox:" items:#("Item 1","Item 2")\
+height:3 width:80 across:2
+multilistbox theMLBox "Multilistbox:" items:#("Item 1","Item 2")\
+height:3 width:80
+dropdownlist theDDL "DropDownList:" items:#("Item 1","Item 2")\
+width:80 across:2
+combobox theCombobox "Combobox:" items:#("Item 1","Item 2")\
+height:3 width:80
+edittext theEdittext "Edittext:"
+hyperlink theHyperlink "Hyperlink" url:"http://www.autodesk.com"\
+color:red across:2 offset:[10,20]
+label theLabel "Label" offset:[0,20]
+groupBox theGroupbox "Groupbox:" height:40 offset:[0,-40] width:174
+progressbar theProgressbar "Progressbar:" value:50
+radiobuttons theRadiobuttons labels:#("Option 1","Option 2")
+bitmap theBitmap "Bitmap" width:80 height:50 offset:[0,0]\
+bitmap:(bitmap 80 50 color:red) align:#left across:2
+imgTag theImgTag "Bitmap" width:80 height:50 offset:[0,0]\
+bitmap:(bitmap 80 50 color:green) align:#right
+SubRollout theSubrollout "Subrollout" height:50
+curvecontrol theCurvecontrol "Curvecontrol:" height:150
+```
+
+#### Utility에 rollout 만들기
+```ms
+utility name "title"
+(
+
+)
+```
+```ms
+group "이름"
+(
+
+)
+```
+
+```ms
+addRollout [롤아웃] [대상]
+removeRollout [롤아웃]
+
+myFloater = newRolloutFloater "Title" myWidth myHeight
+closeRolloutFloater myFloater
+
+slider orient:#vertical across:5
+spinner -- 범위 정해진 숫자..
+```
+
+### 메소드
+```
+-- open, close, pressed, changed
+on fsMainRollout open do
+(
+
+)
+```
+
+### 지오메트리 메소드
+https://help.autodesk.com/view/3DSMAX/2018/ENU/?guid=__files_GUID_D1D7EB56_A370_4B07_99B4_BC779FB87CAF_htm#WS3ED54CBA79FF2E3DDCBAB2212B7835B3AF-7E0A
+
+```ms
+numPoints
+```
+
+### 파일
+```ms
+fileIn "파일명" -- 현재 경로(기본 scriptsPath)에서 파일을 불러들인다
+scriptsPath
+maxFileName
+maxFilePath
+sysInfo.windowsdir
+sysInfo.systemdir
+sysInfo.tempdir
+sysInfo.currentdir
+doesFileExist
+getINISetting <filename_string> <section_string> <key_string>
+setINISetting <filename_string> <section_string> <key_string> <key_value_string> [ forceUTF16:<boolean> ]
+delIniSetting <filename_string> <section_string> <key_string>   
+getFiles <wild_card_filename_string>
+getDirectories <wild_card_directory_name_string>
+makeDir <directory_path_string> all:<boolean> 
+hiddenDOSCommand() -- 디렉토리 지우려면...
+deleteFile <filename_string> 
+renameFile <old_filename_string> <new_filename_string> 
+copyFile <existing_filename_string> <target_filename_string> 
+getFileSize <filename_string> 
+getFileAttribute <filename_string> <attribute> 
+setFileAttribute <filename_string> <attribute> <boolean> 
+getFileSecurityInfo <file_name> <attribute> testFileAttribute: <bool> 
+isDirectoryWriteable <dir_name> 
+createFile <filename_string> [encoding:]
+openFile <filename_string> [mode:] [encoding:]
+ -- openFile selectedFileName mode:#wt (write, text)
+ -- openFile selectedFileName mode:#wb (write, binary)
+ -- openFile selectedFileName mode:#r+ (read + write)
+readLine <filestream>
+readChar <filestream>
+readChars <filestream> <char_count>
+readDelimitedString <filestream> <string>
+filePos <filestream>
+seek <filestream> <integer>
+eof <filestream>
+close <filestream> --★중요
+free <filestream>
+print <value> to:<filestream>
+format <fmt_string> { <value> } to:<filestream>
+```
+
+#### 바이너리
+```ms
+<BinStream>fopen <String fileName> <String mode>
+<Boolean>fclose <BinStream>
+<Boolean>fseek <BinStream> <Integer> <#seek_set | #seek_cur | #seek_end>
+<Integer>ftell <BinStream>
+<Boolean>writeByte <BinStream> <Integer> [#signed | #unsigned]
+<Boolean>writeShort <BinStream> <Integer> [#signed | #unsigned]
+<Boolean>writeLong <BinStream> <Integer> [#signed | #unsigned]
+<Boolean>writeFloat <BinStream> <Float>
+<Integer>readByte <BinStream> [#signed | #unsigned]
+```
+
+### material
+material => textureMap => vertexColor
+
+
+
+### 기타 시스템 변수/함수
+```ms
+sysInfo.username
+sysInfo.computername
+sysInfo.cpucount
+sysInfo.desktopSize
+sysinfo.getSystemMemoryInfo()
+rootNode -- children 참조
+rootScene 
+sliderTime
+```
+
+### dotNetObject
+```ms
+openFileDialog = dotNetObject "System.Windows.Forms.OpenFileDialog" -- SaveFileDialog도 있음!
+openFileDialog.Title = "내보내기"
+openFileDialog.Filter = "txt files (*.txt)|*.txt|Script Files (*.ms)|*.ms|ini files (*.ini)|*.ini|XML files (*.xml)|*.xml|All files (*.*)|*.*"
+ofdResult = openFileDialog.ShowDialog()
+dlgResult = dotNetClass "System.Windows.Forms.DialogResult"
+if (ofdResult == dlgResult.OK) do
+(
+    selectedFileName = openFileDialog.Filename
+)
+```
+
+### modifier
+addModifier
+getSelectionLevel <maxobject> 
+setSelectionLevel <maxobject> {#object | #vertex | #edge | #face} 
+
+### mesh ★★
+http://help.autodesk.com/view/3DSMAX/2018/ENU/?guid=__files_GUID_0532C071_4401_4846_8450_3DA5510A3883_htm#GUID-E6E4714A-35EF-4F00-8A13-0F4AEE33D0DD
+
+```ms
+<mesh>.material
+<mesh>.numFaces
+<mesh>.faces
+<mesh>.numVerts
+<mesh>.vertices
+<mesh>.edges
+tVertCount = (getNumTVerts <mesh>)
+
+getVert <mesh> <vert_index_integer> -- position만 얻어옴
+getNormal <mesh> <vert_index_integer>
+getTVert <mesh> <tvert_index_integer>
+meshop.getVertsByColor <Mesh mesh> <color color> <float red_thresh> <float green_thresh> <float blue_thresh> channel:<int=0>
+meshop.getVertsByColor <Mesh mesh> <point3 uvw> <Float u_thresh> <Float v_thresh> <Float w_thresh> channel: <int=0>
+meshop.getVertWeight <Mesh mesh> <int vertIndex>
+meshop.getVAlpha <Mesh mesh> <int vertIndex>
+```
+
+#### CPV verts
+```ms
+cpvVertCount = (getNumCPVVerts target)
+format "cpvVert 개수: %\n" cpvVertCount
+if cpvVertCount > 0 do
+(				
+    for i = 1 to cpvVertCount do
+    (					
+        vertexColor = (getVertColor target i)
+        print vertexColor as string
+    )
+)
+```
+
+#### 예시
+
+```ms
+vertexPosition = vertex.position
+format "\t\t<position x=\"%\" y=\"%\" z=\"%\"/>\n" \
+    vertexPosition.x vertexPosition.y vertexPosition.z \
+    to:savedFile
+				
+```
+
+### poly (Editable_Poly)
+```ms
+<poly>.Retriangulate
+<poly>.GetNumFaces
+<poly>.GetFaceDegree <faceID>
+<poly>.GetNumVertices
+<poly>.GetVertex
+<poly>.GetVertexColor #VertexColor|#Illumination|#Alpha
+<poly>.GetVertexFaceCount <vertexID>
+<poly>.GetVertexFace <vertexID> <faceID> 
+```
+
+```ms
+polyop.getNumVerts <Poly poly>
+polyop.getNumEdges <Poly poly>
+polyop.getNumFaces <Poly poly>
+polyop.getFaceVerts <Poly poly> <int face>
+polyop.getFaceEdges <Poly poly> <int face>
+polyop.getFaceDeg <Poly poly> <int face> -- face의 degree (vertex의 수)
+polyop.getFaceNormal
+polyop.getFacesUsingVert
+polyop.retriangulate <Poly poly> <facelist>
+```
+
+#### vertex color
+```ms
+select target.vertices[i]
+a = (selection[1].GetVertexColor #illumination)
+```
+
+#### 예제
+```ms
+target = selection[1]
+vertexCount = target.GetNumVertices() as integer
+
+format "Vertex 개수: % 개\n" vertexCount
+format "<vertices count=\"%\">\n" vertexCount to:savedFile
+
+targetMaterial = target.material
+print targetMaterial as string
+
+for i = 1 to vertexCount do
+(
+    vertex = (target.GetVertex i)
+    
+    --#TAG <vertex>
+    format "\t<vertex id=\"%\">\n" (i - 1) to:savedFile
+
+    target.setSelection #Vertex #{i}
+    vertexColor_ = (target.GetVertexColor #VertexColor)
+    vertexIllum = (target.GetVertexColor #Illumination)
+
+    -- position
+    format "\t\t<position x=\"%\" y=\"%\" z=\"%\"/>\n" \
+        vertex.x vertex.y vertex.z \
+        to:savedFile
+
+    -- color
+    format "\t\t<color r=\"%\" g=\"%\" b=\"%\"/>\n" \
+        vertexColor_.r vertexColor_.g vertexColor_.b \
+        to:savedFile
+    
+    -- illum
+    format "\t\t<illum r=\"%\" g=\"%\" b=\"%\"/>\n" \
+        vertexIllum.r vertexIllum.g vertexIllum.b \
+        to:savedFile
+    
+    --#TAG </vertex>
+    format "\t</vertex>\n" to:savedFile
+)
+format "</vertices>\n" to:savedFile
+```
+
+### 유용한 함수
+```ms
+print
+format
+messagebox
+queryBox
+yesNoCancelBox
+classOf <노드> <클래스> -- Box, BoneGeometry, Biped_Object, Dummy, Directionallight
+superClassOf <노드> <클래스> -- 보통 GeometryClass가 많다, helper, light
+superclassOf selection[1]
+canConvertTo <노드> <클래스>
+convertTo <노드> <클래스>
+```
+|    | class | superClass |
+| -- | -- | -- |
+| Box | Box | GeometryClass |
+| Bone | BoneGeometry | GeometryClass |
+| Biped | Biped_Object | GeometryClass |
+| Dummy (of Ring Array) | Dummy | helper |
+| Sunlight == Free Directional Light | Directionallight | light |
+| Physical Camera | Physical | camera |
+| Target (of camera) | Target Object | GeometryClass |

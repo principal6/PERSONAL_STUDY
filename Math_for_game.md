@@ -162,7 +162,6 @@ $$
   \therefore sin^2\theta+cos^2\theta=1
   $$
   
-
 * 내적 증명
 
 ![](Asset\vector_dot.png)
@@ -1490,4 +1489,4 @@ $I$와 $C$사이의 거리가 1 이하이면 충돌이다 ??
 
 $I$를 찾기 위해서는 먼저 타원체의 공간에서 반직선과의 교차점을 찾아 월드 공간으로 변환한다
 
-![](Asset\sphere_ellipsoid_collision.png)
+![](Asset\sphere_ellipsoid_collision.png)   
