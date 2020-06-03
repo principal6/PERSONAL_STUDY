@@ -116,17 +116,16 @@ UtilityObj::SelectionSetChanged()
 UtilityObj::DeleteThis()
 UtilityObj::SetStartupParam()
 
-## Max Script
-### tutorial
+# Max Script
+## tutorial
 https://www.youtube.com/watch?v=H030WBIfzF8
 
-### SDK Documentation
+## SDK Documentation
 http://help.autodesk.com/view/3DSMAX/2018/ENU/?guid=__files_GUID_F039181A_C072_4469_A329_AE60FF7535E7_htm
 http://help.autodesk.com/view/3DSMAX/2018/ENU/?guid=__files_GUID_46ECBAD7_35E9_43BD_8A8C_849772924805_htm
 http://help.autodesk.com/view/3DSMAX/2018/ENU/?guid=__files_GUID_B83B4297_B521_4553_A22D_B812AFA766C4_htm
 
-### script
-#### 예제
+## 예제
 ```ms
 fileIn "FSEngineMain.ms"
 
@@ -136,13 +135,59 @@ macroscript FSEngine
 	tooltip:"FSEngine Toolbar" --Cutomize 내 Item 이름이자, 마우스 올리면 나오는 설명
 	buttontext:"FSEngine" --툴바 내 버튼 이름
 (
-	closeRolloutFloater mainFloater
+	try (closeRolloutFloater mainFloater) catch()
+
 	mainFloater = newRolloutFloater "Main" 300 200
 
 	addRollout fsMainRollout mainFloater
 )
 ```
-#### loop
+
+
+## 자료형
+### 형변환
+as integer
+as string
+as eulerAngles
+
+### string
+local str = "가" + (123 as string) + "나"
+str.count
+
+### 배열
+local arr = #()
+append <array> <value>
+appendIfUnique <array> <value>
+free arr -- @IMP
+
+### struct
+```ms
+struct VertexData
+(
+	_position	= point3 0 0 0,
+	_normal     = point3 0 0 0,
+	_color		= point3 0 0 0,
+	_uv			= point2 0 0
+)
+
+local var = VertexData() -- 인스턴스 선언 방법
+```
+
+### point3
+<point3>.x: Float -- the x coordinate
+<point3>.y: Float -- the y coordinate
+<point3>.z: Float -- the z coordinate
+<point3> == <point3>
+<point3> != <point3>
+<point3> + <point3_or_number>
+<point3> - <point3_or_number>
+<point3> * <point3_or_number>
+<point3> / <point3_or_number>
+local vertex_normal = Point3 0 0 0
+
+length <point3>
+
+## loop
 ```ms
 for i = 1 to myCount do
 (
@@ -150,8 +195,8 @@ for i = 1 to myCount do
 )
 ```
 
-#### items
-##### 속성
+## items
+### 속성
 ```ms
 button btnA "A" width:120 pos:[8, 24] enabled:false border:false visible:true
 button btnB "B" width:120 align:#left
@@ -159,7 +204,7 @@ button btnC "C" width:120 align:#center -- 기본이 중앙
 button btnC "C" width:120 offset:[4, 0]
 ```
 
-##### 종류
+### 종류
 ```ms
 angle theAngle "Angle" width:80 across:2 degrees:45 align:#left
 slider theSlider "Slider:" orient:#vertical
@@ -170,7 +215,7 @@ checkbutton theCheckbutton "Checkbutton" width:80 align:#right
 mapbutton theMapButton "Map Button" width:80 across:2 align:#left
 materialbutton theMatButton "Material Button" width:80 align:#right
 pickbutton thePickbutton "Pickbutton:" width:80)
-checkbox theCheckbox "Checkbox" across:2 offset:[0,2]
+checkbox theCheckbox "Checkbox" [checked:false] across:2 offset:[0,2]
 colorpicker theColorpicker "Colorpicker:"
 listbox theListbox "Listbox:" items:#("Item 1","Item 2")\
 height:3 width:80 across:2
@@ -195,7 +240,7 @@ SubRollout theSubrollout "Subrollout" height:50
 curvecontrol theCurvecontrol "Curvecontrol:" height:150
 ```
 
-#### Utility에 rollout 만들기
+### Utility에 rollout 만들기
 ```ms
 utility name "title"
 (
@@ -220,7 +265,7 @@ slider orient:#vertical across:5
 spinner -- 범위 정해진 숫자..
 ```
 
-### 메소드
+## 메소드
 ```
 -- open, close, pressed, changed
 on fsMainRollout open do
@@ -236,7 +281,7 @@ https://help.autodesk.com/view/3DSMAX/2018/ENU/?guid=__files_GUID_D1D7EB56_A370_
 numPoints
 ```
 
-### 파일
+## 파일 다루기
 ```ms
 fileIn "파일명" -- 현재 경로(기본 scriptsPath)에서 파일을 불러들인다
 scriptsPath
@@ -280,25 +325,24 @@ print <value> to:<filestream>
 format <fmt_string> { <value> } to:<filestream>
 ```
 
-#### 바이너리
+### 바이너리 파일
 ```ms
 <BinStream>fopen <String fileName> <String mode>
 <Boolean>fclose <BinStream>
 <Boolean>fseek <BinStream> <Integer> <#seek_set | #seek_cur | #seek_end>
 <Integer>ftell <BinStream>
-<Boolean>writeByte <BinStream> <Integer> [#signed | #unsigned]
-<Boolean>writeShort <BinStream> <Integer> [#signed | #unsigned]
-<Boolean>writeLong <BinStream> <Integer> [#signed | #unsigned]
-<Boolean>writeFloat <BinStream> <Float>
+writeByte <BinStream> <Integer> [#signed | #unsigned]
+writeShort <BinStream> <Integer> [#signed | #unsigned]
+writeLong <BinStream> <Integer> [#signed | #unsigned]
+writeFloat <BinStream> <Float>
+writeString 
 <Integer>readByte <BinStream> [#signed | #unsigned]
 ```
 
-### material
+## material
 material => textureMap => vertexColor
 
-
-
-### 기타 시스템 변수/함수
+## 기타 시스템 변수/함수
 ```ms
 sysInfo.username
 sysInfo.computername
@@ -307,10 +351,11 @@ sysInfo.desktopSize
 sysinfo.getSystemMemoryInfo()
 rootNode -- children 참조
 rootScene 
-sliderTime
+sliderTime --@IMP 각 프레임!! (set, get 가능!)
+getDir #temp
 ```
 
-### dotNetObject
+## dotNetObject
 ```ms
 openFileDialog = dotNetObject "System.Windows.Forms.OpenFileDialog" -- SaveFileDialog도 있음!
 openFileDialog.Title = "내보내기"
@@ -323,23 +368,50 @@ if (ofdResult == dlgResult.OK) do
 )
 ```
 
-### modifier
-addModifier
+## modifier
+local mod_edit_mesh = Edit_Mesh()
+addModifier selected_object mod_edit_mesh
+deleteModifier selected_object mod_edit_mesh
+
 getSelectionLevel <maxobject> 
 setSelectionLevel <maxobject> {#object | #vertex | #edge | #face} 
 
-### mesh ★★
+modPanel
+
+## skinops
+
+## geometry, node
+for node in geometry do ...
+
+### node  @IMP
+<node>.name
+<node>.material
+<node>.parent
+<node>.children
+<node>.mesh
+<node>.wireColor
+<node>.isHidden
+<node>.isFrozen
+<node>.visibility
+<node>.transform  -- @IMP: 기본 좌표계는 world 좌표계!!!!
+<node>.transform.translationpart
+<node>.transform.rotationpart
+<node>.transform.scalepart
+
+## mesh 
 http://help.autodesk.com/view/3DSMAX/2018/ENU/?guid=__files_GUID_0532C071_4401_4846_8450_3DA5510A3883_htm#GUID-E6E4714A-35EF-4F00-8A13-0F4AEE33D0DD
 
 ```ms
 <mesh>.material
-<mesh>.numFaces
+<mesh>.numFaces -- @IMP
 <mesh>.faces
 <mesh>.numVerts
 <mesh>.vertices
 <mesh>.edges
 tVertCount = (getNumTVerts <mesh>)
 
+getFace <mesh> <face_index> --@IMP @IMP
+getFaceNormal <mesh> <face_index> --@IMP 아 이거 로컬 기준 노멀이므로 주의!!!!
 getVert <mesh> <vert_index_integer> -- position만 얻어옴
 getNormal <mesh> <vert_index_integer>
 getTVert <mesh> <tvert_index_integer>
@@ -347,33 +419,37 @@ meshop.getVertsByColor <Mesh mesh> <color color> <float red_thresh> <float green
 meshop.getVertsByColor <Mesh mesh> <point3 uvw> <Float u_thresh> <Float v_thresh> <Float w_thresh> channel: <int=0>
 meshop.getVertWeight <Mesh mesh> <int vertIndex>
 meshop.getVAlpha <Mesh mesh> <int vertIndex>
+
+meshop.getNumVerts
+meshop.getNumFaces
+meshop.getFacesUsingVert
+meshop.getPolysUsingVert -- @IMP 이걸로 해야 PolygonFace를 얻는다...!!!
+
+meshop.getNumMaps
+meshop.getMapSupport -- @IMP @IMP (-2: alpha, -1: illumination, 0: color, 1: texture)
+meshop.getNumMapFaces
+meshop.getNumMapVerts -- @IMP
+meshop.getMapFace -- @IMP mapChannel 0 == vertex color, 1 == texture ?
+
+meshop.getNumCPVVerts -- Color Per Vertex (mapChannel 0)
+meshop.getVCFaces
+meshop.getVertexColor
+
+meshop.getNumTVerts -- Texture (mapChannel 1)
+meshop.getMapVert -- @IMP
+
+meshop.getFaceRNormals
 ```
 
-#### CPV verts
-```ms
-cpvVertCount = (getNumCPVVerts target)
-format "cpvVert 개수: %\n" cpvVertCount
-if cpvVertCount > 0 do
-(				
-    for i = 1 to cpvVertCount do
-    (					
-        vertexColor = (getVertColor target i)
-        print vertexColor as string
-    )
-)
-```
-
-#### 예시
-
+### 예시
 ```ms
 vertexPosition = vertex.position
 format "\t\t<position x=\"%\" y=\"%\" z=\"%\"/>\n" \
     vertexPosition.x vertexPosition.y vertexPosition.z \
     to:savedFile
-				
 ```
 
-### poly (Editable_Poly)
+## poly (Editable_Poly) ★★
 ```ms
 <poly>.Retriangulate
 <poly>.GetNumFaces
@@ -382,28 +458,30 @@ format "\t\t<position x=\"%\" y=\"%\" z=\"%\"/>\n" \
 <poly>.GetVertex
 <poly>.GetVertexColor #VertexColor|#Illumination|#Alpha
 <poly>.GetVertexFaceCount <vertexID>
-<poly>.GetVertexFace <vertexID> <faceID> 
+<poly>.GetVertexFace <vertexID> <faceID> -- @IMP
+
+<poly>.faces[i]
 ```
 
 ```ms
 polyop.getNumVerts <Poly poly>
 polyop.getNumEdges <Poly poly>
-polyop.getNumFaces <Poly poly>
-polyop.getFaceVerts <Poly poly> <int face>
+polyop.getNumFaces <Poly poly> -- @IMP
+polyop.getFaceVerts <Poly poly> <int face> -- @IMP
 polyop.getFaceEdges <Poly poly> <int face>
 polyop.getFaceDeg <Poly poly> <int face> -- face의 degree (vertex의 수)
-polyop.getFaceNormal
+polyop.getFaceNormal -- @IMP
 polyop.getFacesUsingVert
 polyop.retriangulate <Poly poly> <facelist>
 ```
 
-#### vertex color
+### vertex color
 ```ms
 select target.vertices[i]
 a = (selection[1].GetVertexColor #illumination)
 ```
 
-#### 예제
+### 예제
 ```ms
 target = selection[1]
 vertexCount = target.GetNumVertices() as integer
@@ -446,18 +524,31 @@ for i = 1 to vertexCount do
 format "</vertices>\n" to:savedFile
 ```
 
-### 유용한 함수
+
+## FrameTagManager
+``` ms
+FrameTagManager.getTagCount
+FrameTagManager.getTagID
+FrameTagManager.getNameByID
+FrameTagManager.getTimeByID
+```
+
+## 유용한 함수
 ```ms
 print
 format
+matchPattern "문자열" pattern:"*.*" [ignoreCase:false]
+random (0 255)
 messagebox
 queryBox
 yesNoCancelBox
-classOf <노드> <클래스> -- Box, BoneGeometry, Biped_Object, Dummy, Directionallight
+classOf <노드> <클래스> -- @IMP: Point3, Box, BoneGeometry, Biped_Object, Dummy, Directionallight
 superClassOf <노드> <클래스> -- 보통 GeometryClass가 많다, helper, light
 superclassOf selection[1]
 canConvertTo <노드> <클래스>
 convertTo <노드> <클래스>
+ -- convertToMesh
+ -- convertToPoly
 ```
 |    | class | superClass |
 | -- | -- | -- |
