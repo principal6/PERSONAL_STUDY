@@ -265,6 +265,19 @@ slider orient:#vertical across:5
 spinner -- 범위 정해진 숫자..
 ```
 
+## 함수 정의
+```ms
+function myFunc arg0 arg1 =
+(
+
+)
+
+function refFunc &refArg =
+(
+
+)
+```
+
 ## 메소드
 ```
 -- open, close, pressed, changed
@@ -284,9 +297,11 @@ numPoints
 ## 파일 다루기
 ```ms
 fileIn "파일명" -- 현재 경로(기본 scriptsPath)에서 파일을 불러들인다
+fileIn (scriptsPath + "FSEngine\my.ms")
 scriptsPath
 maxFileName
 maxFilePath
+getSavePath [caption:<window_caption_string>] [initialDir:<pathname>] 
 sysInfo.windowsdir
 sysInfo.systemdir
 sysInfo.tempdir
@@ -342,7 +357,7 @@ writeString
 ## material
 material => textureMap => vertexColor
 
-## 기타 시스템 변수/함수
+## 기타 시스템 변수/함수 (System Globals)
 ```ms
 sysInfo.username
 sysInfo.computername
@@ -353,6 +368,30 @@ rootNode -- children 참조
 rootScene 
 sliderTime --@IMP 각 프레임!! (set, get 가능!)
 getDir #temp
+undefined
+pi
+e
+keyboard.shiftPressed
+keyboard.controlPressed
+keyboard.altPressed
+keyboard.escPressed 
+listener
+localTime
+getLocalTime() -- @IMP array로 리턴해줌!!
+maxFileName -- 현재 열린 파일의 이름!!
+maxFilePath -- 현재 열린 파일의 경로!
+rootNode -- @IMP Scene 내 모든 노드의 부모!
+sceneMaterials 
+scripsPath -- @IMP
+trackbar.visible 
+units.MetricType 
+apropos "light"
+showClass "path*"
+showClass "noise.*"
+showClass "*:mod*" -- :뒤에는 superclass!
+showClass "*.*" to:<stream>
+showProperties 
+hasProperty 
 ```
 
 ## dotNetObject
