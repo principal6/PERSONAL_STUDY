@@ -153,11 +153,15 @@ as eulerAngles
 ### string
 local str = "가" + (123 as string) + "나"
 str.count
+substring <string> offset count
 
 ### 배열
 local arr = #()
 append <array> <value>
 appendIfUnique <array> <value>
+insertItem
+deleteItem
+findItem
 free arr -- @IMP
 
 ### struct
@@ -195,7 +199,7 @@ for i = 1 to myCount do
 )
 ```
 
-## items
+## UI Control
 ### 속성
 ```ms
 button btnA "A" width:120 pos:[8, 24] enabled:false border:false visible:true
@@ -206,6 +210,11 @@ button btnC "C" width:120 offset:[4, 0]
 
 ### 종류
 ```ms
+label theLabel "Label" offset:[0,20]
+dropdownlist theDDL "DropDownList:" items:#("Item 1","Item 2") width:80 across:2
+listbox theListbox "Listbox:" items:#("Item 1","Item 2") height:3 width:80 across:2
+multilistbox theMLBox "Multilistbox:" items:#("Item 1","Item 2") height:3 width:80
+edittext theEdittext "Edittext:"
 angle theAngle "Angle" width:80 across:2 degrees:45 align:#left
 slider theSlider "Slider:" orient:#vertical
 spinner theSpinner "Spinner:"
@@ -217,25 +226,13 @@ materialbutton theMatButton "Material Button" width:80 align:#right
 pickbutton thePickbutton "Pickbutton:" width:80)
 checkbox theCheckbox "Checkbox" [checked:false] across:2 offset:[0,2]
 colorpicker theColorpicker "Colorpicker:"
-listbox theListbox "Listbox:" items:#("Item 1","Item 2")\
-height:3 width:80 across:2
-multilistbox theMLBox "Multilistbox:" items:#("Item 1","Item 2")\
-height:3 width:80
-dropdownlist theDDL "DropDownList:" items:#("Item 1","Item 2")\
-width:80 across:2
-combobox theCombobox "Combobox:" items:#("Item 1","Item 2")\
-height:3 width:80
-edittext theEdittext "Edittext:"
-hyperlink theHyperlink "Hyperlink" url:"http://www.autodesk.com"\
-color:red across:2 offset:[10,20]
-label theLabel "Label" offset:[0,20]
+combobox theCombobox "Combobox:" items:#("Item 1","Item 2") height:3 width:80
+hyperlink theHyperlink "Hyperlink" url:"http://www.autodesk.com" color:red across:2 offset:[10,20]
 groupBox theGroupbox "Groupbox:" height:40 offset:[0,-40] width:174
 progressbar theProgressbar "Progressbar:" value:50
 radiobuttons theRadiobuttons labels:#("Option 1","Option 2")
-bitmap theBitmap "Bitmap" width:80 height:50 offset:[0,0]\
-bitmap:(bitmap 80 50 color:red) align:#left across:2
-imgTag theImgTag "Bitmap" width:80 height:50 offset:[0,0]\
-bitmap:(bitmap 80 50 color:green) align:#right
+bitmap theBitmap "Bitmap" width:80 height:50 offset:[0,0] bitmap:(bitmap 80 50 color:red) align:#left across:2
+imgTag theImgTag "Bitmap" width:80 height:50 offset:[0,0] bitmap:(bitmap 80 50 color:green) align:#right
 SubRollout theSubrollout "Subrollout" height:50
 curvecontrol theCurvecontrol "Curvecontrol:" height:150
 ```
@@ -298,9 +295,9 @@ numPoints
 ```ms
 fileIn "파일명" -- 현재 경로(기본 scriptsPath)에서 파일을 불러들인다
 fileIn (scriptsPath + "FSEngine\my.ms")
-scriptsPath
-maxFileName
-maxFilePath
+scriptsPath -- @IMP
+maxFilePath -- 현재 열린 파일의 경로!
+maxFileName -- 현재 열린 파일의 이름!!
 getSavePath [caption:<window_caption_string>] [initialDir:<pathname>] 
 sysInfo.windowsdir
 sysInfo.systemdir
@@ -354,9 +351,6 @@ writeString
 <Integer>readByte <BinStream> [#signed | #unsigned]
 ```
 
-## material
-material => textureMap => vertexColor
-
 ## 기타 시스템 변수/함수 (System Globals)
 ```ms
 sysInfo.username
@@ -367,7 +361,7 @@ sysinfo.getSystemMemoryInfo()
 rootNode -- children 참조
 rootScene 
 sliderTime --@IMP 각 프레임!! (set, get 가능!)
-getDir #temp
+getDir #temp -- #maxroot
 undefined
 pi
 e
@@ -378,11 +372,8 @@ keyboard.escPressed
 listener
 localTime
 getLocalTime() -- @IMP array로 리턴해줌!!
-maxFileName -- 현재 열린 파일의 이름!!
-maxFilePath -- 현재 열린 파일의 경로!
 rootNode -- @IMP Scene 내 모든 노드의 부모!
 sceneMaterials 
-scripsPath -- @IMP
 trackbar.visible 
 units.MetricType 
 apropos "light"
@@ -429,8 +420,8 @@ for node in geometry do ...
 <node>.children
 <node>.mesh
 <node>.wireColor
-<node>.isHidden
-<node>.isFrozen
+<node>.isHidden -- @IMP: 눈 모양!
+<node>.isFrozen -- @IMP
 <node>.visibility
 <node>.transform  -- @IMP: 기본 좌표계는 world 좌표계!!!!
 <node>.transform.translationpart
@@ -564,6 +555,39 @@ format "</vertices>\n" to:savedFile
 ```
 
 
+## material
+<material>.name 
+
+### Standardmaterial (class)
+<Standard>.shaderType Integer default: 1 -- alias: Shader_Type 
+ 0- Anisotropic
+ 1- Blinn
+ 2- Metal
+ 3- Multi-Layer
+ 4- Oren-Nayar-Blinn
+ 5- Phong
+ 6- Strauss
+ 7- Translucent
+<standard>.wire Boolean default: false -- boolean 
+<standard>.twoSided
+<standard>.opacity
+
+<Standard>.ambient Color default:(color 127.5 127.5 127.5)- animatable; RGB color; Ambient_Color 
+<Standard>.diffuse Color default:(color 127.5 127.5 127.5)-- animatable, alias: Diffuse_Color 
+<Standard>.specular Color
+
+<Standard>.ambientMap TextureMap default: undefined -- alias for maps[0] 
+<Standard>.ambientMapAmount Float default: 100.0 -- alias for mapAmounts[0] 
+
+
+<Standard>.diffuseLevel Float default: 100.0 -- animatable; percentage; Diffuse_Level 
+<Standard>.diffuseLevelMap TextureMap default: undefined -- alias for maps[8] 
+<Standard>.diffuseLevelMapAmount Float default: 100.0 -- alias for mapAmounts[8] 
+<Standard>.diffuseMap TextureMap default: undefined -- alias for maps[1] 
+<Standard>.diffuseMapAmount Float default: 100.0 -- alias for mapAmounts[1] 
+<Standard>.bumpMap TextureMap default: undefined -- alias for maps[10] 
+<Standard>.bumpMapAmount Float default: 30.0 -- alias for mapAmounts[10] 
+
 ## FrameTagManager
 ``` ms
 FrameTagManager.getTagCount
@@ -576,6 +600,7 @@ FrameTagManager.getTimeByID
 ```ms
 print
 format
+swap <a> <b>
 matchPattern "문자열" pattern:"*.*" [ignoreCase:false]
 random (0 255)
 messagebox
