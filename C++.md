@@ -387,13 +387,13 @@ int main()
 
 ## 전처리기
 
-### include
+### #include
 
 헤더 파일: `.h` / `.hpp` (hpp는 명시적으로 C++의 헤더파일임을 알려줌)
 
 #### forward declaration (전방 선언)
 
-### macro
+### #define
 
 #### Source-code Annotation Language (SAL)
 
@@ -405,6 +405,63 @@ void foo(_In_ int a, _Inout_ int* b, _Out_ int* c, _Outptr_ int** d, _In_opt_ in
     // ...
 }
 ```
+
+### #pragma
+
+#### comment
+
+```cpp
+#pragma comment(lib, "abc.lib")
+```
+
+#### warning
+
+```cpp
+#pragma warning(push)
+#pragma warning(disable : 4424)
+// ...
+#pragma warning(pop)
+```
+
+#### optimize
+
+```cpp
+#pragma optimize("", off)
+// 이부분은 최적화가 전혀 되지 않습니다. (★디버그 빌드 아닐 때 디버깅을 위해 필요한 기능!!!★)
+#pragma optimize("", on)
+```
+
+#### region
+
+```cpp
+#pragma region A region
+// ...
+#pragma endregion
+```
+
+#### message
+
+```cpp
+#pragma message("You are here: " __FILE__ __TIMESTAMP__)
+```
+
+#### include alias
+
+```cpp
+#pragma include_alias( "nickname.h", "original_name.h" )
+```
+
+#### deprecated
+
+```cpp
+#pragma deprecated(MyClass)
+class MyClass {  // C4995
+public:
+   void f(){}
+};
+```
+
+
 
 
 
@@ -500,6 +557,34 @@ void foo(int (&ref)[4])
 {
 	
 };
+```
+
+### lvalue, rvalue, xvalue ...
+
+```cpp
+#include <iostream>
+#define PRINT(text) std::cout << text << " of " << _id << "\n"
+class Test
+{
+	const char* _id{};
+public:
+	Test(const char* id) : _id{ id } { PRINT("constructor"); }
+	~Test() { PRINT("destructor"); }
+	Test& operator=(const Test& b) { PRINT("copy assignment"); return *this; }
+	Test& operator=(Test&& b) { PRINT("move assignment"); return *this; }
+};
+
+Test makeInstant() { return "temp"; }
+int main()
+{
+	Test a{ "a" }; // constructor
+	Test b{ "b" }; // constructor
+	b = a; // copy assignment (a is lvalue)
+	a = makeInstant(); // move assignment (makeInstante() returns rvalue)
+	b = std::move(a); // move assignment (std::move() makes 'a' xvalue)
+	std::cout << "=== main() will return ===\n";
+	return 0; // desctuctors
+}
 ```
 
 
