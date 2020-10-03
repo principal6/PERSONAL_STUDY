@@ -948,6 +948,42 @@ int main()
 
 
 
+### 리턴값 최적화 (Return value optimization)
+
+```cpp
+#include <iostream>
+
+class WhereIs
+{
+	char _id;
+public:
+	WhereIs(const char id) : _id{ id } { std::cout << _id << " ctor\n"; }
+	WhereIs(const WhereIs& rhs) : _id{ rhs._id } { std::cout << _id << " copy ctor\n"; }
+	WhereIs(WhereIs&& rhs) noexcept : _id{ rhs._id } { std::cout << _id << " move ctor\n"; }
+	~WhereIs() { std::cout << _id << " dtor\n"; }
+};
+
+WhereIs makeWhereIs(const char id)
+{
+	WhereIs result{ id };
+	return result;
+}
+
+WhereIs makeWhereIsRvo(const char id)
+{
+	return WhereIs(id);
+}
+
+int main()
+{
+	WhereIs a = makeWhereIs('a');
+	WhereIs b = makeWhereIsRvo('b');
+	return 0;
+}
+```
+
+
+
 ### 멤버 초기화
 
 in-class 말고 생성자에서 초기화, 소멸자에서 해제하면 좋겠다! (forward declaration이 많을 수록 더더욱..?)
