@@ -6,6 +6,60 @@
 
  https://archive.org/details/GDC2014Melax Working with 3D Rotations
 
+
+
+## 행렬과 벡터
+
+### Matrix * Column Vector 일 때 (OpenGL)
+
+#### Multiplication Interpretation ($\leftarrow$ Global Basis, $\rightarrow$ Local Basis)
+
+$B_M = P_M * B_L$
+
+$M_{SRT} = T * R * S$
+
+$T = \begin{bmatrix}
+1 & 0 & 0 & T_x \\
+0 & 1 & 0 & T_y \\
+0 & 0 & 1 & T_z \\
+0 & 0 & 0 & 1 \\
+\end{bmatrix}$
+
+$M_{basis} = \begin{bmatrix}
+I_x & J_x & K_x & 0 \\
+I_y & J_y & K_y & 0 \\
+I_z & J_z & K_z & 0 \\
+0 & 0 & 0 & 1 \\
+\end{bmatrix}$
+
+
+
+### Row Vector * Matrix 일 때 (DirectX)
+
+#### Multiplication Interpretation ($\leftarrow$ Local Basis, $\rightarrow$ Global Basis)
+
+$B_M = B_L * P_M$
+
+$M_{SRT} = S * R * T$
+
+$T = \begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+T_x & T_y & T_z & 1 \\
+\end{bmatrix}$
+
+$M_{basis} = \begin{bmatrix}
+I_x & I_y & I_z & 0 \\
+J_x & J_y & J_z & 0 \\
+K_x & K_y & K_z & 0 \\
+0 & 0 & 0 & 1 \\
+\end{bmatrix}$
+
+
+
+
+
 ## 방정식
 
 implicit equation			$y=x$				$x^2+y^2=1$
