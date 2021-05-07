@@ -1,6 +1,10 @@
 # Linear Algebra 선형대수학
 
-## vector 벡터
+
+
+
+
+## 1. vector 벡터
 
 벡터는 **변환(transformation)**의 일종이다!! 위치가 아니라 **이동값**이다!!! 그래서 좌표처럼 표기하면 헷갈린다..
 $$
@@ -186,6 +190,27 @@ $$
 ### 
 
 ### @@@ TODO: 직선과 평면 ... 
+
+
+
+## 2. 행렬 matrix
+
+**차원 변환기!!**
+
+
+
+
+$$
+\begin{bmatrix}
+1 & 0 \\
+0 & 1
+\end{bmatrix}
+$$
+
+
+
+
+
 
 
 
@@ -662,6 +687,138 @@ $$
 
 
 ## inverse & determinant
+
+
+
+### 역행렬 도출하기!!
+
+#### #1
+
+$$
+\begin{bmatrix}
+	2 & 0 \\
+	0 & 2
+\end{bmatrix}
+\begin{bmatrix}
+	3 \\ 4
+\end{bmatrix}
+= 
+\begin{bmatrix}
+	6 \\ 8
+\end{bmatrix}
+$$
+
+
+$$
+A^{-1}
+=
+\begin{bmatrix}
+1/2 & 0 \\ 0 & 1/2
+\end{bmatrix}
+$$
+
+
+#### #2
+
+$$
+\begin{bmatrix}
+	1 & 2 \\
+	0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+	3 \\ 4
+\end{bmatrix}
+= 
+\begin{bmatrix}
+	11 \\ 4
+\end{bmatrix}
+$$
+
+
+$$
+A^{-1}
+=
+\begin{bmatrix}
+	1 & -2 \\
+	0 & 1
+\end{bmatrix}
+$$
+
+
+#### #3
+
+$$
+\begin{bmatrix}
+	1 & 2 \\
+	3 & 1
+\end{bmatrix}
+\begin{bmatrix}
+	4 \\ 7
+\end{bmatrix}
+= 
+\begin{bmatrix}
+	18 \\ 19
+\end{bmatrix}
+$$
+
+
+
+바로 풀기 어렵다.. 연립방정식으로 써보자!!
+$$
+b_1 = x_1 + 2x_2 \\
+b_2 = 3x_1 + x_2
+$$
+b 값이 주어졌을 때 x를 구하는 방법?
+$$
+3b_1 = 3x_1 + 6x_2 \\
+b_2 = 3x_1 + x_2
+$$
+
+$$
+\begin{align}
+& 3b_1 - b_2 = 5x_2 \\
+\rightarrow & \ \frac{3}{5}b_1 - \frac{1}{5}b_2 = x_2
+\end{align}
+$$
+
+$$
+\begin{align}
+b_1 &= x_1 + 2x_2 \\
+2b_2 &= 6x_1 + 2x_2 \\
+\rightarrow 2b_2 - b_1 &= 5x_1 \\
+\rightarrow \frac{2}{5}b_2 - \frac{1}{5}b_1 &= x_1
+\end{align}
+$$
+
+$$
+A^{-1}
+=
+\begin{bmatrix}
+	3/5 & -1/5 \\
+	-1/5 & 2/5
+\end{bmatrix}
+$$
+
+
+#### 이제 일반화 가능!!!
+
+#### 그럼 여기서 행렬식 5 는 어떤 의미가 있을까?
+
+$$
+\begin{bmatrix}
+	1 & 2 \\
+	3 & 1
+\end{bmatrix}
+\begin{bmatrix}
+	1 \\ 0
+\end{bmatrix}
+= 
+\begin{bmatrix}
+	1 \\ 3
+\end{bmatrix}
+$$
+
+![determinant](Asset/determinant.png)
 
 
 
