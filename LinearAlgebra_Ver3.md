@@ -6,6 +6,30 @@
 
 ## 1. vector 벡터
 
+### point 점
+
+1-space 1차원에서 number 수 는 직선 상의 점을
+
+2-space 2차원에서 pair(=couple) of numbers 두 수는 plane 평면의 점을
+
+3-space 3차원에서 triple of numbers 세 수는 3차원 공간의 점을
+
+4-space 4차원에서 quadruple of numbers 네 수로 4차원 공간의 점을 정의할 수 있고
+
+n-space n차원에서 n-tuple of numbers n 개의 수로 n차원 공간의 점을 정의할 수 있다.
+
+이때 점을 이루는 각 수
+$$
+x_1, x_2, \cdots, x_n
+$$
+를 coordinate 좌표 라고 하고, 점을 $X$ 처럼 대문자로 표기한다.
+
+n-space 는 $\R^n$ 으로 표기한다.
+
+
+
+
+
 벡터는 **변환(transformation)**의 일종이다!! 위치가 아니라 **이동값**이다!!! 그래서 좌표처럼 표기하면 헷갈린다..
 $$
 (1, 2) \ne [ 1 ,\ 2 ]
@@ -69,9 +93,18 @@ $$
 (-1)\bold{v} = -\bold{v}
 $$
 
+
 $$
 \bold{u} - \bold{v} = \bold{u} + (-\bold{v})
 $$
+
+
+
+#### direction 방향
+
+$c > 0$ 일 때 $c\bold{v}$ 는 $\bold{v}$ 와 같은 방향이고, $c < 0$ 일 때는 반대 방향이다.
+
+
 
 ### $\R^n$ 으로 확장
 
@@ -126,7 +159,7 @@ $\bold{v_1}, \bold{v_2}, \cdots, \bold{v_n}$ 의 **linear combination (선형 �
 
 
 
-### scalar product (스칼라적) = dot product
+### dot prodcut (= scalar product) (스칼라적, 내적, 점적)
 
 $$
 \bold{u} = \begin{bmatrix}u_1 \\ u_2 \\ \vdots \\ u_n\end{bmatrix},\ \bold{v} = \begin{bmatrix}v_1 \\ v_2 \\ \vdots \\ v_n\end{bmatrix}
@@ -136,30 +169,188 @@ $$
 $$
 \bold{u} \cdot \bold{v} = u_1v_1 + u_2v_2 + \cdots + u_nv_n
 $$
-을 스칼라적이라고 한다. 이때 두 벡터는 반드시 성분의 개수가 같아야 한다!
+을 dot product 라고 한다. 이때 두 벡터는 반드시 성분의 개수가 같아야 한다!
 
-#### 정리
+#### 네 가지 기본적인 성질
 
 $$
 \begin{align}
 &\text{a. } \bold{u} \cdot \bold{v} = \bold{v} \cdot \bold{u} \\
 &\text{b. } \bold{u} \cdot (\bold{v} + \bold{w}) = \bold{u} \cdot \bold{v} + \bold{u} \cdot \bold{w} \\
 &\text{c. } (c\bold{u}) \cdot \bold{v} = c(\bold{u} \cdot \bold{v}) \\
-&\text{d. } \bold{u} \cdot \bold{u} \ge 0 \text{ 이다. 그리고 } \bold{u} \cdot \bold{u} = 0 \text{ 이기 위한 필요충분조건은 } \bold{u} = \bold{0} \text{ 이다.} \\
+&\text{d. } \bold{u} = \bold{0} \text{ 이면 } \bold{u} \cdot \bold{u} = 0 \text{ 이고, 그렇지 않은 경우} \bold{u} \cdot \bold{u} \ge 0 \text{ 이다. }\\
 \end{align}
 $$
 
 
 
-### norm = length
+#### orthogonality 직교
 
-#### unit vector
+$\R^n$ 의 두 벡터 $\bold{u}, \bold{v}$ 에 대해
+$$
+\bold{u} \cdot \bold{v} = 0
+$$
+일 때 두 벡터는 서로 **orthogonal (직교) = perpendicular (수직)** 이다.
 
-단위원! unit circle
+위 정의에 따라 영벡터 $0$ 는 모든 벡터와 직교한다!
 
-#### normalization
 
-### Cauchy-Schwarz inequality (코시-슈바르츠 부등식)
+
+### norm 노름 (= length 길이, magnitude 크기)
+
+벡터 $\bold{v}$ 의 길이를 $||\bold{v}||$ 로 나타내고
+$$
+\Vert\bold{v}\Vert = \sqrt{\bold{v} \cdot \bold{v}}
+$$
+로 정의한다.
+
+임의의 벡터에 대해
+$$
+\Vert\bold{v}\Vert = \Vert-\bold{v}\Vert
+$$
+가 성립한다.
+
+두 점 $A$ 와 $B$ 사이의 거리는
+
+벡터 $\vec{AB}$ 의 길이과 같다. 즉
+$$
+\Vert{A-B}\Vert = \sqrt{(A-B) \cdot (A-B)}
+$$
+이다.
+
+또한 어떤 실수 $c$ 에 대해
+$$
+\Vert{c\bold{v}}\Vert = \vert{c}\vert\Vert\bold{v}\Vert
+$$
+가 성립한다.
+$$
+\Vert\bold{v} + \bold{u}\Vert = \Vert\bold{v} - \bold{u}\Vert \text{ 일 필요충분조건은 } \bold{v} \cdot \bold{u}=0 \text{ 이다.}
+$$
+
+
+#### unit vector 단위 벡터
+
+$$
+\lVert\bold{e}\rVert = 1
+$$
+
+을 만족하는 벡터를 unit vector 단위 벡터 라고 한다.
+
+
+
+#### standard unit vector 표준 단위 벡터
+
+단위 벡터는 무수히 많이 존재하는데(단위원), 그 중 $i$ 번째 성분이 $1$ 이고, 나머지 성분은 전부 $0$ 인 벡터 $\bold{e}_i$ 를 **standard unit vector 표준 단위 벡터** 라 한다.
+
+3차원에서 표준 단위 벡터는 3개로
+$$
+\bold{e}_1 = (1, 0, 0) \\
+\bold{e}_2 = (0, 1, 0) \\
+\bold{e}_3 = (0, 0, 1)
+$$
+와 같다.
+
+#### normalization 정규화
+
+#### Pythagorean theorem 피타고라스의 정리
+
+두 벡터 $\bold{v}$ 와 $\bold{u}$ 가 서로 직교하면
+$$
+\lVert\bold{v} + \bold{u}\rVert^2 = \lVert\bold{v}\rVert^2 + \lVert\bold{u}\rVert^2
+$$
+이다.
+
+##### 증명
+
+길이의 정의에 의해 
+$$
+\begin{align}
+\lVert\bold{v} + \bold{u}\rVert^2 
+&= (\bold{v} + \bold{u}) \cdot (\bold{v} + \bold{u}) \\
+&= \bold{v} \cdot \bold{v} + 2\bold{v} \cdot \bold{u} + \bold{u} \cdot \bold{u} \\
+&= \lVert\bold{v}\rVert^2 + 2\bold{v} \cdot \bold{u} + \lVert\bold{u}\rVert^2 \\
+&= \lVert\bold{v}\rVert^2 + \lVert\bold{u}\rVert^2
+\end{align}
+$$
+두 벡터가 직교하면 $\bold{v} \cdot \bold{u} = 0$ 라는 사실을 이용했다.
+
+
+
+### projection 사영
+
+![vector_projection](Asset\vector_projection_1.png)
+
+원점 $O$ 에서 점 $A, B$ 에 이르는 벡터를 $\bold{a}, \bold{b}$ 라고 하자.
+
+이때 점 $A$ 에서 벡터 $\bold{b}$ 로 향하는 수선의 발을 $P$ 라고 하고, 원점에서 $P$ 에 이르는 벡터를 $\bold{p}$ 라 하자.
+
+$\bold{p}$ 와 $\bold{b}$ 는 방향이 같은 벡터이므로 $\bold{p} = c\bold{b}$ 를 만족하는 실수 $c$ 가 존재한다.
+
+이때 벡터 $\bold{a}-c\bold{b}$ 는 벡터 $\bold{b}$ 와 직교하므로
+$$
+(\bold{a} - c\bold{b}) \cdot \bold{b} = 0 \\
+\bold{a} \cdot \bold{b} - c\bold{b} \cdot \bold{b} = 0 \\
+\bold{a} \cdot \bold{b} = c\bold{b} \cdot \bold{b} \\
+\frac{\bold{a} \cdot \bold{b}}{\bold{b} \cdot \bold{b}} = c
+$$
+이다.
+
+component of $\bold{a}$ along $\bold{b}$ ($\bold{b}$ 를 따른 $\bold{a}$ 의 성분) 이란 
+
+실수
+$$
+c = \frac{\bold{a} \cdot \bold{b}}{\bold{b} \cdot \bold{b}}
+$$
+를 말한다.
+
+또한 벡터 $c\bold{b}$ 를 projection of $\bold{a}$ along $\bold{b}$ ($\bold{b}$ 를 따른 $\bold{a}$ 의 사영) 이라고 하고
+$$
+\text{proj}_{\bold{b}}\bold{a} = \frac{\bold{a} \cdot \bold{b}}{\bold{b} \cdot \bold{b}}\bold{b}
+$$
+
+로 표기한다.
+
+### $\cos{\theta}$
+
+$$
+\bold{a} \cdot \bold{b} = \lVert\bold{a}\rVert \lVert\bold{b}\rVert \cos{\theta}
+$$
+
+![vector_dot_product](Asset\vector_dot_product.png)
+
+
+
+위의 그림에서 알 수 있듯이 두 벡터 $\bold{a}$ 와 $c\bold{b}$ 사이의 각도 $\theta$ 에 대해
+$$
+\cos{\theta} = \frac{c\lVert\bold{b}\rVert}{\lVert{a}\rVert}
+$$
+가 성립한다.
+$$
+\begin{align}
+\cos{\theta} 
+&= \frac{\bold{a} \cdot \bold{b}}{\lVert\bold{b}\rVert^2}\frac{\lVert\bold{b}\rVert}{\lVert{a}\rVert} \\
+&= \frac{\bold{a} \cdot \bold{b}}{\lVert{a}\rVert\lVert\bold{b}\rVert} \\
+\\
+\lVert\bold{a}\rvert \lVert\bold{b}\rVert \cos{\theta} &= \bold{a} \cdot \bold{b}
+\end{align}
+$$
+
+
+### Cauchy-Schwarz inequality 코시-슈바르츠 부등식
+
+$$
+\vert\bold{a}\cdot\bold{b}\vert \le \Vert{\bold{a}}\Vert\Vert{\bold{b}}\Vert
+$$
+
+
+
+### triangle inequality 삼각 부등식
+
+$$
+\Vert{\bold{a}+\bold{b}}\Vert \le \Vert{\bold{a}}\Vert + \Vert{\bold{b}}\Vert
+$$
+
+
 
 ### distance between vectos
 
@@ -167,13 +358,7 @@ $$
 \text{d}(\bold{u}, \bold{v}) = ||\bold{u} - \bold{v}||
 $$
 
-### orthogonality 직교
 
-$\R^n$ 의 두 벡터 $\bold{u}, \bold{v}$ 에 대해
-$$
-\bold{u} \cdot \bold{v} = 0
-$$
-일 때 두 벡터는 서로 **orthogonal (직교)** 이다.
 
 #### zero vector and orthogonality
 
@@ -181,21 +366,21 @@ $$
 
 
 
-### projection 사영
 
-$$
-\text{proj}_{\bold{u}}(\bold{v})
-$$
 
-### 
+
+
+
 
 ### @@@ TODO: 직선과 평면 ... 
 
+### cross product 벡터적
 
 
-## 2. 행렬 matrix
 
-**차원 변환기!!**
+## 2. systems of linear equations 연립선형방정식 (선형계)
+
+행렬은 **차원 변환기!!**
 
 
 
@@ -661,6 +846,25 @@ $$
 
 
 
+## 3. matrix 행렬
+
+실수들로 이루어진 직사각형 형태의 배열을 **matrix 행렬** 이라고 한다.
+
+$n, m$ 이 양의 정수일 때, $m$ 개의 **row 행** 과 $n$ 개의 **column 열** 을 갖는 행렬은
+$$
+\begin{bmatrix}
+	a_{11} & a_{12} & \cdots & a_{1n} \\
+	a_{21} & a_{22} & \cdots & a_{2n} \\
+	\vdots & \vdots & & \vdots \\
+	a_{m1} & a_{m2} & \cdots & a_{mn} \\
+\end{bmatrix}
+$$
+로 표기한다. 이때 행렬은 $m \times n$ (m by n) matrix 라고 부른다.
+
+$a_{ij}$ 를 행렬의 $ij-$entry (항) 이라고 부른다.
+
+
+
 ## matrix multiplication
 
 composition of transformations
@@ -684,6 +888,29 @@ T_A(T_B(\bold{x})) &= A(B(\bold{x})) \\
 &= \begin{vmatrix}A\bold{b}_1 \ A\bold{b}_2 \ \cdots \ A\bold{b}_p\end{vmatrix}\bold{x}
 \end{align}
 $$
+
+
+
+### trace 대각합
+
+$$
+\text{tr}(A) = a_{11} + a_{22} + \cdots + a_{nn}
+$$
+
+
+$$
+\text{tr}(AB) = \text{tr}(BA)
+$$
+
+
+### elementary matrix 기본행렬
+
+기본 행연산을 행렬로 만든 것! $E$ 로 표기
+
+
+
+### idempotent matrix 멱등행렬
+
 
 
 ## inverse & determinant
@@ -824,9 +1051,78 @@ $$
 
 
 
+### LU factorization LU 분해
+
+matrix factorization 행렬 분해
+
+상삼각행렬
+
+단위하삼각행렬
+
+
+
+#### permutation matrix 치환행렬
+
+행을 서로 교환해주는 행렬! $P$ 로 표기
+
+$P$ 가 치환행렬이면
+$$
+P^{-1} = P^T
+$$
+이다.
+
+**증명**: $PP^T = I$ 임을 보여라.
+
+
+
+#### $P^TLU$ factorization
+
+모든 정사각행렬은 $P^TLU$ 분해를 갖는다!
+
+
+
+#### $LDU$ factorization
+
+$D$ 는 대각행렬
+
+
+
+
+
 ## vector space & subspace
 
+### 벡터공간
 
+집합 $V$ 의 원소 $\bold{u}, \bold{v}, \bold{w}$ 와 임의의 실수 $a, b, c$ 에 대해
+$$
+\begin{align}
+&\text{ 1. } \bold{u} + \bold{v} \in V \\
+&\text{ 2. } c\bold{v} \in V \\
+&\text{ 3. } (\bold{u} + \bold{v}) + \bold{w} = \bold{u} + (\bold{v} + \bold{w}) \\
+&\text{ 4. } \bold{0} \text{ 라 표기되는 원소가 존재하며, } V \text{ 의 모든 원소 } \bold{u} \text{ 에 대해 } \bold{0} + \bold{u} = \bold{u} + \bold{0} = \bold{u} \text{ 를 만족한다.} \\
+&\text{ 5. } \text{각 원소 } \bold{u} \text{ 에 대해 } \bold{u} + (-\bold{u}) = \bold{0} \text{ 을 만족하는 원소} -\bold{u} \text{ 가 } V \text{ 에 존재한다.} \\
+&\text{ 6. } \bold{u} + \bold{v} = \bold{v} + \bold{u} \\
+&\text{ 7. } c(\bold{u}+\bold{v}) = c\bold{u} + c\bold{v} \\
+&\text{ 8. } (a + b)\bold{v} = a\bold{u} + b\bold{v} \\
+&\text{ 9. } (ab)\bold{v} = a(b\bold{v}) \\
+&\text{10. } 1\bold{u} = \bold{u}
+\end{align}
+$$
+위의 10가지 **axiom 공리** 가 모두 성립하는 집합 $V$ 를 **vector space 벡터공간** 이라고 한다.
+
+
+
+### 부분공간
+
+두 벡터 $\bold{a}, \bold{b}$ 와 집합 $S$ 에 대해
+$$
+\begin{align}
+&\text{1. } \bold{0} \in S \\
+&\text{2. } \bold{a} + \bold{b} \in S \\
+&\text{3. } c\bold{a} \in S
+\end{align}
+$$
+위 세 조건이 모두 성립하는 집합 $S$ 를 **$\R^n$ 의** **subspace 부분공간** 이라고 한다.
 
 
 
@@ -1110,6 +1406,17 @@ $$
 0 & 0 & 0 & 4 \\
 \end{vmatrix}
 $$
+
+
+
+### similar matrix 닮은 행렬
+
+$$
+AP=PB
+$$
+
+를 만족하는 가역행렬 $P$ 가 존재하면 $A$ 와 $B$ 는 닮음이고, $A \sim B$ 로 표기한다.
+
 
 
 ### diagonalization 대각화
